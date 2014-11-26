@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<!-- login action -->
+	<package name="login" extends="struts-default">
+		<action name="login" class="cn.joymates.erp.action.right.UserAction" method="login">
+            <result type="redirect">/index.jsp</result>
+            <result name="fail">/login.jsp</result>
+        </action>
+        
+        <action name="logout" class="cn.joymates.erp.action.right.UserAction" method="logout">
+        	<result type="redirect">/login.jsp</result>
+        </action>
+
+	</package>
+	
+    <package name="basic" namespace="/admin/basic" extends="struts-default">
+        <!-- 角色管理 -->
+        <action name="roleMgr" >
+            <result>/WEB-INF/rightMgr/role_mgr.jsp</result>
+        </action>
+        
+       	<action name="role_*" class="cn.joymates.erp.action.right.RoleManagerAction" method="{1}">
+       		<result name="find">/WEB-INF/rightMgr/role_mgr.jsp</result>
+       		<result name="addUI">/WEB-INF/rightMgr/role_add.jsp</result>
+       		<result name="modifyUI">/WEB-INF/rightMgr/role_modify.jsp</result>
+       		<result name="resourceList">/WEB-INF/rightMgr/role_auth.jsp</result>
+       	</action> 
+		<!-- 用户管理 -->
+        <action name="userMgr" >
+            <result>/WEB-INF/rightMgr/user_mgr.jsp</result>
+        </action>
+        
+         <action name="userAddUI" >
+            <result>/WEB-INF/rightMgr/user_add.jsp</result>
+        </action>
+        
+       	<action name="user_*" class="cn.joymates.erp.action.right.UserAction" method="{1}">
+       		<result name="find">/WEB-INF/rightMgr/user_mgr.jsp</result>
+       		<result name="modifyUI">/WEB-INF/rightMgr/user_modify.jsp</result>
+       		<result name="pwdOver" >/WEB-INF/rightMgr/pwd_modify.jsp</result>
+       	</action>
+       	
+       	<!-- 密码修改 -->
+       	<action name="pwdUI">
+       		<result>/WEB-INF/rightMgr/pwd_modify.jsp</result>
+       	</action>
+       	
+    </package>
+      
+</struts>

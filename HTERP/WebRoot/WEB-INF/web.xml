@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  
+  <!-- session time out filter -->
+	<filter>
+		<filter-name>sessionTimeoutFilter</filter-name>
+		<filter-class>cn.joymates.erp.filter.SessionTimeOutFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>sessionTimeoutFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- struts2 -->
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- proxool -->
+	<servlet>
+		<servlet-name>proxoolServletConfigurator</servlet-name>
+		<servlet-class>
+			org.logicalcobwebs.proxool.configuration.ServletConfigurator
+		</servlet-class>
+		<init-param>
+			<param-name>xmlFile</param-name>
+			<param-value>WEB-INF/proxool.xml</param-value>
+		</init-param>
+		<load-on-startup>0</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>Admin</servlet-name>
+		<servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Admin</servlet-name>
+		<url-pattern>/proxoolAdmin</url-pattern>
+	</servlet-mapping>
+	
+	<!-- ecside -->
+	<filter>
+		<filter-name>ecsideExport</filter-name>
+		<filter-class>org.ecside.filter.ECSideFilter</filter-class>
+		<init-param>
+			<param-name>useEasyDataAccess</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ecsideExport</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- dwr -->
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>uk.ltd.getahead.dwr.DWRServlet</servlet-class>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+
+	<display-name>hterp</display-name>
+	<welcome-file-list>
+		<welcome-file>login.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

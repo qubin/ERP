@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/jxc/!svn/ver/514/JXC2/WebRoot/lodop6
+END
+install_lodop32.exe
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/jxc/!svn/ver/514/JXC2/WebRoot/lodop6/install_lodop32.exe
+END
+install_lodop64.exe
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/jxc/!svn/ver/514/JXC2/WebRoot/lodop6/install_lodop64.exe
+END

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"     
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">     
+   
+<mapper namespace="right">
+	<!-- longin -->
+    <select id="findByIdAndPassword" parameterType="User" resultType="User">
+        SELECT 
+        	u.user_id userId,
+        	u.user_login_id userLoginId,
+        	ur.role_id remark
+        FROM
+            tb_user u LEFT JOIN tb_user_role ur 
+        ON 
+        	u.user_id = ur.user_id
+        WHERE 
+        	u.user_login_id = #{userLoginId} AND 
+        	u.password1 = #{password1}	AND 
+        	u.is_logout = '0'
+  	</select>
+  	
+  	<!-- loading function tree -->
+	<select id="searchResourceByUserId" parameterType="User" resultType="Resource">
+    	SELECT 
+    		rs.resource_id resourceId, 
+    		rs.resource_url resourceUrl,
+    	    rs.resource_order resourceOrder, 
+    	    rs.parent_id parentId,
+    	    rs.resource_desc resourceDesc,
+    	    rs.resource_title resourceTitle,
+    	    rs.resource_type resourceType,
+    	    rs.in_page_name inPageName
+		FROM 
+			tb_user_role ur, tb_role r ,tb_role_resource rp, tb_resource rs
+		WHERE 
+			ur.role_id = r.role_id and
+		    r.role_id = rp.role_id and
+		    rp.resource_id = rs.resource_id and 
+		    ur.user_id = #{userId} 
+		ORDER BY 
+			rs.resource_id
+        		
+  	</select>
+  	
+  	<delete id="deleteByRoleId" parameterType="String">
+  		DELETE FROM 
+  			tb_role_privilege
+  		WHERE 
+  			role_id = #{role_id}	
+  	</delete>
+  	
+  	<insert id="insertRolePrivilege" parameterType="Map">
+  		INSERT INTO 
+  			tb_role_privilege
+  			(
+  			role_id,
+  			resource_id
+  			)
+  			VALUES
+  			(
+			#{role_id},
+			#{resource_id}
+  			)
+  	</insert>
+  	
+  	<select id="findResouceByRoleId" resultType="Resource" parameterType="string">
+  		select 
+  			resource_id resourceId
+		from
+		    tb_role_privilege
+		where 
+			role_id = #{role_id}
+  	</select>
+  	
+  	<insert id="insertUserRole" parameterType="Map">
+  		INSERT INTO 
+  			tb_user_role 
+  			(role_id,
+  			 user_id) 
+  		VALUES (
+  			#{role_id}, 
+  			#{user_id})
+  	</insert> 
+  	
+  	<select id="selectRoleByUserId" parameterType="String" resultType="String">
+  		SELECT role_id FROM tb_user_role
+  		WHERE user_id = #{user_id}
+  		LIMIT 0, 1
+  	</select>
+  	
+  	<!--dwr 判断角色名称是否唯一 -->
+  	<select id="findRoleByRoleName" parameterType="Role" resultType="integer">
+		select count(1) from role_tb
+		where role_name = #{roleName}  	
+		<if test="roleUuid != null">
+			and role_uuid != #{roleUuid}
+		</if>
+  	</select>
+  	
+</mapper>  
