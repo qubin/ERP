@@ -20,7 +20,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import cn.joymates.erp.domain.base.BaseVO;
-
+/**
+ * obj to sql
+ * @author Jackie Hou
+ *
+ */
 public class Bean2SqlUtils {
 	
 	public static Log logger = LogFactory.getLog(Bean2SqlUtils.class);
