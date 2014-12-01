@@ -14,5 +14,5 @@
 	
     <include file="erpRight.xml"/> 
     <include file="blogSupplier.xml"/> 
-    
+    <include file="blogMaterial.xml"/>
 </struts>

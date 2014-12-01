@@ -37,15 +37,18 @@ public class SupplierAction extends BaseAction {
 		return "home";
 	}
 	
-	public String modifyUI() {
+	public String showModifyUI() {
+		supplier = service.selectOne(supplier);
 		return "modifyUI";
 	}
 	
 	public String delete(){
+		service.update(supplier);
 		return "home";
 	}
 	
 	public String modify() {
+		service.update(supplier);
 		return "home";
 	}
 	

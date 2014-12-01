@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="materialManager" extends="struts-default" namespace="/admin/material" >
+		<action name="material_*" class="cn.joymates.erp.action.baseinfo.MaterialAction" method="{1}">
+            <result name="home">/WEB-INF/material/material_home.jsp</result>
+            <result name="addUI">/WEB-INF/material/material_add.jsp</result>
+            <result name="modifyUI">/WEB-INF/material/material_modify.jsp</result>
+        </action>
+	</package>
+      
+</struts>

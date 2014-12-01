@@ -1,7 +1,2 @@
 /cn
-/erpRight.xml
-/log4j.properties
-/mybatis-conf.xml
-/struts.xml
-/blogCourse.xml
-/blogSupplier.xml
+/blogMaterial.xml

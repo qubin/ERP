@@ -25,12 +25,12 @@
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
-          <h2>供应商查询</h2>
+          <h2>材料信息查询</h2>
 		 <form id="form1" action="${pageContext.request.contextPath}/admin/supplier/supplier_find.html" method="post">
           <table class="m-table-form">
              <tbody>
                 <tr>
-                  <th class="tr">供应商名称：</th>
+                  <th class="tr">材料名称：</th>
                   <td><input type="text" class="u-ipt" name="supplier.name"></td>
                   <th class="tr">联系人：</th>
                   <td><input type="text" class="u-ipt" name="supplier.conPerson"></td>        
@@ -46,7 +46,7 @@
 			<div class="hr10"></div>
 			      
                    
-          <h2>供应商信息列表</h2>
+          <h2>材料信息列表</h2>
           <div align="center">
           <ec:table items="supplierList" var="sr"
 				retrieveRowsCallback="limit"

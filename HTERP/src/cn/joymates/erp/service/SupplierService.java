@@ -20,8 +20,8 @@ public class SupplierService  extends BaseService<Supplier> {
 		String suppConPerson = supplier.getConPerson();
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_supplier where 1=1 ");
-		searchsql.append("SELECT COUNT(*) FROM t_supplier where 1=1 ");
+		resultsql.append("SELECT * FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
+		searchsql.append("SELECT COUNT(*) FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
 		if(!"".equals(suppName) && suppName != null){
 			resultsql.append(" AND name LIKE '%" + suppName + "%' ");
 			searchsql.append(" AND name LIKE '%" + suppName + "%' ");

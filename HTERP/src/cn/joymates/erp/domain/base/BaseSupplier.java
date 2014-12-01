@@ -13,11 +13,11 @@ public class BaseSupplier extends BaseVO {
 		fieldMap.put("fax", "fax");
 		fieldMap.put("address", "address");
 		fieldMap.put("email", "email");
-		fieldMap.put("isLogout", "isLogout");
+		fieldMap.put("isLogout", "is_logout");
 		fieldMap.put("logoutReason", "logout_reason");
 		fieldMap.put("remark", "remark");
 		
-		this.id = "uuid";
+		this.id = "id";
 	}
 
 	private Integer uuid;
