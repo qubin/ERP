@@ -17,7 +17,7 @@ public class BaseCustomer extends BaseVO {
 		fieldMap.put("remark1", "remark1");
 		this.id = "id";
 	}
-	private String custId;
+	private Integer custId;
 	private String custName;
 	private String telephone;
 	private String fax;
@@ -28,10 +28,11 @@ public class BaseCustomer extends BaseVO {
 	private String remark;
 	private String remark1;
 	
-	public String getCustId() {
+	
+	public Integer getCustId() {
 		return custId;
 	}
-	public void setCustId(String custId) {
+	public void setCustId(Integer custId) {
 		this.custId = custId;
 	}
 	public String getCustName() {

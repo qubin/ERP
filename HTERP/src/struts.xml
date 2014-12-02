@@ -15,4 +15,5 @@
     <include file="erpRight.xml"/> 
     <include file="erpSupplier.xml"/> 
     <include file="erpMaterial.xml"/>
+    <include file="erpCustomer.xml"/>
 </struts>
