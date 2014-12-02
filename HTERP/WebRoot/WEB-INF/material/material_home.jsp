@@ -26,17 +26,24 @@
       <div class="hr10"></div>
           <div class="hr10"></div>
           <h2>材料信息查询</h2>
-		 <form id="form1" action="${pageContext.request.contextPath}/admin/supplier/supplier_find.html" method="post">
+		 <form id="form1" action="${pageContext.request.contextPath}/admin/material/material_find.html" method="post">
           <table class="m-table-form">
              <tbody>
                 <tr>
-                  <th class="tr">材料名称：</th>
-                  <td><input type="text" class="u-ipt" name="supplier.name"></td>
-                  <th class="tr">联系人：</th>
-                  <td><input type="text" class="u-ipt" name="supplier.conPerson"></td>        
+                  <th class="tr">供应商：</th>
+                  <td>
+                  	   <s:select name="material.supplyId"
+						  cssClass="u-ipt required"
+						  cssStyle="width:178px"
+					      list="#request.supplierList"
+					      listKey="uuid" listValue="name" headerKey="-1"
+					      headerValue="--查询所有--" />
+                  </td>            
+                  <th class="tr">规格：</th>
+                  <td><input type="text" class="u-ipt" name="material.standard"></td>        
                   <td>
 					 <button type="button" class="u-btn" onclick="javascript:document.getElementById('form1').submit()">查询</button>&emsp;                   
-                     <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/supplier/supplier_showAddUI.html'">新增</button>&emsp;           
+                     <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/material/material_showAddUI.html'">新增</button>&emsp;           
                    </td>
                 </tr>                				                           
              </tbody>
@@ -48,9 +55,9 @@
                    
           <h2>材料信息列表</h2>
           <div align="center">
-          <ec:table items="supplierList" var="sr"
+          <ec:table items="materialList" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/supplier/supplier_find.html"
+				action="${pageContext.request.contextPath}/admin/material/material_find.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="99%" listWidth="99%" height="600px"
@@ -59,18 +66,20 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="NAME" title="名称" width="11%" />
+					<ec:column property="WAREHOUSESIGN" title="所在仓库" width="11%" />
+					<ec:column property="SUPPLIERNAME" title="供应商" width="11%" />
+					<ec:column property="DENSITY" title="面密度" width="11%" style="text-align:right" />
+					<ec:column property="THICKNESS" title="厚度" width="11%" style="text-align:right"/>
 					<ec:column property="DESC1" title="描述" width="11%" />
-					<ec:column property="CON_PERSON" title="联系人" width="11%" />
-					<ec:column property="CON_PHONE" title="联系电话" width="11%" style="text-align:center"/>
-					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
-					<ec:column property="ADDRESS" title="地址" width="11%" />
-					<ec:column property="EMAIL" title="邮箱" width="11%" />
+					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:right"/>
+					<ec:column property="STANDARD" title="规格" width="11%"  style="text-align:center"/>
+					<ec:column property="SCROLL_COUNT" title="卷数" width="11%"  style="text-align:right"/>
+					<ec:column property="MMAT_ID" title="母卷编号" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="${pageContext.request.contextPath}/admin/supplier/supplier_showModifyUI.html?supplier.uuid=${sr.ID}">修 改</a>
+						<a href="${pageContext.request.contextPath}/admin/material/material_showModifyUI.html?material.uuid=${sr.ID}">修 改</a>
 						&nbsp;&nbsp;&nbsp;&nbsp;
-						<a onclick="return delMsg(${org1.IS_LEAF})" href="${pageContext.request.contextPath}/admin/supplier/supplier_delete.html?supplier.uuid=${sr.ID}&supplier.isLogout=1">注 销</a>
+						<a onclick="return delMsg(${org1.IS_LEAF})" href="${pageContext.request.contextPath}/admin/material/material_delete.html?material.uuid=${sr.ID}&material.isLogout=1">注 销</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import cn.joymates.erp.dao.impl.MaterialDaoImpl;
 import cn.joymates.erp.domain.Material;
 
-
 public class MaterialService  extends BaseService<Material> {
 	
 	public MaterialService() {
@@ -16,22 +15,32 @@ public class MaterialService  extends BaseService<Material> {
 	}
 	
 	public List<Map<String, Object>> find(Material material, String ec_rd, HttpServletRequest req) {
-//		String suppName = material.getName();
-//		String suppConPerson = material.getConPerson();
-		StringBuffer resultsql = new StringBuffer();
-		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
-		searchsql.append("SELECT COUNT(*) FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
-//		if(!"".equals(suppName) && suppName != null){
-//			resultsql.append(" AND name LIKE '%" + suppName + "%' ");
-//			searchsql.append(" AND name LIKE '%" + suppName + "%' ");
+		//int warehouseId = material.getWarehouseId();
+		int supplyId;
+		try {
+			supplyId = material.getSupplyId();
+		} catch (Exception e) {
+			supplyId = -1;
+		}
+//		String standard = material.getStandard();
+		
+		String searchsql = "",resultsql = "";
+		searchsql = "SELECT count(*) FROM t_material AS m LEFT JOIN t_supplier AS s ON m.supply_id=s.id LEFT JOIN t_warehouse AS w ON m.warehouse_id=w.id where 1=1 AND (m.is_logout='0' OR m.is_logout IS NULL) ";
+		resultsql = "SELECT m.*,s.name AS supplierName,w.sign1 AS warehouseSign FROM t_material AS m LEFT JOIN t_supplier AS s ON m.supply_id=s.id LEFT JOIN t_warehouse AS w ON m.warehouse_id=w.id where 1=1 AND (m.is_logout='0' OR m.is_logout IS NULL) ";
+//		if(warehouseId != -1){
+//			resultsql = " AND m.warehouse_id=" + warehouseId + " ";
+//			searchsql = " AND m.warehouse_id=" + warehouseId + " ";
 //		}
-//		if(!"".equals(suppConPerson) && suppConPerson != null){
-//			resultsql.append(" AND con_person LIKE '%" + suppConPerson + "%' ");
-//			searchsql.append(" AND con_person LIKE '%" + suppConPerson + "%' ");
+		if(supplyId != -1){
+			resultsql += " AND m.supply_id=" + supplyId + " ";
+			searchsql += " AND m.supply_id=" + supplyId + " ";
+		}
+//		if(!"".equals(standard) && standard != null){
+//			resultsql += " AND m.standard LIKE '%" + standard + "%' ";
+//			searchsql += " AND m.standard LIKE '%" + standard + "%' ";
 //		}
-		resultsql.append(" ORDER BY id DESC limit ?, ? ");
-		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
+		resultsql += " ORDER BY m.id DESC limit ?, ? ";
+		return dao.getEcsideList(ec_rd, searchsql, resultsql, req);
 	}
 	
 }

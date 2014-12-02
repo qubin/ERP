@@ -1,5 +1,7 @@
 package cn.joymates.erp.domain.base;
 
+import java.math.BigDecimal;
+
 public class BaseMaterial extends BaseVO {
 
 	public BaseMaterial() {
@@ -28,14 +30,14 @@ public class BaseMaterial extends BaseVO {
 	private Integer uuid;
 	private Integer warehouseId;
 	private Integer supplyId;
-	private Double density;
-	private Double thickness;
+	private BigDecimal density;
+	private BigDecimal thickness;
 	private String desc;
-	private Double weight;
+	private BigDecimal weight;
 	private String standard;
-	private Double scrollCount;
+	private BigDecimal scrollCount;
 	private String isAlarm;
-	private Double alarmWeight;
+	private BigDecimal alarmWeight;
 	private String isLogout;
 	private String logoutReason;
 	private Integer mmatId;
@@ -59,16 +61,16 @@ public class BaseMaterial extends BaseVO {
 	public void setSupplyId(Integer supplyId) {
 		this.supplyId = supplyId;
 	}
-	public Double getDensity() {
+	public BigDecimal getDensity() {
 		return density;
 	}
-	public void setDensity(Double density) {
+	public void setDensity(BigDecimal density) {
 		this.density = density;
 	}
-	public Double getThickness() {
+	public BigDecimal getThickness() {
 		return thickness;
 	}
-	public void setThickness(Double thickness) {
+	public void setThickness(BigDecimal thickness) {
 		this.thickness = thickness;
 	}
 	public String getDesc() {
@@ -77,10 +79,10 @@ public class BaseMaterial extends BaseVO {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public Double getWeight() {
+	public BigDecimal getWeight() {
 		return weight;
 	}
-	public void setWeight(Double weight) {
+	public void setWeight(BigDecimal weight) {
 		this.weight = weight;
 	}
 	public String getStandard() {
@@ -89,10 +91,10 @@ public class BaseMaterial extends BaseVO {
 	public void setStandard(String standard) {
 		this.standard = standard;
 	}
-	public Double getScrollCount() {
+	public BigDecimal getScrollCount() {
 		return scrollCount;
 	}
-	public void setScrollCount(Double scrollCount) {
+	public void setScrollCount(BigDecimal scrollCount) {
 		this.scrollCount = scrollCount;
 	}
 	public String getIsAlarm() {
@@ -101,10 +103,10 @@ public class BaseMaterial extends BaseVO {
 	public void setIsAlarm(String isAlarm) {
 		this.isAlarm = isAlarm;
 	}
-	public Double getAlarmWeight() {
+	public BigDecimal getAlarmWeight() {
 		return alarmWeight;
 	}
-	public void setAlarmWeight(Double alarmWeight) {
+	public void setAlarmWeight(BigDecimal alarmWeight) {
 		this.alarmWeight = alarmWeight;
 	}
 	public String getIsLogout() {
@@ -137,7 +139,6 @@ public class BaseMaterial extends BaseVO {
 	public void setRemark1(String remark1) {
 		this.remark1 = remark1;
 	}
-	
 	
 
 }
