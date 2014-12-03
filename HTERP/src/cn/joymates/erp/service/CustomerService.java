@@ -18,8 +18,8 @@ public class CustomerService extends BaseService<Customer> {
 	public List<Map<String, Object>> findAll(Customer cust,String ec_rd, HttpServletRequest req){
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_customer where 1=1 AND (is_logout='0' OR is_logout IS NULL) ORDER BY id DESC limit ?, ? ");
-		searchsql.append("SELECT COUNT(*) FROM t_customer where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
+		resultsql.append("SELECT * FROM t_customer where 1=1 ORDER BY id DESC limit ?, ? ");
+		searchsql.append("SELECT COUNT(*) FROM t_customer where 1=1 ");
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
 	}
 
@@ -31,8 +31,8 @@ public class CustomerService extends BaseService<Customer> {
 	public List<Map<String, Object>> findQuery(String ec_rd,String queryStr, String serachType,HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_customer where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
-		searchsql.append("SELECT COUNT(*) FROM t_customer where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
+		resultsql.append("SELECT * FROM t_customer where 1=1 ");
+		searchsql.append("SELECT COUNT(*) FROM t_customer where 1=1 ");
 		resultsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
 		searchsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
 		resultsql.append(" ORDER BY id DESC limit ?, ? ");

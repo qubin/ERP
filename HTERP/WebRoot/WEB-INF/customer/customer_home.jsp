@@ -1,4 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
 <jsp:include page="../top.jsp"></jsp:include>
@@ -9,15 +10,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <title></title>
   <script type="text/javascript">
-  	function delMsg(isLeaf) {
-		if (confirm('您确定要注销此信息吗？') == false) {
+	function recoverMsg() {
+  		if (confirm("您确定要恢复此信息吗？") == false) {
 			return false;
-		} else {
-			if (isLeaf == "0") {
-				alert("非叶子节点不允许删除！");
-				return false;
-			}
 		}
+	}
+	
+	function delMsg(Id){
+		if (confirm("您确定要恢复此信息吗？") == true) {
+			var reason = prompt("请输入注销原因");
+			if(reason != null && reason != ""){
+				var href = "${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=" + Id + "&cust.isLogout=1&cust.logOutReason=" + reason;
+				window.location.href = href;
+			}
+		}	
 	}
   </script>
 </head>
@@ -30,10 +36,10 @@
           <table class="m-table-form">
              <tbody>
                 <tr>
-                  <th class="tr">供应商名称：</th>
+                  <th class="tr">查询类型：</th>
                   <td>
 	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
-	                  	<option value="all"></option>
+	                  	<option value="all">全部</option>
 	                  	<option value="name">名称</option>
 	                  	<option value="telephone">联系电话</option>
 	                  	<option value="fax">传真</option>
@@ -54,14 +60,14 @@
 			<div class="hr10"></div>
 			      
                    
-          <h2>客户商信息列表</h2>
+          <h2>客户信息列表</h2>
           <div align="center">
           <ec:table items="custList" var="sr"
 				retrieveRowsCallback="limit"
 				action="${pageContext.request.contextPath}/admin/customer/customer_showhome.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
-				resizeColWidth="true" width="99%" listWidth="99%" height="600px"
+				resizeColWidth="true" width="100%" listWidth="100%" height="600px"
 				sortable="false" 
 				useAjax="false" 
 				style="align:center"
@@ -72,12 +78,19 @@
 					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PERSON" title="联系人" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PHONE" title="联系人电话" width="11%" style="text-align:center"/>
+					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" style="text-align:center" mappingItem="LOGOUT"/>
+					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="${pageContext.request.contextPath}/admin/customer/customer_showModifyUI.html?cust.custId=${sr.ID}">修 改</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;
-						<a onclick="return delMsg(${org1.IS_LEAF})" href="${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=${sr.ID}&cust.isLogout=1">注 销</a>
-					</ec:column>
+						<c:if test="${sr.IS_LOGOUT == 0}">
+							<a href="${pageContext.request.contextPath}/admin/customer/customer_showModifyUI.html?cust.custId=${sr.ID}">修 改</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a onclick="return delMsg(${sr.ID})" href="javascript:void(0)">注 销</a>
+						</c:if>
+						<c:if test="${sr.IS_LOGOUT == 1}">
+							<a onclick="return recoverMsg()" href="${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=${sr.ID}&cust.isLogout=0">恢 复</a>
+						</c:if>
+						</ec:column>
 				</ec:row>
 			</ec:table>
 		</div>

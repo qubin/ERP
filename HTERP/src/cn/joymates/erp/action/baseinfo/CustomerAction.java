@@ -22,6 +22,7 @@ public class CustomerAction extends BaseAction{
 			cust = new Customer();
 		}
 		List<Map<String, Object>> custList = service.findAll(cust, ec_rd, req);
+		req.setAttribute("LOGOUT", Customer.logoutMap);
 		req.setAttribute("custList", custList);
 		return "home";
 	}
@@ -29,13 +30,15 @@ public class CustomerAction extends BaseAction{
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
 		if(queryStr != null && serachType != null){
-			
+			if("all".equals(serachType)){
+				return showhome();
+			}else{
 				List<Map<String, Object>> custList = service.findQuery(ec_rd,queryStr,serachType,req);
 				req.setAttribute("custList", custList);
 				return "home";
-			
+			}
 		}
-		return "fail";
+		return "home";
 	}
 	public String add(){
 		try {
@@ -44,17 +47,23 @@ public class CustomerAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return "home";
 	}
 	
 	public String delete(){
 		try {
-			service.delete(cust);
-			return showhome();
+			if("0".equals(cust.getIsLogout())){
+				cust.setLogOutReason(" ");
+				service.update(cust);
+				return showhome();
+			}else{
+				service.update(cust);
+				return showhome();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return "home";
 	}
 	
 	public String showAddUI(){

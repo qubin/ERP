@@ -97,5 +97,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			and role_uuid != #{roleUuid}
 		</if>
   	</select>
-  	
+  	<!--判断仓库是否有原材料，成品 -->
+  	<select id="checkDeleteWarehouse" parameterType="integer" resultType="integer">
+		SELECT 
+		(SELECT COUNT(*) FROM t_material
+		WHERE warehouse_id = #{warehouse_id}) 
+		+ 
+		(SELECT COUNT(*) FROM t_product
+		WHERE AREA = #{warehouse_id})
+  	</select>
 </mapper>  
