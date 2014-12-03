@@ -9,7 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 /**
- * action基础�?
+ * action基础类
  * 
  * @author Jackie Hou
  *
