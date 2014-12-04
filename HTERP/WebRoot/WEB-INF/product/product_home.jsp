@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="../top.jsp"></jsp:include>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -9,17 +10,24 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <title></title>
   <script type="text/javascript">
-  	function delMsg(id) {
-		if (confirm('您确定要注销此信息吗？')) {
-			var str=prompt("注销原因？","");
-			if(str!=null && str!=""){
-				var h = "${pageContext.request.contextPath}/admin/product/product_delete.html?product.uuid="+id+"&product.isLogout=1&product.logoutReason="+str;
-				window.location.href=h;
+	function delMsg(id,isLogout) {
+  		if(isLogout == 0){
+			if (confirm('您确定要注销此信息吗？')) {
+				var str=prompt("注销原因？","");
+				if(str!=null && str!=""){
+					var h = "${pageContext.request.contextPath}/admin/product/product_delete.html?product.uuid="+id+"&product.isLogout=1&product.logoutReason="+str;
+					window.location.href=h;
+				}else{
+					return false;
+				}
 			}else{
 				return false;
 			}
 		}else{
-			return false;
+			if (confirm('您确定要恢复此信息吗？')) {
+				var h = "${pageContext.request.contextPath}/admin/product/product_delete.html?product.uuid="+id+"&product.isLogout=0&product.logoutReason=' '";
+				window.location.href=h;
+			}
 		}
 	}
   </script>
@@ -81,9 +89,18 @@
 					<ec:column property="_0" title="动作" width="10%" style="text-align:center">
 						<a href="${pageContext.request.contextPath}/admin/product/product_showDetailUI.html?product.uuid=${sr.ID}">详情</a>
 						&nbsp;&nbsp;&nbsp;
-						<a href="${pageContext.request.contextPath}/admin/product/product_showModifyUI.html?product.uuid=${sr.ID}">修 改</a>
-						&nbsp;&nbsp;&nbsp;
-						<a id="a_zx" onclick="return delMsg(${sr.ID})" href="#" >注 销</a>
+						<c:if test="${sr.IS_LOGOUT==0}">
+							<a href="${pageContext.request.contextPath}/admin/product/product_showModifyUI.html?product.uuid=${sr.ID}">修 改</a>
+							&nbsp;&nbsp;&nbsp;
+						</c:if>
+						<a onclick="return delMsg(${sr.ID},${sr.IS_LOGOUT})" href="#">
+							<c:if test="${sr.IS_LOGOUT==0}">
+								注 销
+							</c:if>
+							<c:if test="${sr.IS_LOGOUT==1 }">
+								恢复
+							</c:if>
+						</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

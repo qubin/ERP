@@ -2,6 +2,7 @@ package cn.joymates.erp.action.baseinfo;
 
 import java.util.List;
 import java.util.Map;
+
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.service.ProductService;
@@ -42,12 +43,15 @@ public class ProductAction extends BaseAction {
 	
 	public String delete(){
 		try {
+			if(!"".equals(product.getLogoutReason()) && product.getLogoutReason() != null){
+				String lr = new String(product.getLogoutReason().getBytes("ISO-8859-1"),"UTF-8");
+				product.setLogoutReason(lr);
+			}
 			service.update(product);
-			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "error";
 		}
+		return showHome();
 	}
 	
 	public String modify() {

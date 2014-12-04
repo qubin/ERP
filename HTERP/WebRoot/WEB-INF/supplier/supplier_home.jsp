@@ -93,8 +93,10 @@
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="${pageContext.request.contextPath}/admin/supplier/supplier_showModifyUI.html?supplier.uuid=${sr.ID}">修 改</a>
-						&nbsp;&nbsp;&nbsp;&nbsp;
+						<c:if test="${sr.IS_LOGOUT==0}">
+							<a href="${pageContext.request.contextPath}/admin/supplier/supplier_showModifyUI.html?supplier.uuid=${sr.ID}">修 改</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+						</c:if>
 						<a onclick="return delMsg(${sr.ID},${sr.IS_LOGOUT})" href="#">
 							<c:if test="${sr.IS_LOGOUT==0}">
 								注 销

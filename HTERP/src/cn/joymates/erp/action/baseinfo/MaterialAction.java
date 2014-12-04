@@ -16,11 +16,8 @@ public class MaterialAction extends BaseAction {
 		if (material == null) {
 			material = new Material();
 		}
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
-		List<Map<String, Object>> materialList = service.find(material, ec_rd, req);
-		
+		List<Map<String, Object>> materialList = service.find(material,material_key,material_name,ec_rd,req);
 		req.setAttribute("materialList", materialList);
-		req.setAttribute("supplierList", supplierList);
 		return "home";
 	}
 	
@@ -28,10 +25,7 @@ public class MaterialAction extends BaseAction {
 		if (material == null) {
 			material = new Material();
 		}
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
-		List<Map<String, Object>> materialList = service.find(material, ec_rd, req);
-		
-		req.setAttribute("supplierList", supplierList);
+		List<Map<String, Object>> materialList = service.find(material,material_key,material_name,ec_rd,req);
 		req.setAttribute("materialList", materialList);
 		return "home";
 	}
@@ -50,9 +44,6 @@ public class MaterialAction extends BaseAction {
 	
 	public String add() {
 		service.save(material);
-		
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
-		req.setAttribute("supplierList", supplierList);
 		return "home";
 	}
 	
@@ -70,18 +61,20 @@ public class MaterialAction extends BaseAction {
 	}
 	
 	public String delete(){
-		service.update(material);
-		
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
-		req.setAttribute("supplierList", supplierList);
+		try {
+			if(!"".equals(material.getLogoutReason()) && material.getLogoutReason() != null){
+				String lr = new String(material.getLogoutReason().getBytes("ISO-8859-1"),"UTF-8");
+				material.setLogoutReason(lr);
+			}
+			service.update(material);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "home";
 	}
 	
 	public String modify() {
 		service.update(material);
-		
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
-		req.setAttribute("supplierList", supplierList);
 		return "home";
 	}
 	
@@ -98,6 +91,8 @@ public class MaterialAction extends BaseAction {
 	private SupplierService supplierService = ServiceProxyFactory.getInstanceNoMybatis(new SupplierService());
 	private Material material;
 	private Supplier supplier;
+	private String material_key;
+	private String material_name;
 	
 	public Supplier getSupplier() {
 		return supplier;
@@ -111,6 +106,20 @@ public class MaterialAction extends BaseAction {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-	
-	
+
+	public String getMaterial_key() {
+		return material_key;
+	}
+
+	public void setMaterial_key(String material_key) {
+		this.material_key = material_key;
+	}
+
+	public String getMaterial_name() {
+		return material_name;
+	}
+
+	public void setMaterial_name(String material_name) {
+		this.material_name = material_name;
+	}
 }
