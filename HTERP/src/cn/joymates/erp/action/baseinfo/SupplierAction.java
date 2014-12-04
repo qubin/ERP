@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
@@ -14,8 +15,9 @@ public class SupplierAction extends BaseAction {
 		if (supplier == null) {
 			supplier = new Supplier();
 		}
-		List<Map<String, Object>> supplierList = service.find(supplier, ec_rd, req);
+		List<Map<String, Object>> supplierList = service.find(supplier,product_key,product_name,ec_rd,req);
 		req.setAttribute("supplierList", supplierList);
+		req.setAttribute("logoutMap", Supplier.logoutMap);
 		return "home";
 	}
 	
@@ -23,8 +25,9 @@ public class SupplierAction extends BaseAction {
 		if (supplier == null) {
 			supplier = new Supplier();
 		}
-		List<Map<String, Object>> supplierList = service.find(supplier, ec_rd, req);
+		List<Map<String, Object>> supplierList = service.find(supplier,product_key,product_name,ec_rd,req);
 		req.setAttribute("supplierList", supplierList);
+		req.setAttribute("logoutMap", Supplier.logoutMap);
 		return "home";
 	}
 	
@@ -34,7 +37,7 @@ public class SupplierAction extends BaseAction {
 	
 	public String add() {
 		service.save(supplier);
-		return "home";
+		return showHome();
 	}
 	
 	public String showModifyUI() {
@@ -43,13 +46,21 @@ public class SupplierAction extends BaseAction {
 	}
 	
 	public String delete(){
-		service.update(supplier);
-		return "home";
+		try {
+			if(!"".equals(supplier.getLogoutReason()) && supplier.getLogoutReason() != null){
+				String lr = new String(supplier.getLogoutReason().getBytes("ISO-8859-1"),"UTF-8");
+				supplier.setLogoutReason(lr);
+			}
+			service.update(supplier);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return showHome();
 	}
 	
 	public String modify() {
 		service.update(supplier);
-		return "home";
+		return showHome();
 	}
 	
 	
@@ -63,14 +74,29 @@ public class SupplierAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private SupplierService service = ServiceProxyFactory.getInstanceNoMybatis(new SupplierService());
 	private Supplier supplier;
-	
+	private String product_key;
+	private String product_name;
 	public Supplier getSupplier() {
 		return supplier;
 	}
-
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
-	
+
+	public String getProduct_key() {
+		return product_key;
+	}
+
+	public void setProduct_key(String product_key) {
+		this.product_key = product_key;
+	}
+
+	public String getProduct_name() {
+		return product_name;
+	}
+
+	public void setProduct_name(String product_name) {
+		this.product_name = product_name;
+	}
 	
 }

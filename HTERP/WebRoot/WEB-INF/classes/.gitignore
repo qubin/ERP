@@ -1,6 +1,10 @@
 /cn
-/blogMaterial.xml
-/blogSupplier.xml
+/erpCustomer.xml
 /erpMaterial.xml
+/erpRight.xml
 /erpSupplier.xml
 /erpWarehouse.xml
+/log4j.properties
+/mybatis-conf.xml
+/struts.xml
+/erpProduct.xml

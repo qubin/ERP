@@ -15,20 +15,14 @@ public class SupplierService  extends BaseService<Supplier> {
 		dao = new SupplierDaoImpl();
 	}
 	
-	public List<Map<String, Object>> find(Supplier supplier, String ec_rd, HttpServletRequest req) {
-		String suppName = supplier.getName();
-		String suppConPerson = supplier.getConPerson();
+	public List<Map<String, Object>> find(Supplier supplier,String product_key,String product_name, String ec_rd,HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
-		searchsql.append("SELECT COUNT(*) FROM t_supplier where 1=1 AND (is_logout='0' OR is_logout IS NULL) ");
-		if(!"".equals(suppName) && suppName != null){
-			resultsql.append(" AND name LIKE '%" + suppName + "%' ");
-			searchsql.append(" AND name LIKE '%" + suppName + "%' ");
-		}
-		if(!"".equals(suppConPerson) && suppConPerson != null){
-			resultsql.append(" AND con_person LIKE '%" + suppConPerson + "%' ");
-			searchsql.append(" AND con_person LIKE '%" + suppConPerson + "%' ");
+		resultsql.append("SELECT * FROM t_supplier where 1=1 ");
+		searchsql.append("SELECT COUNT(*) FROM t_supplier where 1=1 ");
+		if(!"ALL".equals(product_key) && !"".equals(product_key) && product_key != null){
+			resultsql.append(" AND " + product_key + " LIKE '%" + product_name + "%' ");
+			searchsql.append(" AND " + product_key + " LIKE '%" + product_name + "%' ");
 		}
 		resultsql.append(" ORDER BY id DESC limit ?, ? ");
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
