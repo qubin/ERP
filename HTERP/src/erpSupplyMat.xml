@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="supplyMatManager" extends="struts-default" namespace="/admin/supplyMat" >
+		<action name="supplyMat_*" class="cn.joymates.erp.action.baseinfo.SupplyMatAction" method="{1}">
+            <result name="home">/WEB-INF/supplyMat/supplyMat_home.jsp</result>
+            <result name="addUI">/WEB-INF/supplyMat/supplyMat_add.jsp</result>
+            <result name="modifyUI">/WEB-INF/supplyMat/supplyMat_modify.jsp</result>
+        </action>
+	</package>
+      
+</struts>
