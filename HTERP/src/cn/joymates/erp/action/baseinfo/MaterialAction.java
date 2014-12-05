@@ -18,6 +18,7 @@ public class MaterialAction extends BaseAction {
 		}
 		List<Map<String, Object>> materialList = service.find(material,material_key,material_name,ec_rd,req);
 		req.setAttribute("materialList", materialList);
+		req.setAttribute("logoutMap", Material.logoutMap);
 		return "home";
 	}
 	
@@ -27,15 +28,19 @@ public class MaterialAction extends BaseAction {
 		}
 		List<Map<String, Object>> materialList = service.find(material,material_key,material_name,ec_rd,req);
 		req.setAttribute("materialList", materialList);
+		req.setAttribute("logoutMap", Material.logoutMap);
 		return "home";
 	}
 	
 	public String showAddUI() {
 		
-		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
-		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
+		String searchsql = "SELECT COUNT(*) FROM t_warehouse where is_logout='0' ";		
+		String resultsql = "SELECT * FROM t_warehouse where is_logout='0'  limit ?, ? ";
 		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
+		
+		supplier = new Supplier();
+		supplier.setIsLogout("0");
+		List<Supplier> supplierList = supplierService.selectList(supplier);
 		
 		req.setAttribute("warehouseList", warehouseList);
 		req.setAttribute("supplierList", supplierList);
@@ -44,16 +49,19 @@ public class MaterialAction extends BaseAction {
 	
 	public String add() {
 		service.save(material);
-		return "home";
+		return showHome();
 	}
 	
 	public String showModifyUI() {
 		material = service.selectOne(material);
 		
-		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
-		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
+		String searchsql = "SELECT COUNT(*) FROM t_warehouse where is_logout='0' ";		
+		String resultsql = "SELECT * FROM t_warehouse where is_logout='0'  limit ?, ? ";
 		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
-		List<Supplier> supplierList = supplierService.selectList(new Supplier());
+		
+		supplier = new Supplier();
+		supplier.setIsLogout("0");
+		List<Supplier> supplierList = supplierService.selectList(supplier);
 		
 		req.setAttribute("warehouseList", warehouseList);
 		req.setAttribute("supplierList", supplierList);
@@ -70,12 +78,12 @@ public class MaterialAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String modify() {
 		service.update(material);
-		return "home";
+		return showHome();
 	}
 	
 	

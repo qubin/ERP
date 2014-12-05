@@ -49,8 +49,6 @@
                   		<option value="ALL">---查询所有---</option>
                   		<option value="HT_PN">华天产品编号</option>
                   		<option value="CUS_PN">客户产品编号</option>
-                  		<option value="SIGN1">所在仓库</option>
-                  		<option value="CUSNAME">客户</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="product_name"/></th>
@@ -80,11 +78,10 @@
 				<ec:row>
 					<ec:column property="HT_PN" title="华天产品编号" width="10%" style="text-align:center"/>
 					<ec:column property="CUS_PN" title="客户产品编号" width="10%" style="text-align:center"/>
-					<ec:column property="SIGN1" title="所在仓库" width="10%" />
-					<ec:column property="CUSNAME" title="客户" width="10%" />
-					<ec:column property="PATTERN_TYPE" title="模具类型" width="10%" />
-					<ec:column property="PIC_COUNT" title="库存片数" width="10%" />
-					<ec:column property="IS_LOGOUT" title="是否注销" width="10%" mappingItem="logoutMap"/>
+					<ec:column property="PROPERTIES" title="产品性质" width="10%" mappingItem="propertiesMap"/>
+					<ec:column property="MARKET" title="产品市场" width="10%" mappingItem="marketMap"/>
+					<ec:column property="PATTERN_TYPE" title="模具类型" width="10%" mappingItem="patternTypeMap"/>
+					<ec:column property="IS_LOGOUT" title="是否注销" width="10%" style="text-align:center" mappingItem="logoutMap"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="10%" />
 					<ec:column property="_0" title="动作" width="10%" style="text-align:center">
 						<a href="${pageContext.request.contextPath}/admin/product/product_showDetailUI.html?product.uuid=${sr.ID}">详情</a>

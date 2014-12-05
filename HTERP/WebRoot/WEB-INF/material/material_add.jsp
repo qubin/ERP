@@ -18,20 +18,9 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">仓库：</th>
-						<td><s:select name="material.warehouseId"
-							  cssClass="u-ipt required"
-							  cssStyle="width:178px"
-						      list="#request.warehouseList"
-						      listKey="ID" listValue="SIGN1" headerKey="-1"
-						      headerValue="--请选择--" />
-						      </td>
-						      
-					</tr>
-					<tr>
-						<th class="tr">供应商：</th>
+						<th class="tr" width="42%">供应商：</th>
 						<td><s:select name="material.supplyId"
-							  cssClass="u-ipt required"
+							  cssClass="u-ipt required validate-selection"
 							  cssStyle="width:178px"
 						      list="#request.supplierList"
 						      listKey="uuid" listValue="name" headerKey="-1"
@@ -39,12 +28,12 @@
 					</tr>
 					<tr>
 						<th class="tr">面密度：</th>
-						<td><input type="text" class="u-ipt required" name="material.density"
+						<td><input type="text" class="u-ipt validate-number" name="material.density"
 							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">厚度：</th>
-						<td><input type="text" class="u-ipt required" name="material.thickness"
+						<td><input type="text" class="u-ipt validate-number" name="material.thickness"
 							maxlength="60"></td>
 					</tr>
 					<tr>
@@ -54,7 +43,7 @@
 					</tr>
 					<tr>
 						<th class="tr">重量：</th>
-						<td><input type="text" class="u-ipt required" name="material.weight"
+						<td><input type="text" class="u-ipt validate-number" name="material.weight"
 							maxlength="60"></td>
 					</tr>
 					<tr>
@@ -62,16 +51,16 @@
 						<td><input type="text" class="u-ipt required" name="material.standard"
 							maxlength="60"></td>
 					</tr>
-					<tr>
-						<th class="tr">卷数：</th>
-						<td><input type="text" class="u-ipt required" name="material.scrollCount"
-							maxlength="60"></td>
-					</tr>
-					<tr>
-						<th class="tr">母卷：</th>
-						<td><input type="text" class="u-ipt" name="material.mmatId"
-							maxlength="60"></td>
-					</tr>
+<!-- 					<tr> -->
+<!-- 						<th class="tr">卷数：</th> -->
+<!-- 						<td><input type="text" class="u-ipt validate-number" name="material.scrollCount" -->
+<!-- 							maxlength="60"></td> -->
+<!-- 					</tr> -->
+<!-- 					<tr> -->
+<!-- 						<th class="tr">母卷：</th> -->
+<!-- 						<td><input type="text" class="u-ipt" name="material.mmatId" -->
+<!-- 							maxlength="60"></td> -->
+<!-- 					</tr> -->
 					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="material.remark"

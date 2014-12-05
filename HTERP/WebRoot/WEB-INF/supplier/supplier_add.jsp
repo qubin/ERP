@@ -42,7 +42,7 @@
 					</tr>
 					<tr>
 						<th class="tr">联系电话：</th>
-						<td><input type="text" class="u-ipt" name="supplier.conPhone"
+						<td><input type="text" class="u-ipt required validate-tel-phone" name="supplier.conPhone"
 							maxlength="60"></td>
 					</tr>
 					<tr>
@@ -57,7 +57,7 @@
 					</tr>
 					<tr>
 						<th class="tr">邮箱：</th>
-						<td><input type="text" class="u-ipt" name="supplier.email"
+						<td><input type="text" class="u-ipt validate-email" name="supplier.email"
 							maxlength="60"></td>
 					</tr>
 					<tr>

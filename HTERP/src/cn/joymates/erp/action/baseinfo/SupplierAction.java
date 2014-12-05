@@ -36,12 +36,12 @@ public class SupplierAction extends BaseAction {
 	}
 	
 	public String add() {
-		service.save(supplier);
+		service.save(supplier);	//添加供应商信息
 		return showHome();
 	}
 	
 	public String showModifyUI() {
-		supplier = service.selectOne(supplier);
+		supplier = service.selectOne(supplier);	//获取供应商 
 		return "modifyUI";
 	}
 	

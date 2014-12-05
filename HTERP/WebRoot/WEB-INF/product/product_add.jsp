@@ -29,31 +29,42 @@
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">客户产品编号：</th>
-						<td><input type="text" class="u-ipt" name="product.cusPn" maxlength="60"></td>
-				  </tr>
-					<tr>
-						<th align="right" class="tr">所在仓库：</th>
-					  	<td><input type="text" class="u-ipt required" name="product.area" maxlength="60"></td>
+						<td><input type="text" class="u-ipt required" name="product.cusPn" maxlength="60"></td>
 				  </tr>
 				  <tr>
-				  		<th align="right" class="tr">客户：</th>
-						<td><input type="text" class="u-ipt" name="product.customerId" maxlength="60"></td>
-				  </tr>
-					<tr>
 						<th align="right" class="tr">车型/钢背应用：</th>
 					  	<td><input type="text" class="u-ipt" name="product.appFor" maxlength="60"></td>
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">产品性质：</th>
-						<td><input type="text" class="u-ipt" name="product.properties" maxlength="60"></td>
+						<td>
+							<select class="u-ipt required validate-selection" name="product.properties" style="width:178px">
+								<option value="-1">--请选择--</option>
+								<option value="1">flat</option>
+								<option value="2">tab</option>
+								<option value="3">drift lock</option>
+							</select>
+						</td>
 				  </tr>
 				  <tr>
 						<th align="right" class="tr">产品市场：</th>
-					  	<td><input type="text" class="u-ipt" name="product.market" maxlength="60"></td>
+					  	<td>
+					  		<select class="u-ipt required validate-selection" name="product.market" style="width:178px">
+								<option value="-1">--请选择--</option>
+								<option value="1">OE</option>
+								<option value="2">AF</option>
+							</select>
+					  	</td>
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">模具类型：</th>
-						<td><input type="text" class="u-ipt" name="product.patternType" maxlength="60"></td>
+						<td>
+							<select class="u-ipt required validate-selection" name="product.patternType" style="width:178px">
+								<option value="-1">--请选择--</option>
+								<option value="1">prog</option>
+								<option value="2">single die</option>
+								<option value="3">prog + single die</option>
+							</select>
 				  </tr>
 					<tr>
 						<th align="right" class="tr">冲压步骤数：</th>
@@ -61,31 +72,32 @@
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">步距：</th>
-						<td><input type="text" class="u-ipt" name="product.stepPitch" maxlength="60"></td>
+						<td><input type="text" class="u-ipt validate-number" name="product.stepPitch" maxlength="5"></td>
 				  </tr>
 					<tr>
 						<th align="right" class="tr">料宽：</th>
-					  	<td><input type="text" class="u-ipt" name="product.matWidth" maxlength="60"></td>
+					  	<td><input type="text" class="u-ipt validate-number" name="product.matWidth" maxlength="6"></td>
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">面积：</th>
-						<td><input type="text" class="u-ipt" name="product.areca" maxlength="60"></td>
+						<td><input type="text" class="u-ipt validate-number" name="product.areca" maxlength="6"></td>
 				  </tr>
 					<tr>
 						<th align="right" class="tr">单片重量：</th>
-					  	<td><input type="text" class="u-ipt" name="product.singleWeight" maxlength="60"></td>
+					  	<td><input type="text" class="u-ipt validate-number" name="product.singleWeight" maxlength=6></td>
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">包装盒尺寸：</th>
-						<td><input type="text" class="u-ipt" name="product.packSize" maxlength="60"></td>
+						<td><input type="text" class="u-ipt" name="product.packSize" maxlength="15"></td>
 				  </tr>
 					<tr>
 						<th align="right" class="tr">PPAP状态：</th>
-					  	<td><input type="text" class="u-ipt" name="product.ppapStatus" maxlength="60"></td>
-				  </tr>
-				  <tr>
-				  		<th align="right" class="tr">库存片数：</th>
-						<td><input type="text" class="u-ipt" name="product.picCount" maxlength="60"></td>
+					  	<td>
+					  		<select class="u-ipt required validate-selection" name="product.ppapStatus" style="width:178px">
+								<option value="-1">--请选择--</option>
+								<option value="1">ok</option>
+								<option value="0">null</option>
+							</select>
 				  </tr>
 					<tr>
 						<th align="right" class="tr">备注：</th>

@@ -40,12 +40,12 @@
 					</tr>
 					<tr>
 						<th class="tr">联系人：</th>
-						<td><input type="text" class="u-ipt"
+						<td><input type="text" class="u-ipt required"
 							name="supplier.conPerson" maxlength="60" value="${supplier.conPerson}"></td>
 					</tr>
 					<tr>
 						<th class="tr">联系电话：</th>
-						<td><input type="text" class="u-ipt" name="supplier.conPhone"
+						<td><input type="text" class="u-ipt required validate-tel-phone" name="supplier.conPhone"
 							maxlength="60" value="${supplier.conPhone}"></td>
 					</tr>
 					<tr>
@@ -60,7 +60,7 @@
 					</tr>
 					<tr>
 						<th class="tr">邮箱：</th>
-						<td><input type="text" class="u-ipt" name="supplier.email"
+						<td><input type="text" class="u-ipt validate-email" name="supplier.email"
 							maxlength="60" value="${supplier.email}"></td>
 					</tr>
 					<tr>

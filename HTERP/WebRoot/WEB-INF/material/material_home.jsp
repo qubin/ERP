@@ -47,15 +47,12 @@
                   <td width="10">
                   	<select class="u-ipt" name="material_key">
                   		<option value="ALL">---查询所有---</option>
-                  		<option value="WAREHOUSESIGN">所在仓库</option>
-                  		<option value="SUPPLIERNAME">供应商</option>
+                  		<option value="NAME">供应商</option>
                   		<option value="DENSITY">面密度</option>
                   		<option value="THICKNESS">厚度</option>
                   		<option value="DESC1">描述</option>
                   		<option value="WEIGHT">重量</option>
                   		<option value="STANDARD">规格</option>
-                  		<option value="SCROLL_COUNT">卷数</option>
-                  		<option value="MMAT_ID">母卷编号</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="material_name"/></th>        
@@ -84,16 +81,13 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="WAREHOUSESIGN" title="所在仓库" width="11%" />
 					<ec:column property="SUPPLIERNAME" title="供应商" width="11%" />
 					<ec:column property="DENSITY" title="面密度" width="11%" style="text-align:right" />
 					<ec:column property="THICKNESS" title="厚度" width="11%" style="text-align:right"/>
 					<ec:column property="DESC1" title="描述" width="11%" />
 					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:right"/>
 					<ec:column property="STANDARD" title="规格" width="11%"  style="text-align:center"/>
-					<ec:column property="SCROLL_COUNT" title="卷数" width="11%"  style="text-align:right"/>
-					<ec:column property="MMAT_ID" title="母卷编号" width="11%" />
-					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" />
+					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">

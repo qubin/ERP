@@ -4,8 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import cn.joymates.erp.action.BaseAction;
+import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Product;
+import cn.joymates.erp.domain.Warehouse;
+import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
+import cn.joymates.erp.service.WarehousService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class ProductAction extends BaseAction {
@@ -14,6 +18,9 @@ public class ProductAction extends BaseAction {
 		List<Map<String, Object>> productList = service.find(product,product_key,product_name,ec_rd,req);
 		req.setAttribute("productList", productList);
 		req.setAttribute("logoutMap", Product.logoutMap);
+		req.setAttribute("propertiesMap", Product.propertiesMap);
+		req.setAttribute("marketMap", Product.marketMap);
+		req.setAttribute("patternTypeMap", Product.patternTypeMap);
 		return "home";
 	}
 	
@@ -24,10 +31,19 @@ public class ProductAction extends BaseAction {
 		List<Map<String, Object>> productList = service.find(product,product_key,product_name,ec_rd,req);
 		req.setAttribute("productList", productList);
 		req.setAttribute("logoutMap", Product.logoutMap);
+		req.setAttribute("propertiesMap", Product.propertiesMap);
+		req.setAttribute("marketMap", Product.marketMap);
+		req.setAttribute("patternTypeMap", Product.patternTypeMap);
 		return "home";
 	}
 	
 	public String showAddUI() {
+		List<Customer> customerList = customerService.selectList(new Customer());
+		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
+		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
+		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
+		req.setAttribute("customerList", customerList);
+		req.setAttribute("warehouseList", warehouseList);
 		return "addUI";
 	}
 	
@@ -37,7 +53,13 @@ public class ProductAction extends BaseAction {
 	}
 	
 	public String showModifyUI() {
+		List<Customer> customerList = customerService.selectList(new Customer());
+		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
+		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
+		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
 		product = service.selectOne(product);
+		req.setAttribute("customerList", customerList);
+		req.setAttribute("warehouseList", warehouseList);
 		return "modifyUI";
 	}
 	
@@ -80,6 +102,8 @@ public class ProductAction extends BaseAction {
 	
 	private static final long serialVersionUID = 1L;
 	private ProductService service = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
+	private CustomerService customerService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
+	private WarehousService warehousService = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
 	private Product product;
 	private String product_key;
 	private String product_name;

@@ -782,7 +782,7 @@ Validation.addAllThese([
 			return Validation.get('IsEmpty').test(v) || /^((0[1-9]{3})?(0[12][0-9])?[-])?\d{6,8}$/.test(v);}
 			else
 			{
-			return Validation.get('IsEmpty').test(v) || (/(^0?[1][35][0-9]{9}$)/.test(v));
+			return Validation.get('IsEmpty').test(v) || (/(^0?[1][358][0-9]{9}$)/.test(v));
 			}
 		}],
 	/**
@@ -790,7 +790,7 @@ Validation.addAllThese([
 	* Example : 判断元素为手机
 	*/
 	['validate-mobile-phone', Validator.messages['validate-mobile-phone'], function(v) {
-				return Validation.get('IsEmpty').test(v) || (/(^0?[1][35][0-9]{9}$)/.test(v));
+				return Validation.get('IsEmpty').test(v) || (/(^0?[1][358][0-9]{9}$)/.test(v));
 			}],
 	/**
 	* Usage :   validate-qq
