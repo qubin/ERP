@@ -7,15 +7,6 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title></title>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/interface/findUserRole.js'></script>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/engine.js'></script>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/util.js'></script>
-<script type="text/javascript">
-	
-</script>
 </head>
 <body>
 	<div id="container" class="container">
@@ -37,22 +28,22 @@
 					</tr>
 					<tr>
 						<th class="tr">联系人：</th>
-						<td><input type="text" class="u-ipt required" name="cust.custConPerson"
+						<td><input type="text" class="u-ipt required " name="cust.custConPerson"
 							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">联系人电话：</th>
-						<td><input type="text" class="u-ipt" name="cust.custPhone"
+						<td><input type="text" class="u-ipt validate-tel-phone" name="cust.custPhone"
 							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">传真：</th>
-						<td><input type="text" class="u-ipt" name="cust.fax"
+						<td><input type="text" class="u-ipt required" name="cust.fax"
 							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">备注：</th>
-						<td><input type="text" class="u-ipt" name="cust.remark"
+						<td><input type="text" class="u-ipt required" name="cust.remark"
 							maxlength="60"></td>
 					</tr>
 				</tbody>

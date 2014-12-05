@@ -6,7 +6,7 @@
 	    <driver-class>com.mysql.jdbc.Driver</driver-class>
 	    <driver-properties>
 	      	<property name="user" value="root"/>
-	      	<property name="password" value="root"/>
+	      	<property name="password" value="java"/>
  	        <property name="characterEncoding" value="UTF8"/>
 	    </driver-properties>
 	    <!-- 连接池中可用的连接数量 -->

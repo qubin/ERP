@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class CustomerAction extends BaseAction{
 	private CustomerService service = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
 	private Customer cust;
 	
-	public String showhome(){
+	public String showHome(){
 		if(cust == null){
 			cust = new Customer();
 		}
@@ -31,7 +32,7 @@ public class CustomerAction extends BaseAction{
 		String serachType = req.getParameter("serachType");
 		if(queryStr != null && serachType != null){
 			if("all".equals(serachType)){
-				return showhome();
+				return showHome();
 			}else{
 				List<Map<String, Object>> custList = service.findQuery(ec_rd,queryStr,serachType,req);
 				req.setAttribute("custList", custList);
@@ -43,7 +44,7 @@ public class CustomerAction extends BaseAction{
 	public String add(){
 		try {
 			service.save(cust);
-			return showhome();
+			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,10 +56,12 @@ public class CustomerAction extends BaseAction{
 			if("0".equals(cust.getIsLogout())){
 				cust.setLogOutReason(" ");
 				service.update(cust);
-				return showhome();
+				return showHome();
 			}else{
+				String str = URLDecoder.decode(cust.getLogOutReason(), "utf-8");
+				cust.setLogOutReason(str);
 				service.update(cust);
-				return showhome();
+				return showHome();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,11 +76,11 @@ public class CustomerAction extends BaseAction{
 	public String modify(){
 		try {
 			service.update(cust);
-			return showhome();
+			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return "home";
 	}
 	
 	public String showModifyUI(){
@@ -87,7 +90,7 @@ public class CustomerAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "fail";
+		return "home";
 	}
 	
 	

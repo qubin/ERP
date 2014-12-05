@@ -21,6 +21,8 @@
 		}else{
 			var reason = prompt("请输入注销原因");
 			if(reason != null && reason != ""){
+				reason = encodeURI(reason);
+				reason = encodeURI(reason);
 	  			var href = "${pageContext.request.contextPath}/admin/warehouse/warehouse_delete.html?wh.WarehouseId=" + Id + "&wh.isLogout=1&wh.logOutReason=" + reason;
 	  	  		window.location.href = href;
 	  		}
@@ -32,9 +34,21 @@
   			alert("仓库中存在原材料，成品，无法注销");
   		}
   	};
+  	function checkWarehouse(Id){
+  		var url = "${pageContext.request.contextPath}/admin/warehouse/warehouse_checkWarehouse.html?wh.WarehouseId=" + Id;
+  		new Ajax.Request(url,
+  	  	{
+  	  		method:'get',
+  	  		onSuccess: function(data){
+  	  			data.responseText == 'true' ? delMsg(Id) : alert('仓库中存在原材料，成品，无法注销！');    
+  	  		},
+  	  		onFailure: function(){ alert('仓库中存在原材料，成品，无法注销！') }
+  	  	});
+  	}
   </script>
 </head>
 <body>
+<input type="button" value="asdddd" id="btn"/>
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
@@ -68,7 +82,7 @@
           <div align="center">
           <ec:table items="whList" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/warehouse/warehouse_showhome.html"
+				action="${pageContext.request.contextPath}/admin/warehouse/warehouse_showHome.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="100%" listWidth="100%" height="600px"
@@ -86,7 +100,7 @@
 						<c:if test="${sr.IS_LOGOUT == 0}">
 							<a href="${pageContext.request.contextPath}/admin/warehouse/warehouse_showModifyUI.html?wh.warehouseId=${sr.ID}">修 改</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a onclick="return delMsg(${sr.ID});" href="javascript:void(0)">注 销</a>
+							<a onclick="return checkWarehouse(${sr.ID});" href="javascript:void(0)">注 销</a>
 						</c:if>
 						<c:if test="${sr.IS_LOGOUT == 1}">
 							<a onclick="return recoverMsg()" href="${pageContext.request.contextPath}/admin/warehouse/warehouse_delete.html?wh.WarehouseId=${sr.ID}&wh.isLogout=0">恢 复</a>

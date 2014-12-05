@@ -20,6 +20,8 @@
 		if (confirm("您确定要恢复此信息吗？") == true) {
 			var reason = prompt("请输入注销原因");
 			if(reason != null && reason != ""){
+				reason = encodeURI(reason);
+				reason = encodeURI(reason);
 				var href = "${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=" + Id + "&cust.isLogout=1&cust.logOutReason=" + reason;
 				window.location.href = href;
 			}
@@ -64,7 +66,7 @@
           <div align="center">
           <ec:table items="custList" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/customer/customer_showhome.html"
+				action="${pageContext.request.contextPath}/admin/customer/customer_showHome.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="100%" listWidth="100%" height="600px"

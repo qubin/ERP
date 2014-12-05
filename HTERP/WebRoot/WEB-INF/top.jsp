@@ -28,14 +28,14 @@
 	<script src="${pageContext.request.contextPath}/assets/js/validation/effects.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/validation/validation_cn.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/myUtils.js" type="text/javascript"></script>
-	 <script type="text/javascript">   
+	 <script type="text/javascript"> 
 		window.onload = function(){   
 			//  form1 为 表单的名称   
 			if(document.getElementById('form1')!=null){
 	    		var validator = new Validation('form1', {stopOnFirst:true, immediate:true}); 
 			}
 		}
-</script>
+	</script>
 <!-- 加上此段样式，它的显示格式有改变  -->
 <STYLE type=text/css>
 BODY TD {

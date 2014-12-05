@@ -1,5 +1,7 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +18,7 @@ public class WarehouseAction extends BaseAction{
 	private WarehousService service = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
 	private Warehouse wh;
 	
-	public String showhome(){
+	public String showHome(){
 		if(wh == null){
 			wh = new Warehouse();
 		}
@@ -31,7 +33,7 @@ public class WarehouseAction extends BaseAction{
 		String serachType = req.getParameter("serachType");
 		if(queryStr != null && serachType != null){
 			if("all".equals(serachType)){
-				return showhome();
+				return showHome();
 			}else{
 				List<Map<String, Object>> whList = service.findQuery(ec_rd,queryStr,serachType,req);
 				req.setAttribute("whList", whList);
@@ -48,7 +50,7 @@ public class WarehouseAction extends BaseAction{
 	public String add(){
 		try {
 			service.save(wh);
-			return showhome();
+			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,7 +70,7 @@ public class WarehouseAction extends BaseAction{
 	public String modify(){
 		try {
 			service.update(wh);
-			return showhome();
+			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,21 +82,34 @@ public class WarehouseAction extends BaseAction{
 			if("0".equals(wh.getIsLogout())){
 				wh.setLogOutReason(" ");
 				service.update(wh);
-				return showhome();
+				return showHome();
 			}else{
 				//
 				int result = service.checkDeleteWarehouse(wh);
 				if(result == 0){
+					String str = URLDecoder.decode(wh.getLogOutReason() , "utf-8");
+					wh.setLogOutReason(str);
 					service.update(wh);
-					return showhome();
+					return showHome();
 				}
-				req.setAttribute("msg", 1);
-				return showhome();
+				return showHome();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "home";
+	}
+	
+	public void checkWarehouse(){
+		try {
+			int result = service.checkDeleteWarehouse(wh);
+			String msg = result == 0 ? "true" : "false";
+			resp.getWriter().write(msg);
+			resp.getWriter().flush();
+			resp.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public Warehouse getWh() {

@@ -18,4 +18,10 @@
     <include file="erpCustomer.xml"/>
     <include file="erpWarehouse.xml"/>
     <include file="erpProduct.xml"/>
+    
+    
+    
+    
+    
+     <include file="erpSupplyMat.xml"/>
 </struts>
