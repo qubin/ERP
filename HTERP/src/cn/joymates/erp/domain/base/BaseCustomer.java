@@ -15,6 +15,10 @@ public class BaseCustomer extends BaseVO {
 		fieldMap.put("logOutReason", "logout_reason");
 		fieldMap.put("remark", "remark");
 		fieldMap.put("remark1", "remark1");
+		fieldMap.put("tariff", "tariff");
+		fieldMap.put("bank", "bank");
+		fieldMap.put("account", "account");
+		fieldMap.put("address", "address");
 		this.id = "id";
 	}
 	private Integer custId;
@@ -27,8 +31,36 @@ public class BaseCustomer extends BaseVO {
 	private String logOutReason;
 	private String remark;
 	private String remark1;
+	private String tariff;
+	private String bank;
+	private String account;
+	private String address;
 	
 	
+	public String getTariff() {
+		return tariff;
+	}
+	public void setTariff(String tariff) {
+		this.tariff = tariff;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
 	public Integer getCustId() {
 		return custId;
 	}

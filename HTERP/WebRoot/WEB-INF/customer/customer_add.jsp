@@ -42,6 +42,26 @@
 							maxlength="60"></td>
 					</tr>
 					<tr>
+						<th class="tr">税号：</th>
+						<td><input type="text" class="u-ipt" name="cust.tariff"
+							maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr">开户银行：</th>
+						<td><input type="text" class="u-ipt" name="cust.bank"
+							maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr">银行账号：</th>
+						<td><input type="text" class="u-ipt" name="cust.account"
+							maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr">单位地址：</th>
+						<td><input type="text" class="u-ipt" name="cust.address"
+							maxlength="60"></td>
+					</tr>
+					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt required" name="cust.remark"
 							maxlength="60"></td>

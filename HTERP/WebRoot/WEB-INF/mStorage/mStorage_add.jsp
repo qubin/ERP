@@ -19,7 +19,11 @@
 				<tbody>
 					<tr>
 						<th class="tr" width="42%">名称：</th>
-						<td>阿斯顿</td>
+						<td></td>
+					</tr>
+					<tr>
+						<th class="tr" width="42%">名称：</th>
+						<td></td>
 					</tr>
 					<tr>
 						<th class="tr" width="42%">华天材料号：</th>
