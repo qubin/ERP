@@ -82,6 +82,7 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
+					<ec:column property="CODE" title="编号" width="11%" />
 					<ec:column property="NAME" title="名称" width="11%" />
 					<ec:column property="DESC1" title="描述" width="11%" />
 					<ec:column property="CON_PERSON" title="联系人" width="11%" />

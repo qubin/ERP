@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +62,27 @@ public class SupplierAction extends BaseAction {
 	public String modify() {
 		service.update(supplier);
 		return showHome();
+	}
+	
+	
+	public void checkCodeIsNull(){
+		String strSupCode = req.getParameter("supcode");
+		try {
+			supplier = new Supplier();
+			supplier.setCode(strSupCode);
+			List<Supplier> sl = service.selectList(supplier);
+			String msg;
+			if(sl.size() > 0){
+				msg = "false";
+			}else{
+				msg = "true";
+			}
+			resp.getWriter().write(msg);
+			resp.getWriter().flush();
+			resp.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

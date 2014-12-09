@@ -20,6 +20,7 @@
     <include file="erpProduct.xml"/>
     
     
+    <include file="erpChangeStores.xml"/>
     
     
     

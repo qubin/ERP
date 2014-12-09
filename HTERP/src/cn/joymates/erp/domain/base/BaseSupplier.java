@@ -6,6 +6,7 @@ public class BaseSupplier extends BaseVO {
 		tablename = "t_supplier";
 
 		fieldMap.put("uuid", "id");
+		fieldMap.put("code", "code");
 		fieldMap.put("name", "name");
 		fieldMap.put("desc", "desc1");
 		fieldMap.put("conPerson", "con_person");
@@ -21,6 +22,7 @@ public class BaseSupplier extends BaseVO {
 	}
 
 	private Integer uuid;
+	private String code;
 	private String name;
 	private String desc;
 	private String conPerson;
@@ -97,6 +99,12 @@ public class BaseSupplier extends BaseVO {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

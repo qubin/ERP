@@ -14,25 +14,7 @@
 <script type='text/javascript'
 	src='${pageContext.request.contextPath}/dwr/util.js'></script>
 <script type="text/javascript">
-       function ajax(obj){
-	  		var url = "${pageContext.request.contextPath }/admin/supplier/supplier_checkCodeIsNull.html?supcode="+obj.value;
-	  		new Ajax.Request(url,
-	  	  	{
-	  	  		method:'get',
-	  	  		onSuccess: function(data){
-	  	  			if(data.responseText == 'false'){
-	  	  				document.getElementById("resText").innerHTML = "该编号有重复，请重新添加！";
-	  	  				obj.focus();
-	  	  			}else{
-	  	  				document.getElementById("resText").innerHTML = "";
-	  	  			}
-	  	  		},
-	  	  		onFailure: function(){ 
-	  	  			document.getElementById("resText").innerHTML = "该编号有重复，请重新添加！"; 
-	  	  			obj.focus();
-	  	  		}
-	  	  	});
-	  	}
+	
 </script>
 </head>
 <body>
@@ -44,16 +26,9 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">编号：</th>
-						<td><input type="text" class="u-ipt required" id="supCode" onblur="ajax(this)"
-							name="supplier.code" maxlength="13" />
-							<span style="color:red" id="resText"></span>
-						</td>
-					</tr>
-					<tr>
-						<th class="tr">名称：</th>
+						<th class="tr" width="42%">名称：</th>
 						<td><input type="text" class="u-ipt required"
-							name="supplier.name" maxlength="60" /></td>
+							name="supplier.name" maxlength="13" /></td>
 					</tr>
 					<tr>
 						<th class="tr">描述：</th>
@@ -68,27 +43,27 @@
 					<tr>
 						<th class="tr">联系电话：</th>
 						<td><input type="text" class="u-ipt required validate-tel-phone" name="supplier.conPhone"
-							maxlength="20"></td>
+							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">传真：</th>
 						<td><input type="text" class="u-ipt" name="supplier.fax"
-							maxlength="20"></td>
+							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">地址：</th>
 						<td><input type="text" class="u-ipt" name="supplier.address"
-							maxlength="120"></td>
+							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">邮箱：</th>
 						<td><input type="text" class="u-ipt validate-email" name="supplier.email"
-							maxlength="30"></td>
+							maxlength="60"></td>
 					</tr>
 					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="supplier.remark"
-							maxlength="120"></td>
+							maxlength="60"></td>
 					</tr>
 				</tbody>
 				<tfoot>
