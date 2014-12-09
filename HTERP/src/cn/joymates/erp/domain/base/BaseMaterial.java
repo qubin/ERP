@@ -9,7 +9,7 @@ public class BaseMaterial extends BaseVO {
 
 		fieldMap.put("uuid", "id");
 		fieldMap.put("warehouseId", "warehouse_id");
-		fieldMap.put("supplyId", "supply_id");
+		fieldMap.put("supplymatId", "supplymat_id");
 		fieldMap.put("density", "density");
 		fieldMap.put("thickness", "thickness");
 		fieldMap.put("desc", "desc1");
@@ -29,7 +29,7 @@ public class BaseMaterial extends BaseVO {
 
 	private Integer uuid;
 	private Integer warehouseId;
-	private Integer supplyId;
+	private Integer supplymatId;
 	private BigDecimal density;
 	private BigDecimal thickness;
 	private String desc;
@@ -54,12 +54,6 @@ public class BaseMaterial extends BaseVO {
 	}
 	public void setWarehouseId(Integer warehouseId) {
 		this.warehouseId = warehouseId;
-	}
-	public Integer getSupplyId() {
-		return supplyId;
-	}
-	public void setSupplyId(Integer supplyId) {
-		this.supplyId = supplyId;
 	}
 	public BigDecimal getDensity() {
 		return density;
@@ -139,6 +133,10 @@ public class BaseMaterial extends BaseVO {
 	public void setRemark1(String remark1) {
 		this.remark1 = remark1;
 	}
-	
-
+	public Integer getSupplymatId() {
+		return supplymatId;
+	}
+	public void setSupplymatId(Integer supplymatId) {
+		this.supplymatId = supplymatId;
+	}
 }
