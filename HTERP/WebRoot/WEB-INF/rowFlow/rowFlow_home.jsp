@@ -22,25 +22,19 @@
 			if(reason != null && reason != ""){
 				reason = encodeURI(reason);
 				reason = encodeURI(reason);
-				var href = "${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=" + Id + "&cust.isLogout=1&cust.logOutReason=" + reason;
+				var href = "${pageContext.request.contextPath}/admin/rowFlow/rowFlow_delete.html?rowFlow.rfId=" + Id + "&rowFlow.isLogout=1&rowFlow.logoutReason=" + reason;
 				window.location.href = href;
 			}
 		}	
 	}
-	jQuery(document).ready(function(){
-		jQuery("#btn").bind("click",function(){
-			alert("success");
-		});
-	});
   </script>
 </head>
 <body>
-<input type="button" value="testbtn" id="btn" />
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
           <h2>客户查询</h2>
-		 <form id="form1" action="${pageContext.request.contextPath}/admin/customer/customer_find.html" method="post">
+		 <form id="form1" action="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_find.html" method="post">
           <table class="m-table-form">
              <tbody>
                 <tr>
@@ -48,17 +42,15 @@
                   <td>
 	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
 	                  	<option value="all">全部</option>
-	                  	<option value="name">名称</option>
-	                  	<option value="telephone">联系电话</option>
-	                  	<option value="fax">传真</option>
-	                  	<option value="con_person">联系人</option>
-	                  	<option value="con_phone">联系人电话</option>
+	                  	<option value="out_person">经办人</option>
+	                  	<option value="material_id">材料</option>
+	                  	<option value="in" >入库</option>
+	                  	<option value="out">出库</option>
 	                  </select>
                   </td>  
                   <td><input type="text" class="u-ipt" name="queryStr"></td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   
-                     <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/customer/customer_showAddUI.html'">新增</button>&emsp;           
                    </td>
                 </tr>                				                           
              </tbody>
@@ -68,11 +60,11 @@
 			<div class="hr10"></div>
 			      
                    
-          <h2>客户信息列表</h2>
+          <h2>原料出入库记录列表</h2>
           <div align="center">
-          <ec:table items="custList" var="sr"
+          <ec:table items="rfList" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/customer/customer_showHome.html"
+				action="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_showHome.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="100%" listWidth="100%" height="600px"
@@ -81,22 +73,22 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="NAME" title="名称" width="11%" style="text-align:center"/>
-					<ec:column property="CON_PHONE" title="联系电话" width="11%" style="text-align:center"/>
-					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
-					<ec:column property="CON_PERSON" title="联系人" width="11%" style="text-align:center"/>
-					<ec:column property="CON_PHONE" title="联系人电话" width="11%" style="text-align:center"/>
-					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" style="text-align:center" mappingItem="LOGOUT"/>
-					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" style="text-align:center"/>
-					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
-					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
+					<ec:column property="OUT_PERSON" title="经办人" width="15%" style="text-align:center"/>
+					<ec:column property="IN_OR_OUT" title="入库/出库" width="15%" style="text-align:center"/>
+					<ec:column property="OUT_TIME" title="操作时间" width="15%" style="text-align:center"/>
+					<ec:column property="WEIGHT" title="重量" width="15%" style="text-align:center"/>
+					<ec:column property="MATERIAL_ID" title="材料ID" width="15%" style="text-align:center"/>
+					<ec:column property="REMARK" title="备注" width="15%" style="text-align:center"/>
+					<ec:column property="IS_LOGOUT" title="是否注销" width="15%" style="text-align:center" mappingItem="logoutMap"/>
+					<ec:column property="LOGOUT_REASON" title="注销原因" width="15%" style="text-align:center"/>
+					<ec:column property="_0" title="动作" width="15%" style="text-align:center">
 						<c:if test="${sr.IS_LOGOUT == 0}">
-							<a href="${pageContext.request.contextPath}/admin/customer/customer_showModifyUI.html?cust.custId=${sr.ID}">修 改</a>
+							<a href="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_showModifyUI.html?rowFlow.rfId=${sr.ID}">修 改</a>
 							&nbsp;&nbsp;&nbsp;&nbsp;
 							<a onclick="return delMsg(${sr.ID})" href="javascript:void(0)">注 销</a>
 						</c:if>
 						<c:if test="${sr.IS_LOGOUT == 1}">
-							<a onclick="return recoverMsg()" href="${pageContext.request.contextPath}/admin/customer/customer_delete.html?cust.custId=${sr.ID}&cust.isLogout=0">恢 复</a>
+							<a onclick="return recoverMsg()" href="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_delete.html?rowFlow.rfId=${sr.ID}&rowFlow.isLogout=0">恢 复</a>
 						</c:if>
 						</ec:column>
 				</ec:row>
