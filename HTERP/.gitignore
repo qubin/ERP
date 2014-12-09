@@ -1,2 +1,3 @@
 /.classpath
 WEB-INF/classes
+WEB-INF/proxool.xml
