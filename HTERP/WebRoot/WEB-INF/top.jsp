@@ -22,18 +22,19 @@
     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery.easyui.extend.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery.plugins.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery.syadmin.js"></script>
-     <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery.syadmin.js"></script>
     <script language="JavaScript" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/assets/js/validation/prototype.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/validation/effects.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/validation/validation_cn.js" type="text/javascript"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/libs/jquery-1.8.3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/myUtils.js" type="text/javascript"></script>
 	 <script type="text/javascript"> 
-	 	$.noconflict();
+	 	$.noConflict();
+	 	
 		window.onload = function(){   
 			//  form1 为 表单的名称   
 			if(document.getElementById('form1')!=null){
-	    		var validator = new Validation('form1', {stopOnFirst:true, immediate:true}); 
+	    	    new Validation('form1', {stopOnFirst:true, immediate:true}); 
 			}
 		}
 	</script>
