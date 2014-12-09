@@ -25,4 +25,8 @@
     
     
      <include file="erpSupplyMat.xml"/>
+     <include file="erpPdctFlow.xml"/>
+     <include file="erpRowFlow.xml"/>
+     <include file="erpMStorage.xml"/>
+     <include file="erpStock.xml"/>
 </struts>

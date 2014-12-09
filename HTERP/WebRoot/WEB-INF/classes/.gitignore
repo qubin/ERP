@@ -10,3 +10,7 @@
 /log4j.properties
 /mybatis-conf.xml
 /struts.xml
+/erpMStorage.xml
+/erpPdctFlow.xml
+/erpRowFlow.xml
+/erpStock.xml

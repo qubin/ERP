@@ -27,9 +27,15 @@
 			}
 		}	
 	}
+	jQuery(document).ready(function(){
+		jQuery("#btn").bind("click",function(){
+			alert("success");
+		});
+	});
   </script>
 </head>
 <body>
+<input type="button" value="testbtn" id="btn" />
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
@@ -80,13 +86,17 @@
 					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PERSON" title="联系人" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PHONE" title="联系人电话" width="11%" style="text-align:center"/>
+					<ec:column property="TARIFF" title="税号" width="11%" style="text-align:center"/>
+					<ec:column property="BANK" title="开户银行" width="11%" style="text-align:center"/>
+					<ec:column property="ACCOUNT" title="银行账号" width="11%" style="text-align:center"/>
+					<ec:column property="ADDRESS" title="单位地址" width="11%" style="text-align:center"/>
 					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" style="text-align:center" mappingItem="LOGOUT"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
 						<c:if test="${sr.IS_LOGOUT == 0}">
 							<a href="${pageContext.request.contextPath}/admin/customer/customer_showModifyUI.html?cust.custId=${sr.ID}">修 改</a>
-							&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;
 							<a onclick="return delMsg(${sr.ID})" href="javascript:void(0)">注 销</a>
 						</c:if>
 						<c:if test="${sr.IS_LOGOUT == 1}">

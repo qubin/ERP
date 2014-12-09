@@ -29,6 +29,7 @@
 	<script src="${pageContext.request.contextPath}/assets/js/validation/validation_cn.js" type="text/javascript"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/myUtils.js" type="text/javascript"></script>
 	 <script type="text/javascript"> 
+	 	$.noconflict();
 		window.onload = function(){   
 			//  form1 为 表单的名称   
 			if(document.getElementById('form1')!=null){
