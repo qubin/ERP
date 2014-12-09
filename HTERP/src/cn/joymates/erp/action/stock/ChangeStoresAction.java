@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -71,25 +72,22 @@ public class ChangeStoresAction extends BaseAction {
 	}
 
 	public void getMaterialInfoById() {
+		Connection conn = null;
+		PreparedStatement prst = null;
+		ResultSet rs = null;
+		
 		try {
 			if (material == null) {
 				material = new Material();
 			}
 			Integer strMatId = Integer.parseInt(req.getParameter("matid"));
-			// material.setSupplymatId(strMatId);
-			// List<Material> matList = materialService.selectList(material);
-
-			Connection conn = null;
-			PreparedStatement prst = null;
-			ResultSet rs = null;
-
+			
 			String sql = "SELECT m.*,r.out_time,w.sign1,s.name FROM t_material AS m "
 					+ "LEFT JOIN t_raw_flow r ON m.id=r.material_id "
 					+ "LEFT JOIN t_warehouse AS w ON m.warehouse_id=w.id "
 					+ "LEFT JOIN t_supply_mat AS sm ON m.supplymat_id=sm.id "
 					+ "LEFT JOIN t_supplier AS s ON sm.supply_id=s.id "
 					+ "WHERE m.id=" + strMatId + "";
-			try {
 				conn = DbUtils.getConnection();
 				prst = conn.prepareStatement(sql);
 
@@ -101,7 +99,13 @@ public class ChangeStoresAction extends BaseAction {
 				while (rs.next()) {
 					Map rowData = new HashMap();
 					for (int i = 1; i <= columnCount; i++) {
-						rowData.put(md.getColumnName(i), rs.getObject(i));
+						if (md.getColumnName(i).equals("out_time")) {
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+							String str = sdf.format(rs.getObject(i));
+							rowData.put(md.getColumnName(i), str);
+						} else {
+							rowData.put(md.getColumnName(i), rs.getObject(i));
+						}
 					}
 					list.add(rowData);
 				}
@@ -114,52 +118,83 @@ public class ChangeStoresAction extends BaseAction {
 				resp.getWriter().flush();
 				resp.getWriter().close();
 
-			} catch (SQLException e) {
+		} catch (Exception e) {
 				e.printStackTrace();
 				throw new DaoException(e);
-			} finally {
-				DbUtils.closeStatement(prst);
-			}
-
-			// JSONArray jo = JSONArray.fromObject(matList);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+		} finally {
+			DbUtils.closeStatement(prst);
 		}
 	}
+	
+	/**
+	 * 转库
+	 */
+	public String changestores(){
+		try {
+			String a = strMaterialId;
+			String b = updatestore;
+			material = new Material();
+			material.setUuid(Integer.parseInt(strMaterialId));
+			material.setWarehouseId(Integer.parseInt(updatestore));
+			materialService.update(material);
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return showHome();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	private static final long serialVersionUID = 1L;
-	private SupplierService supplierService = ServiceProxyFactory
-			.getInstanceNoMybatis(new SupplierService());
-	private MaterialService materialService = ServiceProxyFactory
-			.getInstanceNoMybatis(new MaterialService());
-
+	private SupplierService supplierService = ServiceProxyFactory.getInstanceNoMybatis(new SupplierService());
+	private MaterialService materialService = ServiceProxyFactory.getInstanceNoMybatis(new MaterialService());
 	private Supplier supplier;
 	private Warehouse warehous;
 	private Material material;
-
+	private String strMaterialId;
+	private String updatestore;
 	public Supplier getSupplier() {
 		return supplier;
 	}
-
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
-
 	public Warehouse getWarehous() {
 		return warehous;
 	}
-
 	public void setWarehous(Warehouse warehous) {
 		this.warehous = warehous;
 	}
-
 	public Material getMaterial() {
 		return material;
 	}
-
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-
+	public String getStrMaterialId() {
+		return strMaterialId;
+	}
+	public void setStrMaterialId(String strMaterialId) {
+		this.strMaterialId = strMaterialId;
+	}
+	public String getUpdatestore() {
+		return updatestore;
+	}
+	public void setUpdatestore(String updatestore) {
+		this.updatestore = updatestore;
+	}
+	
 }
