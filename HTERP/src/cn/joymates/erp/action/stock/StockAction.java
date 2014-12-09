@@ -15,11 +15,16 @@ public class StockAction extends BaseAction {
 		String secStr = req.getParameter("secStr");
 		String queryStr = req.getParameter("queryStr");
 		if(str != null && secStr != null){
-			if("str".equals("1")){
-				
+			if("all".equals(secStr)){
+				//所有
+				if("1".equals(str)){
+					
+				}else{
+					
+				}
+			}else{
+				//条件
 			}
-		}else{
-			
 		}
 		return "home";
 	}

@@ -8,6 +8,37 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title></title>
 </head>
+<script type="text/javascript">
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#supply").bind("change",function(){
+			j("#materialName").empty();
+			var value = j("#supply").val();
+			var s = "${pageContext.request.contextPath}/admin/mStorage/mStorage_findMaterial.html";
+			j.getJSON(s,{uuid:value},function(data){
+				if(data != null){
+					for(var i = 0; i < data.length; i ++){
+						j("#materialName").append("<option value=" + data[i].supplyMatId + ">" + data[i].matSupplierName +　"</option>");
+					}
+				}else{
+					alert("改供应商下没有材料");
+				}
+			});	
+		});
+		
+		j("#materialName").bind("change",function(){
+			var id = j("#materialName").val();
+			var uri = "${pageContext.request.contextPath}/admin/mStorage/mStorage_findDetail.html";
+			j.getJSON(uri,{id:id},function(data){
+				if(data != null){
+						
+				}else{
+
+				}
+			});
+		});
+	});
+</script>
 <body>
 	<div id="container" class="container">
 		<div class="hr10"></div>
@@ -18,12 +49,20 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">名称：</th>
-						<td></td>
+						<th class="tr" width="42%">供应商：</th>
+						<td><s:select name="supplyMat.supplyId"
+							cssClass="u-ipt required validate-selection"
+							cssStyle="width:178px"
+							list="#request.sList"
+							listKey="uuid" listValue="name" headerKey="-1"
+							headerValue="--请选择--" id="supply" />
+						</td>
 					</tr>
 					<tr>
-						<th class="tr" width="42%">名称：</th>
-						<td></td>
+						<th class="tr" width="42%">供应商材料名：</th>
+						<td><select name="" id="materialName" class="u-ipt">
+						
+						</select></td>
 					</tr>
 					<tr>
 						<th class="tr" width="42%">华天材料号：</th>

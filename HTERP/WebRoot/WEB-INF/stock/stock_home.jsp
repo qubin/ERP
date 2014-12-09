@@ -27,16 +27,24 @@
 			}
 		}	
 	}
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#serachStr").bind("change",function(){
+			if(j("#serachStr").val() == 1){
+				j("#secStr").empty();
+				j("#secStr").append("<option value=''>经办人</option>");
+				j("#secStr").append("<option value=''>所在仓库</option>");
+				j("#secStr").append("<option value=''>供应商</option>");
+			}else{
+				j("#secStr").empty();
+				j("#secStr").append("<option value=''>华天产品编号</option>");
+				j("#secStr").append("<option value=''>客户产品编号</option>");
+				j("#secStr").append("<option value=''>所在仓库</option>");
+				j("#secStr").append("<option value=''>客户ID</option>");
+			}
+		});
+	});
 	
-	function selectSerch(){
-		var str = document.getElementById("serachStr");
-		var secStr = document.getElementById("secStr");
-		if(str.value == 1){
-
-		}else{
-			
-		}
-	}
   </script>
 </head>
 <body>
@@ -50,14 +58,14 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt" onchange="selectSerch();">
+	                  <select name="serachType" id="serachStr" class="u-slt">
 	                  	<option value="1">原材料</option>
 	                  	<option value="2">成品</option>
 	                  </select>
 	                  <select name="serachType" id="secStr" class="u-slt validation-passed">
-	                  	<option value="">经办人</option>
-	                  	<option value="">所在仓库</option>
-	                  	<option value="">供应商</option>
+	                  	<option value=''>经办人</option>
+	                  	<option value=''>所在仓库</option>
+	                  	<option value=''>供应商</option>
 	                  </select>
                   </td>  
                   <td><input type="text" class="u-ipt" name="queryStr"></td>       

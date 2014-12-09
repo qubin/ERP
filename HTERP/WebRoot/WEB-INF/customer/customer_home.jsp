@@ -28,16 +28,9 @@
 		}	
 	}
 	
-	jQuery(document).ready(function(){
-		alert("1");
-		jQuery("#btn1").bind("click",function(){
-			alert("success");
-		});
-	});
   </script>
 </head>
 <body>
-<input type="button" value="testbtn" id="btn1"/>
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
