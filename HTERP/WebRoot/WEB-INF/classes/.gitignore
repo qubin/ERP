@@ -1,1 +1,12 @@
 /cn
+/erpChangeStores.xml
+/erpCustomer.xml
+/erpMaterial.xml
+/erpProduct.xml
+/erpRight.xml
+/erpSupplier.xml
+/erpSupplyMat.xml
+/erpWarehouse.xml
+/log4j.properties
+/mybatis-conf.xml
+/struts.xml
