@@ -24,7 +24,9 @@ public class WarehousService extends BaseService<Warehouse>{
 	public void update(Warehouse ob){
 		dao.update(ob);
 	}
-
+	public List<Warehouse> selectList(Warehouse w){
+		return dao.selectList(w);
+	}
 	public List<Map<String, Object>> findAll(Warehouse wh,String ec_rd, HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();

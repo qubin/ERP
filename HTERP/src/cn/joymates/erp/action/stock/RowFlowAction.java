@@ -56,16 +56,7 @@ public class RowFlowAction extends BaseAction {
 	}
 	
 	public void checkPFOut(){
-		try {
-			BigDecimal weight = service.getWeight(rowFlow.getMaterialId()).getWeight();
-			if(rowFlow.getWeight().compareTo(weight) > 0){
-				resp.getWriter().write("false");
-			}else{
-				resp.getWriter().write("true");
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 	
 	public String showModifyUI(){
