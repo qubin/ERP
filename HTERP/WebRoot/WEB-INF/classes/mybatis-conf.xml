@@ -12,6 +12,7 @@
 		<typeAlias alias="Resource" type="cn.joymates.erp.domain.Resource" />
 		<typeAlias alias="Role" type="cn.joymates.erp.domain.Role" />
 		<typeAlias alias="Supplier" type="cn.joymates.erp.domain.Supplier" />
+		<typeAlias alias="Material" type="cn.joymates.erp.domain.Material" />
 	</typeAliases>
 	
 	<environments default="development">

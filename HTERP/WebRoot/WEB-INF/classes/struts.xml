@@ -21,7 +21,7 @@
     
     
     <include file="erpChangeStores.xml"/>
-    
+    <include file="erpCutMaterial.xml"/>
     
     
      <include file="erpSupplyMat.xml"/>

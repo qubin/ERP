@@ -20,7 +20,7 @@
 				<tbody>
 					<tr>
 						<th class="tr" width="42%">供应商：</th>
-						<td><s:select name="material.supplyId"
+						<td><s:select name="material.supplymatId"
 							  cssClass="u-ipt required"
 							  cssStyle="width:178px"
 						      list="#request.supplierList"

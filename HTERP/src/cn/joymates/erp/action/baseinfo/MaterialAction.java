@@ -6,8 +6,10 @@ import java.util.Map;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.Material;
 import cn.joymates.erp.domain.Supplier;
+import cn.joymates.erp.domain.SupplyMat;
 import cn.joymates.erp.service.MaterialService;
 import cn.joymates.erp.service.SupplierService;
+import cn.joymates.erp.service.SupplyMatService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class MaterialAction extends BaseAction {
@@ -48,7 +50,14 @@ public class MaterialAction extends BaseAction {
 	}
 	
 	public String add() {
-		service.save(material);
+		if(supplyMat == null){
+			supplyMat = new SupplyMat();
+		}
+		supplyMat.setSupplyId(material.getSupplymatId());
+		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
+		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
+		material.setSupplymatId(supplyMatId);
+		service.save(material);	//保存材料信息
 		return showHome();
 	}
 	
@@ -82,6 +91,13 @@ public class MaterialAction extends BaseAction {
 	}
 	
 	public String modify() {
+		if(supplyMat == null){
+			supplyMat = new SupplyMat();
+		}
+		supplyMat.setSupplyId(material.getSupplymatId());
+		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
+		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
+		material.setSupplymatId(supplyMatId);
 		service.update(material);
 		return showHome();
 	}
@@ -97,8 +113,10 @@ public class MaterialAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private MaterialService service = ServiceProxyFactory.getInstanceNoMybatis(new MaterialService());
 	private SupplierService supplierService = ServiceProxyFactory.getInstanceNoMybatis(new SupplierService());
+	private SupplyMatService supplyMatService = ServiceProxyFactory.getInstanceNoMybatis(new SupplyMatService());
 	private Material material;
 	private Supplier supplier;
+	private SupplyMat supplyMat;
 	private String material_key;
 	private String material_name;
 	
@@ -130,4 +148,13 @@ public class MaterialAction extends BaseAction {
 	public void setMaterial_name(String material_name) {
 		this.material_name = material_name;
 	}
+
+	public SupplyMat getSupplyMat() {
+		return supplyMat;
+	}
+
+	public void setSupplyMat(SupplyMat supplyMat) {
+		this.supplyMat = supplyMat;
+	}
+	
 }

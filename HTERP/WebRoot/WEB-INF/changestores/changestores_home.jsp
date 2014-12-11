@@ -22,8 +22,7 @@
 
 				osel.options.add(new Option("--请选择--", "-1"));
 				for (var i = 0; i < strDate.length; i++) {
-					osel.options.add(new Option(strDate[i].substr(1,
-							strDate[i].length), strDate[i].substr(0, 1)));
+					osel.options.add(new Option(strDate[i].substr(1,strDate[i].length), strDate[i].substr(0, 1)));
 				}
 
 				//var jsonData = eval("(" + data.responseText + ")");
@@ -45,12 +44,21 @@
 				document.getElementById("labSuppCk").innerHTML = jsonData[0].sign1;
 				document.getElementById("labSuppRk").innerHTML = jsonData[0].out_time;
 				document.getElementById("strMaterialId").value = jsonData[0].id;
-				
 			}
 		});
 	}
 	function showSuccess(){
 		alert("转库成功！");
+	}
+	function resetForm(){
+		document.getElementById("form1").reset();
+		document.getElementById("labSuppMd").innerHTML = "";
+		document.getElementById("labSuppHd").innerHTML = "";
+		document.getElementById("labSuppMs").innerHTML = "";
+		document.getElementById("labSuppCode").innerHTML = "";
+		document.getElementById("labSuppCk").innerHTML = "";
+		document.getElementById("labSuppRk").innerHTML = "";
+		document.getElementById("strMaterialId").value = "";
 	}
 </script>
 </head>
@@ -119,8 +127,8 @@
 			</p>
 			<br>
 			<p align="center">
-				<input name="button" type="submit" onclick="showSuccess()" class="u-btn" id="button" value="提交"> 
-				<input name="button" type="button" class="u-btn" id="button" value="重置">
+				<input name="button" type="submit" class="u-btn" id="button" value="提交"> 
+				<input name="button" type="button" onclick="resetForm()" class="u-btn" id="button" value="重置">
 			</p>
 		</form>
 		<div class="hr10">
