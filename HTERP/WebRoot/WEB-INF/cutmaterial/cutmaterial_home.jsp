@@ -21,19 +21,24 @@
 <title></title>
 <script type="text/javascript">
 	var j = jQuery;
+	var fjnum = 1;
 	
 	function addTableTr(){
-	
+		
+		fjnum = fjnum + 1;
+		
+		j("#txtFjRow").val(fjnum);
+		
 		var t  = "<tr>";
 			t +=    "<td>";
-			t +=		"<div align='center'><input type='text'  class='u-ipt' name='textfield2' />";
+			t +=		"<div align='center'><input type='text' class='u-ipt' name='txtGysjh" + fjnum + "' />";
 // 			t +=			"<select name='select2' id='select2'  class='u-ipt'>";
 // 			t +=				"<option value='1'>--请选择--</option>";
 // 			t +=			"</select>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
-			t +=		"<div align='center'><input type='text'  class='u-ipt' name='textfield2' />";
+			t +=		"<div align='center'><input type='text' class='u-ipt' name='txtClxh" + fjnum + "' />";
 // 			t +=			"<select name='select10' id='select10'  class='u-ipt'>";
 // 			t +=				"<option value='1' selected>--请选择--</option>";
 // 			t +=			"</select>";
@@ -41,12 +46,12 @@
 			t +=	"</td>";
 			t +=	"<td>";
 			t +=		"<div align='center'>";
-			t +=			"<input type='text' class='u-ipt' name='textfield2' id='textfield2'>";
+			t +=			"<input type='text' class='u-ipt' name='txtCjjs" + fjnum + "'>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
 			t +=		"<div align='center'>";
-			t +=			"<input name='textfield10' type='text' id='textfield10' class='u-ipt'>";
+			t +=			"<input type='text' class='u-ipt'name='txtCjcc" + fjnum + "'>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t += "</tr>";
@@ -68,10 +73,10 @@
 </script>
 </head>
 <body>
-
+<form id="form1" action="${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_cutmaterial.html" method="post">
 	<div id="container" class="container">
 		<div align="right">
-			
+			<input type="hidden" id="txtFjRow" name="txtFjRow" value="1">
 			<table width="100%">
 				<tr>
 					<td width="55%" align="right">
@@ -106,7 +111,7 @@
 			<tbody>
 				<tr>
 					<td width="10%" rowspan="100"><div align="center">
-							<s:select name="material.supplyId"
+							<s:select name="material.mmatId"
 							   onchange="getMmatDesc(this)"
 							   cssClass="u-ipt required validate-selection"
 						       list="#request.materialList"
@@ -117,16 +122,16 @@
 						<label id="mmatDesc"></label>
 					</td>
 					<td><div align="center">
-							<input type="text"  class="u-ipt" name="textfield2" />
+							<input type="text"  class="u-ipt" name="txtGysjh1"/>
 						</div></td>
 					<td><div align="center">
-							<input type="text"  class="u-ipt" name="textfield2" />
+							<input type="text"  class="u-ipt" name="txtClxh1" />
 						</div></td>
 					<td><div align="center">
-							<input type="text"  class="u-ipt" name="textfield2" />
+							<input type="text"  class="u-ipt" name="txtCjjs1" />
 						</div></td>
 					<td><div align="center">
-							<input name="textfield10" type="text" id="textfield10"  class="u-ipt" />
+							<input type="text" class="u-ipt" name="txtCjcc1" />
 						</div></td>
 				</tr>
 			</tbody>
@@ -162,14 +167,14 @@
 
 
 		<div align="center">
-			<input name="button" type="submit" class="u-btn" id="button" value="提交"> 
-			<input name="button2" type="submit" class="u-btn" id="button2" value="重置">
+			<input type="submit" class="u-btn" value="提交"> 
+			<input type="reset" class="u-btn" value="重置">
 		</div>
 		<p>
 			<br /> <br />
 		</p>
 	</div>
-
+</form>
 	<!-- /#container -->
 	<!--javascript start-->
 	<!--javascript end-->

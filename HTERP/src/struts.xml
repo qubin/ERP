@@ -22,7 +22,8 @@
     
     <include file="erpChangeStores.xml"/>
     <include file="erpCutMaterial.xml"/>
-    
+    <include file="erpQCStore.xml"/>
+    <include file="erpMatsoflow.xml"/>
     
      <include file="erpSupplyMat.xml"/>
      <include file="erpPdctFlow.xml"/>
