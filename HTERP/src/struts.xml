@@ -31,4 +31,6 @@
      <include file="erpRowFlow.xml"/>
      <include file="erpMStorage.xml"/>
      <include file="erpStock.xml"/>
+     <include file="erpCustPdct.xml"/>
+     <include file="erpSellBill.xml"/>
 </struts>
