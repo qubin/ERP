@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="sellbillManager" extends="struts-default" namespace="/admin/sellbill" >
+		<action name="sellbill_*" class="cn.joymates.erp.action.sellbill.SellbillAction" method="{1}">
+            <result name="home">/WEB-INF/sellbill/sellbill_home.jsp</result>
+            <result name="addUI">/WEB-INF/sellbill/sellbill_add.jsp</result>
+            <result name="modifyUI">/WEB-INF/sellbill/sellbill_modify.jsp</result>
+            <result name="examine">/WEB-INF/sellbill/sellbill_examine.jsp</result>
+            <result name="examineUI">/WEB-INF/sellbill/sellbill_examineUI.jsp</result>
+            <result name="queryhome">/WEB-INF/sellbill/sellbill_queryhome.jsp</result>
+            <result name="detail">/WEB-INF/sellbill/sellbill_detail.jsp</result>
+        </action>
+	</package>
+      
+</struts>

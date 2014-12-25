@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="productionManager" extends="struts-default" namespace="/admin/production" >
+		<action name="production_*" class="cn.joymates.erp.action.production.PdceistctAction" method="{1}">
+            <result name="home">/WEB-INF/production/production_home.jsp</result>
+            <result name="addUI">/WEB-INF/production/production_add.jsp</result>
+            <result name="shwoAuditPrint">/WEB-INF/production/production_auditprint.jsp</result>
+            <result name="showAudit">/WEB-INF/production/production_auditprint_audit.jsp</result>
+            
+        </action>
+	</package>
+      
+</struts>
