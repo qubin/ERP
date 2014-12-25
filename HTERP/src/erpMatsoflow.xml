@@ -13,4 +13,12 @@
         </action>
 	</package>
       
+    <package name="stockalarmManager" extends="struts-default" namespace="/admin/stockalarm" >
+		<action name="stockalarm_*" class="cn.joymates.erp.action.stock.StockAlarmAction" method="{1}">
+            <result name="home">/WEB-INF/stockalarm/stockalarm_home.jsp</result>
+            <result name="addUI">/WEB-INF/stockalarm/stockalarm_add.jsp</result>
+            <result name="modifyUI">/WEB-INF/stockalarm/stockalarm_modify.jsp</result>
+        </action>
+	</package>
+      
 </struts>

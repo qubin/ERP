@@ -15,15 +15,28 @@ public class QCStoreService  extends BaseService<QCStore> {
 		dao = new QCStoreDaoImpl();
 	}
 	
-	public List<Map<String, Object>> find(QCStore qcstore,String product_key,String product_name, String ec_rd,HttpServletRequest req) {
+	public List<Map<String, Object>> find(QCStore qcstore,String qcstore_key,String qcstore_name, String ec_rd,HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		searchsql.append("SELECT count(*) FROM t_qc where 1=1 ");
-		resultsql.append("SELECT * FROM t_qc where 1=1 ");
-//		if(!"ALL".equals(product_key) && !"".equals(product_key) && product_key != null){
-//			resultsql.append(" AND " + product_key + " LIKE '%" + product_name + "%' ");
-//			searchsql.append(" AND " + product_key + " LIKE '%" + product_name + "%' ");
-//		}
+		searchsql.append("SELECT COUNT(*) FROM t_qc AS q LEFT JOIN t_product AS p ON p.id=q.mat_pdct_id LEFT JOIN ( ");
+		searchsql.append("SELECT m.id,sm.ht_mat_no FROM t_material AS m LEFT JOIN t_supply_mat AS sm ON m.supplymat_id=sm.id");
+		searchsql.append(") AS ma ON q.mat_pdct_id=ma.id WHERE 1=1 ");
+		
+		resultsql.append("SELECT q.id,q.mat_or_pdct,q.mat_pdct_id,");
+		resultsql.append("CASE WHEN q.mat_or_pdct = '1' THEN ma.ht_mat_no WHEN q.mat_or_pdct = '2' THEN p.ht_pn END AS mat_pdct_ht,");
+		resultsql.append("q.weight,q.pic_count,q.isolate_reason,q.remark FROM t_qc AS q LEFT JOIN t_product AS p ON p.id=q.mat_pdct_id LEFT JOIN(");
+		resultsql.append("SELECT m.id,sm.ht_mat_no FROM t_material AS m LEFT JOIN t_supply_mat AS sm ON m.supplymat_id=sm.id) AS ma ON q.mat_pdct_id=ma.id WHERE 1=1 ");
+		if(!"".equals(qcstore.getMatOrPdct()) && qcstore.getMatOrPdct() != null){
+			searchsql.append(" AND q.mat_or_pdct='" + qcstore.getMatOrPdct() + "' ");
+			resultsql.append(" AND q.mat_or_pdct='" + qcstore.getMatOrPdct() + "' ");
+		}
+		if("MAT_PDCT_HT".equals(qcstore_key)){
+			searchsql.append(" AND (ma.ht_mat_no LIKE '%" + qcstore_name + "%' OR p.ht_pn LIKE '%" + qcstore_name + "%') ");
+			resultsql.append(" AND (ma.ht_mat_no LIKE '%" + qcstore_name + "%' OR p.ht_pn LIKE '%" + qcstore_name + "%') ");
+		}else if("ISOLATE_REASON".equals(qcstore_key)){
+			searchsql.append(" AND q.isolate_reason LIKE '%" + qcstore_name + "%' ");
+			resultsql.append(" AND q.isolate_reason LIKE '%" + qcstore_name + "%' ");
+		}
 		resultsql.append(" ORDER BY id DESC limit ?, ? ");
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
 	}

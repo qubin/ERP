@@ -52,7 +52,7 @@ public class BaseProduct extends BaseVO {
 	   private String ppapStatus;
 	   private Integer picCount;
 	   private String isAlarm;
-	   private String alarmWeight;
+	   private BigDecimal alarmWeight;
 	   private String isLogout;
 	   private String logoutReason;
 	   private String remark;
@@ -165,10 +165,10 @@ public class BaseProduct extends BaseVO {
 	public void setIsAlarm(String isAlarm) {
 		this.isAlarm = isAlarm;
 	}
-	public String getAlarmWeight() {
+	public BigDecimal getAlarmWeight() {
 		return alarmWeight;
 	}
-	public void setAlarmWeight(String alarmWeight) {
+	public void setAlarmWeight(BigDecimal alarmWeight) {
 		this.alarmWeight = alarmWeight;
 	}
 	public String getIsLogout() {

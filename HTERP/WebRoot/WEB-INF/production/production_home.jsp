@@ -10,12 +10,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <title></title>
   <script type="text/javascript">
-  	function delMsg(id,isLogout) {
+	function delMsg(id,isLogout) {
   		if(isLogout == 0){
 			if (confirm('您确定要注销此信息吗？')) {
 				var str=prompt("注销原因？","");
 				if(str!=null && str!=""){
-					var h = "${pageContext.request.contextPath}/admin/qcstore/qcstore_delete.html?qcstore.uuid="+id+"&qcstore.isLogout=1&qcstore.logoutReason="+str;
+					var h = "${pageContext.request.contextPath}/admin/production/production_delete.html?production.uuid="+id+"&production.isLogout=1&production.logoutReason="+str;
 					window.location.href=h;
 				}else{
 					return false;
@@ -25,7 +25,7 @@
 			}
 		}else{
 			if (confirm('您确定要恢复此信息吗？')) {
-				var h = "${pageContext.request.contextPath}/admin/qcstore/qcstore_delete.html?qcstore.uuid="+id+"&qcstore.isLogout=0&qcstore.logoutReason=' '";
+				var h = "${pageContext.request.contextPath}/admin/production/production_delete.html?production.uuid="+id+"&production.isLogout=0&production.logoutReason=' '";
 				window.location.href=h;
 			}
 		}
@@ -36,29 +36,26 @@
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
-          <h2>QC隔离库查询</h2>
-		 <form id="form1" action="${pageContext.request.contextPath}/admin/qcstore/qcstore_find.html" method="post">
+          <h2>销售单信息查询</h2>
+		 <form id="form1" action="${pageContext.request.contextPath}/admin/production/production_find.html" method="post">
           <table class="m-table-form">
              <tbody>
                 <tr>
                   <th width="100">
                   	查询条件：
                   </th>
-                  <td width="97">
-                  	<input type="radio" value="1" name="qcstore.matOrPdct">&nbsp;材料&nbsp;&nbsp;&nbsp;
-                  	<input type="radio" value="2" name="qcstore.matOrPdct">&nbsp;成品
-                  </td>
                   <td width="10">
-                  	<select class="u-ipt" name="qcstore_key">
+                  	<select class="u-ipt" name="production_key">
                   		<option value="ALL">---查询所有---</option>
-                  		<option value="MAT_PDCT_HT">华天(材料/成品)编号</option>
-                  		<option value="ISOLATE_REASON">隔离原因</option>
+                  		<option value="CODE">供应商</option>
+                  		<option value="ORDER_DATE">面密度</option>
+                  		<option value="LEAD_DATE">厚度</option>
+                  		<option value="SUPPLY_AREA">描述</option>
                   	</select>
                   </td>
-                  <th width="50"><input type="text" class="u-ipt" name="qcstore_name"/></th>
+                  <th width="50"><input type="text" class="u-ipt" name="production_name"/></th>        
                   <td>
 					 <button type="button" class="u-btn" onclick="javascript:document.getElementById('form1').submit()">查询</button>&emsp;                   
-                     <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/qcstore/qcstore_showAddUI.html'">新增</button>&emsp;           
                    </td>
                 </tr>                				                           
              </tbody>
@@ -68,11 +65,11 @@
 			<div class="hr10"></div>
 			      
                    
-          <h2>QC隔离库信息列表</h2>
+          <h2>销售单信息列表</h2>
           <div align="center">
-          <ec:table items="qcStoreList" var="sr"
+          <ec:table items="pdceistctList" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/qcstore/qcstore_find.html"
+				action="${pageContext.request.contextPath}/admin/production/production_find.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="100%" listWidth="100%" height="600px"
@@ -81,11 +78,14 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="MAT_OR_PDCT" title="材料/成品" width="11%" mappingItem="qcTypeMap" style="text-align:center"/>
-					<ec:column property="MAT_PDCT_HT" title="华天(材料/产品)编号" width="11%" style="text-align:center"/>
-					<ec:column property="WEIGHT" title="QC重量" width="11%" style="text-align:right"/>
-					<ec:column property="PIC_COUNT" title="QC数量" width="11%" style="text-align:right"/>
-					<ec:column property="ISOLATE_REASON" title="隔离原因" width="11%"/>
+					<ec:column property="CODE" title="订货编号" width="11%" style="text-align:center" />
+					<ec:column property="ORDER_DATE" title="订货日期" width="11%" style="text-align:center"/>
+					<ec:column property="LEAD_DATE" title="供货日期" width="11%" style="text-align:center"/>
+					<ec:column property="SUPPLY_AREA" title="供货场地" width="11%"/>
+					<ec:column property="REMARK" title="备注" width="11%"/>
+					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
+						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/production/production_showAddUI.html?pdceistct.uuid=${sr.ID}">转指令单</a>
+					</ec:column>
 				</ec:row>
 			</ec:table>
 		</div>

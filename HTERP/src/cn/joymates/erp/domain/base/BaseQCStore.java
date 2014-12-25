@@ -8,7 +8,6 @@ public class BaseQCStore extends BaseVO {
 		tablename = "t_qc";
 
 		fieldMap.put("uuid", "id");
-		fieldMap.put("tPId", "t_p_id");
 		fieldMap.put("matOrPdct", "mat_or_pdct");
 		fieldMap.put("matPdctId", "mat_pdct_id");
 		fieldMap.put("weight", "weight");
@@ -21,11 +20,10 @@ public class BaseQCStore extends BaseVO {
 	}
 
 	private Integer uuid;
-	private String tPId;
 	private String matOrPdct;
 	private Integer matPdctId;
 	private BigDecimal weight;
-	private String picCount;
+	private Integer picCount;	
 	private String isolateReason;
 	private String remark;
 	private String remark1;
@@ -35,12 +33,6 @@ public class BaseQCStore extends BaseVO {
 	}
 	public void setUuid(Integer uuid) {
 		this.uuid = uuid;
-	}
-	public String gettPId() {
-		return tPId;
-	}
-	public void settPId(String tPId) {
-		this.tPId = tPId;
 	}
 	public String getMatOrPdct() {
 		return matOrPdct;
@@ -60,10 +52,10 @@ public class BaseQCStore extends BaseVO {
 	public void setWeight(BigDecimal weight) {
 		this.weight = weight;
 	}
-	public String getPicCount() {
+	public Integer getPicCount() {
 		return picCount;
 	}
-	public void setPicCount(String picCount) {
+	public void setPicCount(Integer picCount) {
 		this.picCount = picCount;
 	}
 	public String getIsolateReason() {
