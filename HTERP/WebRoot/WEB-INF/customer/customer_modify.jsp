@@ -29,12 +29,10 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">名称：</th>
+						<th class="tr">名称：</th>
 						<td><input type="text" class="u-ipt required"
 							name="cust.name" maxlength="13" value="${cust.custName}"/></td>
-					</tr>
-					<tr>
-						<th class="tr">电话：</th>
+							<th class="tr">电话：</th>
 						<td><input type="text" class="u-ipt" name="cust.telephone"
 							maxlength="60" value="${cust.telephone}"></td>
 					</tr>
@@ -42,18 +40,15 @@
 						<th class="tr">联系人：</th>
 						<td><input type="text" class="u-ipt"
 							name="cust.custConPerson" maxlength="60" value="${cust.custConPerson}"></td>
-					</tr>
-					<tr>
-						<th class="tr">联系电话：</th>
+							<th class="tr">联系电话：</th>
 						<td><input type="text" class="u-ipt" name="cust.custPhone"
 							maxlength="60" value="${cust.custPhone}"></td>
 					</tr>
+			
 					<tr>
 						<th class="tr">传真：</th>
 						<td><input type="text" class="u-ipt" name="cust.fax"
 							maxlength="60" value="${cust.fax}"></td>
-					</tr>
-					<tr>
 						<th class="tr">税号：</th>
 						<td><input type="text" class="u-ipt" name="cust.tariff"
 							maxlength="60"></td>
@@ -62,8 +57,6 @@
 						<th class="tr">开户银行：</th>
 						<td><input type="text" class="u-ipt" name="cust.bank"
 							maxlength="60"></td>
-					</tr>
-					<tr>
 						<th class="tr">银行账号：</th>
 						<td><input type="text" class="u-ipt" name="cust.account"
 							maxlength="60"></td>
@@ -72,8 +65,6 @@
 						<th class="tr">单位地址：</th>
 						<td><input type="text" class="u-ipt" name="cust.address"
 							maxlength="60"></td>
-					</tr>
-					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="cust.remark"
 							maxlength="60" value="${cust.remark}"></td>
@@ -81,7 +72,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="2" class="tc"><input class="u-btn" type="submit"
+						<td colspan="4" class="tc"><input class="u-btn" type="submit"
 							value="提交" id="submitBtn" /> &emsp; <input class="u-btn"
 							type="button" onclick="javascript:history.back()" value="返回" /></td>
 					</tr>

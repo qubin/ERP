@@ -6,12 +6,10 @@ public class BaseProduct extends BaseVO {
 
 	public BaseProduct() {
 		tablename = "t_product";
-
-		fieldMap.put("uuid", "id");
 		fieldMap.put("htPn", "ht_pn");
-		fieldMap.put("cusPn", "cus_pn");
-		fieldMap.put("area", "area");
-		fieldMap.put("customerId", "customer_id");
+		fieldMap.put("uuid", "id");
+	
+
 		fieldMap.put("appFor", "app_for");
 		fieldMap.put("properties", "properties");
 		fieldMap.put("market", "market");
@@ -23,22 +21,19 @@ public class BaseProduct extends BaseVO {
 		fieldMap.put("singleWeight", "single_weight");
 		fieldMap.put("packSize", "pack_size");
 		fieldMap.put("ppapStatus", "ppap_status");
-		fieldMap.put("picCount", "pic_count");
 		fieldMap.put("isAlarm", "is_alarm");
 		fieldMap.put("alarmWeight", "alarm_weight");
 		fieldMap.put("isLogout", "is_logout");
 		fieldMap.put("logoutReason", "logout_reason");
 		fieldMap.put("remark", "remark");
 		fieldMap.put("remark1", "remark1");
+		fieldMap.put("totalWeight", "total_weight");
 		
 		this.id = "id";
 	}
 	
 	   private Integer uuid;
 	   private String htPn;
-	   private String cusPn;
-	   private Integer area;
-	   private Integer customerId;
 	   private String appFor;
 	   private String properties;
 	   private String market;
@@ -50,42 +45,31 @@ public class BaseProduct extends BaseVO {
 	   private BigDecimal singleWeight;
 	   private String packSize;
 	   private String ppapStatus;
-	   private Integer picCount;
 	   private String isAlarm;
 	   private BigDecimal alarmWeight;
 	   private String isLogout;
 	   private String logoutReason;
 	   private String remark;
 	   private String remark1;
-	public Integer getUuid() {
-		return uuid;
-	}
-	public void setUuid(Integer uuid) {
-		this.uuid = uuid;
-	}
+	   private BigDecimal totalWeight;
+	   
 	public String getHtPn() {
 		return htPn;
 	}
 	public void setHtPn(String htPn) {
 		this.htPn = htPn;
 	}
-	public String getCusPn() {
-		return cusPn;
+	public BigDecimal getTotalWeight() {
+		return totalWeight;
 	}
-	public void setCusPn(String cusPn) {
-		this.cusPn = cusPn;
+	public void setTotalWeight(BigDecimal totalWeight) {
+		this.totalWeight = totalWeight;
 	}
-	public Integer getArea() {
-		return area;
+	public Integer getUuid() {
+		return uuid;
 	}
-	public void setArea(Integer area) {
-		this.area = area;
-	}
-	public Integer getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public void setUuid(Integer uuid) {
+		this.uuid = uuid;
 	}
 	public String getAppFor() {
 		return appFor;
@@ -153,18 +137,13 @@ public class BaseProduct extends BaseVO {
 	public void setPpapStatus(String ppapStatus) {
 		this.ppapStatus = ppapStatus;
 	}
-	public Integer getPicCount() {
-		return picCount;
-	}
-	public void setPicCount(Integer picCount) {
-		this.picCount = picCount;
-	}
 	public String getIsAlarm() {
 		return isAlarm;
 	}
 	public void setIsAlarm(String isAlarm) {
 		this.isAlarm = isAlarm;
 	}
+	
 	public BigDecimal getAlarmWeight() {
 		return alarmWeight;
 	}

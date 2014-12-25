@@ -1,12 +1,14 @@
 package cn.joymates.erp.domain.base;
 
+import java.util.Date;
+
 public class BasePdctFlow extends BaseVO {
 	
 	public BasePdctFlow(){
 		tablename = "t_pdct_flow";
 		fieldMap.put("pdctFlowId", "id");
 		fieldMap.put("outTime", "out_time");
-		fieldMap.put("pdctId", "pdct_id");
+		fieldMap.put("custPdctId", "cust_pdct_Id");
 		fieldMap.put("count", "count");
 		fieldMap.put("inOrOut", "in_or_out");
 		fieldMap.put("outPerson", "out_person");
@@ -20,8 +22,8 @@ public class BasePdctFlow extends BaseVO {
 	}
 	
 	private Integer pdctFlowId;
-	private String outTime;
-	private Integer pdctId;
+	private Date outTime;
+	private Integer custPdctId;
 	private Integer count;
 	private String inOrOut;
 	private String outPerson;
@@ -40,17 +42,12 @@ public class BasePdctFlow extends BaseVO {
 	public void setPdctFlowId(Integer pdctFlowId) {
 		this.pdctFlowId = pdctFlowId;
 	}
-	public String getOutTime() {
+	
+	public Date getOutTime() {
 		return outTime;
 	}
-	public void setOutTime(String outTime) {
+	public void setOutTime(Date outTime) {
 		this.outTime = outTime;
-	}
-	public Integer getPdctId() {
-		return pdctId;
-	}
-	public void setPdctId(Integer pdctId) {
-		this.pdctId = pdctId;
 	}
 	public Integer getCount() {
 		return count;
@@ -111,6 +108,12 @@ public class BasePdctFlow extends BaseVO {
 	}
 	public void setLogOutReason(String logOutReason) {
 		this.logOutReason = logOutReason;
+	}
+	public Integer getCustPdctId() {
+		return custPdctId;
+	}
+	public void setCustPdctId(Integer custPdctId) {
+		this.custPdctId = custPdctId;
 	}
 	
 	

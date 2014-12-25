@@ -32,11 +32,12 @@
 		j("#serachStr").bind("change",function(){
 			if(j("#serachStr").val() == 1){
 				j("#secStr").empty();
-				j("#secStr").append("<option value=''>经办人</option>");
+				j("#secStr").append("<option value='all'>-全部-</option>");
 				j("#secStr").append("<option value=''>所在仓库</option>");
 				j("#secStr").append("<option value=''>供应商</option>");
 			}else{
 				j("#secStr").empty();
+				j("#secStr").append("<option value='all'>-全部-</option>");
 				j("#secStr").append("<option value=''>华天产品编号</option>");
 				j("#secStr").append("<option value=''>客户产品编号</option>");
 				j("#secStr").append("<option value=''>所在仓库</option>");
@@ -52,7 +53,7 @@
       <div class="hr10"></div>
           <div class="hr10"></div>
           <h2>库存查询</h2>
-		 <form id="form1" action="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_find.html" method="post">
+		 <form id="form1" action="${pageContext.request.contextPath}/admin/stock/stock_find.html" method="post">
           <table class="m-table-form">
              <tbody>
                 <tr>
@@ -62,8 +63,8 @@
 	                  	<option value="1">原材料</option>
 	                  	<option value="2">成品</option>
 	                  </select>
-	                  <select name="serachType" id="secStr" class="u-slt validation-passed">
-	                  	<option value=''>经办人</option>
+	                  <select name="secStr" id="secStr" class="u-slt validation-passed">
+	                  	<option value='all'>-全部-</option>
 	                  	<option value=''>所在仓库</option>
 	                  	<option value=''>供应商</option>
 	                  </select>

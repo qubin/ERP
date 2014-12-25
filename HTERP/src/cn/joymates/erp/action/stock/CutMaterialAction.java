@@ -1,7 +1,6 @@
 package cn.joymates.erp.action.stock;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.List;
 
 import cn.joymates.erp.action.BaseAction;
@@ -35,10 +34,10 @@ public class CutMaterialAction extends BaseAction {
 			if(material == null){
 				material = new Material();
 			}
-			Integer materialId = Integer.parseInt(req.getParameter("mmatId"));
-			material.setUuid(materialId);
-			Material materialInfo = materialService.selectOne(material);
-			String materialDesc = materialInfo.getDesc();
+			Integer mmatId = Integer.parseInt(req.getParameter("mmatId"));
+			material.setMmatId(mmatId);
+			List<Material> materialList = materialService.selectList(material);
+			String materialDesc = materialList.get(0).getDesc();
 			resp.setCharacterEncoding("UTF-8");
 			resp.getWriter().write(materialDesc);
 			resp.getWriter().flush();
@@ -49,35 +48,8 @@ public class CutMaterialAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
-	/*
-	 * 保存分卷信息
-	 */
-	public void cutmaterial(){
-		Integer materialUuid = material.getMmatId();
-		
-		int intFjRow = Integer.parseInt(req.getParameter("txtFjRow")); 
-		
-		for(int i=1;i <= intFjRow;i++){
-			String strGysjh = req.getParameter("txtGysjh"+i);
-			String strClxh = req.getParameter("txtClxh"+i);
-			String strCjjs = req.getParameter("txtCjjs"+i);
-			BigDecimal bd = new BigDecimal(strCjjs);
-			String strCjcc = req.getParameter("txtCjcc"+i);
-			
-			
-			material = new Material();
-			material.setUuid(materialUuid);
-			Material m = materialService.selectOne(material);
-			
-			m.setUuid(null);
-			m.setScrollId(strGysjh);
-			m.setScrollCount(bd);
-			m.setStandard(strCjcc);
-			materialService.save(m);
-		}
-		
-		
-	}
+	
+	
 	
 	
 	

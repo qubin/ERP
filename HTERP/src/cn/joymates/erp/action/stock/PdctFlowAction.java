@@ -1,21 +1,36 @@
 package cn.joymates.erp.action.stock;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import net.sf.json.JSON;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
+import cn.joymates.erp.domain.CustPdct;
+import cn.joymates.erp.domain.CustPno;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.PdctFlow;
+import cn.joymates.erp.domain.ProdDetail;
 import cn.joymates.erp.domain.Product;
+import cn.joymates.erp.domain.User;
 import cn.joymates.erp.domain.Warehouse;
+import cn.joymates.erp.service.CustPdctService;
+import cn.joymates.erp.service.CustPnoService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.PdctFlowService;
+import cn.joymates.erp.service.ProdDetailService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.service.RowFlowService;
 import cn.joymates.erp.service.WarehousService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
+import cn.joymates.erp.utils.db.SessionFactoryUtil;
 
 public class PdctFlowAction extends BaseAction {
 
@@ -24,7 +39,12 @@ public class PdctFlowAction extends BaseAction {
 	private WarehousService wService = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
 	private CustomerService cService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
 	private ProductService pService = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
+	private ProdDetailService pdService = ServiceProxyFactory.getInstanceNoMybatis(new ProdDetailService());
+	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
+	private CustPnoService cpnService = ServiceProxyFactory.getInstanceNoMybatis(new CustPnoService());
 	private Product product;
+	private CustPdct cp;
+	private CustPno cpn;
 	
 	public String showHome(){
 		Warehouse w = new Warehouse();
@@ -36,9 +56,226 @@ public class PdctFlowAction extends BaseAction {
 		c.setIsLogout("0");
 		req.setAttribute("cList", cService.selectList(c));
 		
-		Product p = new Product();
-		p.setIsLogout("0");
-		req.setAttribute("pList", pService.selectList(p));
+
+		return "home";
+	}
+	
+	public String inWarehouse(){
+		try {
+			String choice = req.getParameter("choice");
+			String num = req.getParameter("inOutNum");
+			String whflag = req.getParameter("whflag");
+			String nowTime = req.getParameter("nowTime");
+			String remark = req.getParameter("remark");
+			String boxNum = req.getParameter("boxNum");
+			String nowflag = req.getParameter("nowflag");
+			if(num != null && nowTime != null && choice != null && boxNum != null && nowTime != null){
+				User u = (User) req.getSession().getAttribute("loggedUser");
+				BigDecimal inOutNum = new BigDecimal(num);
+					//入库
+				if("in".equals(choice)){
+						//新入库
+					int pdId = 0;
+					if(whflag != null && !whflag.equals("-1")){
+						//客户产品
+						if("same".equals(nowflag)){
+							cp = cpService.selectOne(cp);
+							CustPdct newCp = new CustPdct();
+							newCp.setCustId(cp.getCustId());
+							newCp.setProdId(cp.getProdId());
+							newCp.setCus_pn(cp.getCus_pn());
+							newCp.setPicCount(Integer.valueOf(num));
+							newCp.setWeight(cp.getWeight());
+							newCp.setArea(Integer.valueOf(whflag));
+							pdId = cpService.save(newCp);
+						}else{
+							cp = cpService.selectOne(cp);
+							cp.setPicCount(Integer.valueOf(num));
+							cp.setArea(Integer.valueOf(whflag));
+							pdId = cp.getCpId();
+							cpService.update(cp);
+						}
+						//批号
+						cpn.setcPdctId(pdId);
+						cpn.setArea(Integer.valueOf(whflag));
+						cpn.setBoxNo(Integer.valueOf(boxNum));
+						cpn.setBoxNum(Integer.valueOf(boxNum));
+						cpnService.save(cpn);
+					}else{
+						//原入库	
+						cp = cpService.selectOne(cp);
+						//客户产品
+						cp.setPicCount(cp.getPicCount() + Integer.valueOf(num));
+						cpService.update(cp);
+						pdId = cp.getCpId();
+						//批号
+						CustPno oldCpn = new CustPno();
+						oldCpn.setcPdctId(cp.getCpId());
+						oldCpn = cpnService.selectList(oldCpn).get(0);
+						oldCpn.setArea(cp.getArea());
+						oldCpn.setBoxNo(oldCpn.getBoxNo() + Integer.valueOf(boxNum));
+						oldCpn.setBoxNum(oldCpn.getBoxNum() + Integer.valueOf(boxNum));
+						cpnService.update(oldCpn);
+					}
+					//成品重量修改
+					Product p = new Product();
+					p.setUuid(cp.getProdId());
+					p = pService.selectOne(p);
+					p.setTotalWeight(p.getTotalWeight().add(cp.getWeight().multiply(inOutNum)));
+					pService.update(p);
+					//出入库记录
+					PdctFlow pf = new PdctFlow();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					pf.setOutTime(sdf.parse(nowTime));
+					pf.setCount(Integer.valueOf(num));
+					pf.setInOrOut("2");
+					pf.setOutPerson(u.getUserLoginId());
+					pf.setCustPdctId(pdId);
+					pf.setRemark(remark);
+					pdctService.save(pf);
+				}else{
+					//出库
+					//客户产品
+					cp = cpService.selectOne(cp);
+					cp.setPicCount(cp.getPicCount() - Integer.valueOf(num));
+					
+					//成品重量
+					Product p = new Product();
+					p.setUuid(cp.getProdId());
+					p = pService.selectOne(p);
+					BigDecimal tempNum = cp.getWeight().multiply(inOutNum);
+					if(p.getTotalWeight().compareTo(tempNum) != 1){
+						//成品总重量出库数量大于库存
+						return showHome();
+					}
+					p.setTotalWeight(p.getTotalWeight().subtract(tempNum));
+				
+					//批号
+					CustPno cpn = new CustPno();
+					cpn.setcPdctId(cp.getCpId());
+					cpn = cpnService.selectList(cpn).get(0);
+					Integer tempNum2 = cpn.getBoxNo() - Integer.valueOf(boxNum);
+					if(tempNum2 < 0){
+						//出库盒数大于库存盒数
+						return showHome();
+					}
+					cpn.setBoxNo(tempNum2);
+					
+					cpService.update(cp);
+					cpnService.update(cpn);
+					pService.update(p);
+					
+					//出入流水
+					PdctFlow pf = new PdctFlow();
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					pf.setOutTime(sdf.parse(nowTime));
+					pf.setCount(Integer.valueOf(num));
+					pf.setInOrOut("1");
+					pf.setOutPerson(u.getUserLoginId());
+					pf.setCustPdctId(cp.getCpId());
+					pf.setRemark(remark);
+					pdctService.save(pf);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return showHome();
+	}
+	
+	public void findProd(){
+		try {
+			String cpId = req.getParameter("cpId");
+			CustPdct cp = new CustPdct();
+			if(cpId != null && !"null".equals(cpId)){
+				cp.setCpId(Integer.valueOf(cpId));
+				cp = cpService.selectOne(cp);
+				Product p = new Product();
+				p.setUuid(cp.getProdId());
+				p = pService.selectOne(p);
+				CustPno cpn = new CustPno();
+				cpn.setcPdctId(cp.getCpId());
+				cpn = cpnService.selectList(cpn).get(0);
+				List list = new ArrayList();
+				list.add(p);
+				list.add(cp);
+				if(cp.getArea() != null){
+					list.add(true);
+				}else{
+					list.add(false);
+				}
+				list.add(cpn);
+				JSONArray obj = JSONArray.fromObject(list);
+				resp.getWriter().write(obj.toString());
+			}else{
+				resp.getWriter().write("");
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void findCusPn(){
+		try {
+			String custId = req.getParameter("custId");
+			if(custId != null){
+				CustPdct cp = new CustPdct();
+				cp.setCustId(Integer.valueOf(custId));
+				JSONArray list = JSONArray.fromObject(cpService.selectList(cp));
+				resp.getWriter().write(list.toString());
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void checkPic(){
+		try {
+			String cpId = req.getParameter("cpId");
+			String picNum = req.getParameter("picNum");
+			if((cpId != null && !"null".equals(cpId)) && (picNum != null && !"null".equals(picNum))){
+				CustPdct custPdct = new CustPdct();
+				custPdct.setCpId(Integer.valueOf(cpId));
+				custPdct = cpService.selectOne(custPdct);
+				if(custPdct.getPicCount() >= Integer.valueOf(picNum)){
+					resp.getWriter().write("true");
+				}else{
+					resp.getWriter().write("false");
+				}
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void checkBoxNum(){
+		try {
+			String boxNum = req.getParameter("boxNum");
+			String cpId = req.getParameter("cpId");
+			if((cpId != null && !"null".equals(cpId)) && (boxNum != null && !"null".equals(boxNum))){
+				CustPdct custPdct = new CustPdct();
+				custPdct.setCpId(Integer.valueOf(cpId));
+				custPdct = cpService.selectOne(custPdct);
+				CustPno cpn = new CustPno();
+				cpn.setcPdctId(custPdct.getCpId());
+				cpn = cpnService.selectList(cpn).get(0);
+				if((cpn.getBoxNo() >= Integer.valueOf(boxNum))){
+					resp.getWriter().write("true");
+				}else{
+					resp.getWriter().write("false");
+				}
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public String add(){
 		return "home";
 	}
 	
@@ -59,6 +296,21 @@ public class PdctFlowAction extends BaseAction {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+
+	public CustPdct getCp() {
+		return cp;
+	}
+
+	public void setCp(CustPdct cp) {
+		this.cp = cp;
+	}
+
+	public CustPno getCpn() {
+		return cpn;
+	}
+
+	public void setCpn(CustPno cpn) {
+		this.cpn = cpn;
+	}
 	
 }

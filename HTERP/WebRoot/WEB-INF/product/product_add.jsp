@@ -29,7 +29,7 @@
 				  </tr>
 				  <tr>
 				  		<th align="right" class="tr">客户产品编号：</th>
-						<td><input type="text" class="u-ipt required" name="product.cusPn" maxlength="60"></td>
+						<td><input type="text" class="u-ipt required" name="pd.cusPn" maxlength="60"></td>
 				  </tr>
 				  <tr>
 						<th align="right" class="tr">车型/钢背应用：</th>
