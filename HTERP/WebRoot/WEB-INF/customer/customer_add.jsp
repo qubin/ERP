@@ -64,7 +64,9 @@
 							<td><label for=""><s:property value="#p.htPn"/></label></td>
 							<th class="tr">客户产品编号：</th>
 							<td><input type="text" class="u-ipt required" name="cusPn"
-								maxlength="60"></td>
+								maxlength="60">
+								<input type="hidden" name="prodId" value="${p.uuid}"/>
+							</td>
 						</tr>
 					</s:iterator>
 					

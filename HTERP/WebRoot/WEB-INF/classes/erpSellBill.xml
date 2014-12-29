@@ -14,6 +14,8 @@
             <result name="examineUI">/WEB-INF/sellbill/sellbill_examineUI.jsp</result>
             <result name="queryhome">/WEB-INF/sellbill/sellbill_queryhome.jsp</result>
             <result name="detail">/WEB-INF/sellbill/sellbill_detail.jsp</result>
+            <result name="finish">/WEB-INF/sellbill/sellbill_finish.jsp</result>
+            <result name="finishUI">/WEB-INF/sellbill/sellbill_finishUI.jsp</result>
         </action>
 	</package>
       

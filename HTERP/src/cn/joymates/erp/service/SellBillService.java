@@ -56,4 +56,27 @@ public class SellBillService extends BaseService<SellBill> {
 		searchsql.append(serachType).append(" like ").append("'%").append(queryStr).append("%'");
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
 	}
+	
+	public List<Map<String, Object>> findFinish(String ec_rd, String queryStr,
+			String serachType, HttpServletRequest req) {
+		StringBuffer resultsql = new StringBuffer();
+		StringBuffer searchsql = new StringBuffer();
+		resultsql.append("SELECT  sb.`verify_remark`,sb.`verify_status`,sb.`id`,sb.`code`,sb.`order_date`,c.`name`,c.`con_person`,c.`con_phone`,sb.`remark` ");
+		resultsql.append("FROM `t_sell_bill` AS sb LEFT JOIN `t_customer` AS c ON sb.`customer_id` = c.`id` where 1 =1 AND ");
+		resultsql.append("sb.verify_status = '1' ");
+		if(queryStr != null && serachType != null){
+			resultsql.append(" AND ").append(serachType).append(" like ").append("'%").append(queryStr).append("%'");
+		}
+		resultsql.append(" ORDER BY sb.`order_date` DESC limit ?, ? ");
+		searchsql.append("SELECT count(*) FROM `t_sell_bill` AS sb LEFT JOIN `t_customer` AS c ON sb.`customer_id` = c.`id` where 1 = 1 AND ");
+		searchsql.append("sb.verify_status = '1' ");
+		if(queryStr != null && serachType != null){
+			searchsql.append(" AND ").append(serachType).append(" like ").append("'%").append(queryStr).append("%'");
+		}
+		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
+	}
+	
+	public void checkFinish(Integer id){
+		
+	}
 }

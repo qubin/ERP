@@ -11,14 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.sf.json.JSONArray;
 
 import com.mysql.jdbc.ResultSetMetaData;
 
+import cn.joymates.erp.dao.impl.MaterialDaoImpl;
+import cn.joymates.erp.dao.impl.ProductDaoImpl;
+import cn.joymates.erp.domain.Material;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.utils.db.DbUtils;
 
-public class StockService extends BaseService<Product>{
+public class StockService extends BaseService<Material>{
+	
+	public StockService(){
+		dao = new MaterialDaoImpl();
+	}
 	
 	public List<Map<String, Object>> findAllMaterial(String queryType,String queryStr){
 		try {
@@ -57,5 +66,40 @@ public class StockService extends BaseService<Product>{
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public List<Map<String, Object>> findMateEcside(String ec_rd,String queryType,String queryStr,HttpServletRequest req){
+		StringBuffer resultsql = new StringBuffer();
+		StringBuffer searchsql = new StringBuffer();
+		resultsql.append("SELECT sm.`ht_mat_no`,m.`id`,w.`sign1`,m.`weight`,sm.`mat_supplier_name`,s.`name`,m.`desc1`,m.`is_logout`,m.`logout_reason`,m.`remark` "
+				+ "FROM `t_material` AS m LEFT JOIN `t_supply_mat` AS sm ON m.`supplymat_id` = sm.`id` "
+				+ "LEFT JOIN `t_supplier` AS s ON sm.`supply_id` = s.`id` LEFT JOIN `t_warehouse` AS w ON m.`warehouse_id` = w.`id` WHERE 1 = 1 ");
+		if(queryType != null && queryStr != null){
+			resultsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
+		}
+		resultsql.append(" ORDER BY m.`id` DESC limit ?, ? ");
+		searchsql.append("SELECT COUNT(*) "
+				+ "FROM `t_material` AS m LEFT JOIN `t_supply_mat` AS sm ON m.`supplymat_id` = sm.`id` "
+				+ "LEFT JOIN `t_supplier` AS s ON sm.`supply_id` = s.`id` LEFT JOIN `t_warehouse` AS w ON m.`warehouse_id` = w.`id` WHERE 1 = 1 " );
+		if(queryType != null && queryStr != null){
+			searchsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
+		}
+		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
+	}
+	
+	public List<Map<String, Object>> findProd(String ec_rd,String queryType,String queryStr,HttpServletRequest req){
+		StringBuffer resultsql = new StringBuffer();
+		StringBuffer searchsql = new StringBuffer();
+		resultsql.append("select * from t_product where 1 = 1 ");
+		if(queryType != null && queryStr != null){
+			resultsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
+		}
+		resultsql.append(" ORDER BY id ASC limit ?, ?");
+		searchsql.append("select count(*) from t_product where 1 = 1");
+		if(queryType != null && queryStr != null){
+			searchsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
+		}
+		ProductDaoImpl pdDao = new ProductDaoImpl();
+		return pdDao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
 	}
 }

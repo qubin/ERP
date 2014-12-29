@@ -69,12 +69,25 @@
 						<td><input type="text" class="u-ipt" name="cust.remark"
 							maxlength="60" value="${cust.remark}"></td>
 					</tr>
+					<s:iterator value="#request.dataList" id="data">
+						<tr>
+							<th class="tr">华天产品编号：</th>
+							<td ><label for=""><s:property value="#data.ht_pn"/></label></td>
+							<th class="tr">客户产品编号：</th>
+							<td><input type="text" class="u-ipt required" name="cusPn"
+								maxlength="60" value="${data.cus_pn}">
+								所在仓库<label for="">${data.sign1 }</label>
+								<input type="hidden" name="cpId" value="${data.id}"/>
+							</td>
+						</tr>
+					</s:iterator>
 				</tbody>
 				<tfoot>
 					<tr>
 						<td colspan="4" class="tc"><input class="u-btn" type="submit"
-							value="提交" id="submitBtn" /> &emsp; <input class="u-btn"
-							type="button" onclick="javascript:history.back()" value="返回" /></td>
+							value="提交" id="submitBtn" /> &emsp; 
+							<input class="u-btn"type="button" onclick="javascript:history.back()" value="返回" />
+							</td>
 					</tr>
 				</tfoot>
 			</table>

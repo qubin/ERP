@@ -7,9 +7,13 @@
 
 	<package name="stockManager" extends="struts-default" namespace="/admin/stock" >
 		<action name="stock_*" class="cn.joymates.erp.action.stock.StockAction" method="{1}">
-            <result name="home">/WEB-INF/stock/stock_home.jsp</result>
+            <result name="rowList">/WEB-INF/stock/stock_rowList.jsp</result>
+            <result name="prodList">/WEB-INF/stock/stock_prodList.jsp</result>
             <result name="addUI">/WEB-INF/stock/stock_add.jsp</result>
             <result name="modifyUI">/WEB-INF/stock/stock_modify.jsp</result>
+            <result name="choice">/WEB-INF/stock/stock_choice.jsp</result>
+            <result name="detail">/WEB-INF/stock/stock_detail.jsp</result>
+            <result name="prodDetail">/WEB-INF/stock/stock_prodDetail.jsp</result>
         </action>
 	</package>
       

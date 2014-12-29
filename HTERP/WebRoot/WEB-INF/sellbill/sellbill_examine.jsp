@@ -50,7 +50,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
 	                  	<option value="all">全部</option>
 	                  	<option value="code">订货编号</option>
 	                  	<option value="order_date">订货日期</option>

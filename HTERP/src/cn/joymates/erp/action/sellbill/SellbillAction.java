@@ -2,6 +2,7 @@ package cn.joymates.erp.action.sellbill;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,9 +10,12 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.Customer;
+import cn.joymates.erp.domain.Pdceistct;
 import cn.joymates.erp.domain.SellBill;
 import cn.joymates.erp.domain.SellDetail;
+import cn.joymates.erp.domain.User;
 import cn.joymates.erp.service.CustomerService;
+import cn.joymates.erp.service.PdceistctService;
 import cn.joymates.erp.service.SellBillService;
 import cn.joymates.erp.service.SellDetailService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
@@ -25,6 +29,13 @@ public class SellbillAction extends BaseAction {
 	private Customer cust;
 	private SellBill sb;
 	
+	public String finish(){
+		List<Map<String, Object>> l = sService.findFinish(ec_rd, null, null, req);
+		req.setAttribute("fList", l);
+		req.setAttribute("STATUS", SellBill.STATUS);
+		return "finish";
+	}
+
 	public String showHome(){
 		req.setAttribute("list", sService.findAll(ec_rd, req,"showHome"));
 		req.setAttribute("STATUS", SellBill.STATUS);
@@ -50,8 +61,12 @@ public class SellbillAction extends BaseAction {
 	
 	public String pass(){
 		sb = sService.selectOne(sb);
-		sb.setVerifyStatus("1");
-		sService.update(sb);
+		if(sb.getSbId() != null){
+			sb.setVerifyStatus("1");
+			User u = (User) req.getSession().getAttribute("loggedUser");
+			sb.setVerifyPerson(u.getUserLoginId());
+			sService.update(sb);
+		}
 		return examine();
 	}
 	
@@ -129,12 +144,18 @@ public class SellbillAction extends BaseAction {
 		Customer c = new Customer();
 		c.setCustId(sb.getCustId());
 		req.setAttribute("sb", sb);
-		JSONArray list = JSONArray.fromObject(sdService.selectList(sd));
-		req.setAttribute("sdList", list.toString());
+		if(sdService.selectList(sd).size() == 0){
+			req.setAttribute("sdList", "");
+		}else{
+			JSONArray list = JSONArray.fromObject(sdService.selectList(sd));
+			req.setAttribute("sdList", list.toString());
+		}
 		req.setAttribute("cust", cService.selectOne(c));
 		String detail = req.getParameter("detail");
 		if("true".equals(detail)){
 			return "detail";
+		}else if("finish".equals(detail)){
+			return "finishUI";
 		}else{
 			return "examineUI";
 		}
@@ -191,6 +212,67 @@ public class SellbillAction extends BaseAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void checkFinish(){
+		try {
+			sb = sService.selectOne(sb);
+			if(sb.getSbId() != null){
+				SellDetail sd = new SellDetail();
+				sd.setSbId(sb.getSbId());
+				List<SellDetail> sdList = sdService.selectList(sd);
+				PdceistctService piService = new PdceistctService();
+				List<Pdceistct> piList = new ArrayList<Pdceistct>();
+				for(int i = 0 ; i < sdList.size(); i ++){
+					Pdceistct pi = new Pdceistct();
+					pi.setsDetailId(sdList.get(i).getSellDetailId());
+					piList.add(piService.selectList(pi).get(0));
+				}
+				String flag = "true";
+				for(Pdceistct pi : piList){
+					if(pi.getIsOver().equals("2")){
+						flag = "false";
+					}
+				}
+				resp.getWriter().write(flag);
+			}else{
+				resp.getWriter().write("");
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public String finishSellBill(){
+		sb = sService.selectOne(sb);
+		if(sb.getSbId() != null){
+			sb.setIsOrderOver("1");
+			User u = (User) req.getSession().getAttribute("loggedUser");
+			sb.setOverPerson(u.getUserLoginId());
+			sService.update(sb);
+			return finish();
+		}
+		return finish();
+	}
+	
+	public String finishFind(){
+		String queryStr = req.getParameter("queryStr");
+		String serachType = req.getParameter("serachType");
+		if(serachType != null){
+			if("all".equals(serachType)){
+				return examine();
+			}else{
+				if(queryStr != null){
+					List<Map<String, Object>> s = sService.findFinish(ec_rd,queryStr,serachType,req);
+					req.setAttribute("list", s);
+					req.setAttribute("STATUS", SellBill.STATUS);
+					return "finish";
+				}
+				return finish();
+			}
+		}
+		return finish();
 	}
 	
 	public String add(){

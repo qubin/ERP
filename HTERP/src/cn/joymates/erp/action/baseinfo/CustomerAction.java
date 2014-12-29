@@ -7,8 +7,12 @@ import java.util.Map;
 import com.opensymphony.xwork2.ModelDriven;
 
 import cn.joymates.erp.action.BaseAction;
+import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Customer;
+import cn.joymates.erp.domain.Product;
+import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
+import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.service.SupplierService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
@@ -16,6 +20,8 @@ public class CustomerAction extends BaseAction{
 	
 	private static final long serialVersionUID = -5181364297104798752L;
 	private CustomerService service = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
+	private ProductService pservice = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
+	private CustPdctService cpservice = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
 	private Customer cust;
 	
 	public String showHome(){
@@ -43,8 +49,19 @@ public class CustomerAction extends BaseAction{
 	}
 	public String add(){
 		try {
-			service.save(cust);
-			return showHome();
+			String[] cusPn = req.getParameterValues("cusPn");
+			String[] prodId = req.getParameterValues("prodId");
+			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){
+				int custId = service.save(cust);
+				for(int i = 0; i < cusPn.length; i ++){
+					CustPdct cp = new CustPdct();
+					cp.setCustId(custId);
+					cp.setProdId(Integer.valueOf(prodId[i]));
+					cp.setCus_pn(cusPn[i]);
+					cpservice.save(cp);
+				}
+				return showHome();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -70,12 +87,24 @@ public class CustomerAction extends BaseAction{
 	}
 	
 	public String showAddUI(){
+		List pList = pservice.selectList(new Product());
+		req.setAttribute("pList", pList);
 		return "addUI";
 	}
 	
 	public String modify(){
 		try {
 			service.update(cust);
+			String[] cusPn = req.getParameterValues("cusPn");
+			String[] cpId = req.getParameterValues("cpId");
+			for(int i = 0;i < cusPn.length; i ++){
+				CustPdct temp = new CustPdct();
+				temp.setCpId(Integer.valueOf(cpId[i]));
+				temp = cpservice.selectOne(temp);
+				temp.setCus_pn(cusPn[i]);
+				cpservice.update(temp);
+			}
+			
 			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -86,6 +115,8 @@ public class CustomerAction extends BaseAction{
 	public String showModifyUI(){
 		try {
 			cust = service.selectOne(cust);
+			List<Map<String, Object>> list = service.findModify(cust.getCustId());
+			req.setAttribute("dataList", list);
 			return "modifyUI";
 		} catch (Exception e) {
 			e.printStackTrace();
