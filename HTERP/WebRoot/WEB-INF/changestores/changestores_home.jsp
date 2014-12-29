@@ -158,6 +158,15 @@ ul {
 		document.getElementById("labSuppRk").innerHTML = "";
 		document.getElementById("strMaterialId").value = "";
 	}
+	
+	function resetForm2(){
+		document.getElementById("form2").reset();
+		document.getElementById("labProBj").innerHTML = "";
+		document.getElementById("labProLk").innerHTML = "";
+		document.getElementById("labProMj").innerHTML = "";
+		document.getElementById("labProDpzl").innerHTML = "";
+		document.getElementById("labProSzk").innerHTML = "";
+	}
 
 	function getProductInfo(obj) {
 		var url = "${pageContext.request.contextPath}/admin/changestores/changestores_getProductInfo.html?proid=" + obj.value;
@@ -168,28 +177,33 @@ ul {
 					onSuccess : function(data) 
 					{
 						var jsonData = eval("(" + data.responseText + ")");
-						alert(jsonData);
-						document.getElementById("labProBj").innerHTML = jsonData.density;
-						document.getElementById("labProLk").innerHTML = jsonData.thickness;
-						document.getElementById("labProMj").innerHTML = jsonData.desc1;
-						document.getElementById("labProDpzl").innerHTML = jsonData.name;
-						document.getElementById("labProSzk").innerHTML = jsonData.sign1;
+						document.getElementById("labProBj").innerHTML = jsonData[0].step_pitch;
+						document.getElementById("labProLk").innerHTML = jsonData[0].mat_width;
+						document.getElementById("labProMj").innerHTML = jsonData[0].areca;
+						document.getElementById("labProDpzl").innerHTML = jsonData[0].weight;
+						document.getElementById("labProSzk").innerHTML = jsonData[0].sign1;
 					}
 				});
 	}
 
+	function confimProduct(){
+		if(confirm("您确定要转到该库吗？")){
+			alert("转库成功！");
+		}
+	}
+
+	function confimMaterial(){
+		if(confirm("您确定要转到该库吗？")){
+			alert("转库成功！");
+		}
+	}
+
 	function setTab(m, n) {
-
-		var tli = document.getElementById("menu" + m)
-				.getElementsByTagName("li");
-		var mli = document.getElementById("main" + m)
-				.getElementsByTagName("ul");
-
+		var tli = document.getElementById("menu" + m).getElementsByTagName("li");
+		var mli = document.getElementById("main" + m).getElementsByTagName("ul");
 		for (var i = 0; i < tli.length; i++) {
-
 			tli[i].className = i == n ? "hover" : "";
 			mli[i].style.display = i == n ? "block" : "none";
-
 		}
 	}
 </script>
@@ -276,12 +290,10 @@ ul {
 							</p>
 							<br>
 							<p align="center">
-								<input name="button" type="submit" class="u-btn" id="button"
-									value="提交"> <input name="button" type="button"
-									onclick="resetForm()" class="u-btn" id="button" value="重置">
+								<input name="button" onclick="return confimMaterial()" type="submit" class="u-btn" id="button" value="提交"> 
+								<input name="button" type="button" onclick="resetForm()" class="u-btn" id="button" value="重置">
 							</p>
 						</form>
-
 
 					</li>
 				</ul>
@@ -291,7 +303,7 @@ ul {
 
 
 						<form id="form2"
-							action="${pageContext.request.contextPath }/admin/changestores/changestores_changestores.html"
+							action="${pageContext.request.contextPath }/admin/changestores/changestores_changestoresProduct.html"
 							method="post">
 							<input type="hidden" name="strProductlId" id="strProductlId">
 							<table class="m-table-form">
@@ -327,7 +339,7 @@ ul {
 									<tr>
 										<th height="40" class="tr">要&nbsp;转&nbsp;到：</th>
 										<td height="40">
-											<s:select name="updatestore"
+											<s:select name="custPdct.area"
 													  cssClass="u-ipt required validate-selection"
 													  list="#request.warehouseList" 
 													  listKey="warehouseId"
@@ -343,13 +355,11 @@ ul {
 							</p>
 							<br>
 							<p align="center">
-								<input name="button" type="submit" class="u-btn" id="button"
-									value="提交"> <input name="button" type="button"
-									onclick="resetForm()" class="u-btn" id="button" value="重置">
+								<input name="button" onclick="return confimProduct()" type="submit" class="u-btn" id="button" value="提交"> 
+								<input name="button" type="button" onclick="resetForm2()" class="u-btn" id="button" value="重置">
 							</p>
 						</form>
-
-
+						
 					</li>
 				</ul>
 
@@ -358,18 +368,6 @@ ul {
 		</div>
 
 	</div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<!-- /#container -->
 	<!--javascript start-->

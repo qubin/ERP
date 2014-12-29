@@ -150,12 +150,10 @@ ul {
 					onSuccess : function(data) 
 					{
 						var jsonData = eval("(" + data.responseText + ")");
-						alert(jsonData);
-						document.getElementById("labProBj").innerHTML = jsonData.density;
-						document.getElementById("labProLk").innerHTML = jsonData.thickness;
-						document.getElementById("labProMj").innerHTML = jsonData.desc1;
-						document.getElementById("labProDpzl").innerHTML = jsonData.name;
-						document.getElementById("labProSzk").innerHTML = jsonData.sign1;
+						document.getElementById("labProBj").innerHTML = jsonData[0].step_pitch;
+						document.getElementById("labProLk").innerHTML = jsonData[0].mat_width;
+						document.getElementById("labProMj").innerHTML = jsonData[0].areca;
+						document.getElementById("labProDpzl").innerHTML = jsonData[0].weight;
 					}
 				});
 	}
@@ -241,15 +239,15 @@ ul {
 										<td height="40"><label id="labSuppMs"></label></td>
 									</tr>
 									<tr>
-										<th height="40" class="tr">重&nbsp;&nbsp;&nbsp;&nbsp;量：</th>
+										<th height="40" class="tr">隔离重量：</th>
 										<td height="40">
-											<input type="text" name="qcstore.weight" class="u-ipt required"/>
+											<input type="text" name="qcstore.weight" class="u-ipt required"/><font style="color: red;">( *注：正数为添加QC数量，负数为移除QC数量)</font>
 										</td>
 									</tr>
 									<tr>
 										<th height="40" class="tr">隔离原因：</th>
 										<td height="40">
-											<input type="text" name="qcstore.isolateReason" class="u-ipt required"/><font style="color: red;">( *注：正数为添加QC数量，负数为移除QC数量)</font>
+											<input type="text" name="qcstore.isolateReason" class="u-ipt required"/>
 										</td>
 									</tr>
 								</tbody>
@@ -273,13 +271,13 @@ ul {
 
 
 						<form id="form2"
-							action="${pageContext.request.contextPath }/admin/qcstore/qcstore_qcstore.html"
+							action="${pageContext.request.contextPath }/admin/qcstore/qcstore_qcstoreProduct.html"
 							method="post">
-							<input type="hidden" name="strProductlId" id="strProductlId">
+							
 							<table class="m-table-form">
 								<tbody>
 									<tr>
-										<th width="50%" height="40" class="tr">华天产品编号：</th>
+										<th width="45%" height="40" class="tr">华天产品编号：</th>
 										<td height="40"><s:select name="product.uuid"
 												onchange="getProductInfo(this)"
 												cssClass="u-ipt required validate-selection"
@@ -302,6 +300,18 @@ ul {
 										<th height="40" class="tr">单片重量：</th>
 										<td height="40"><label id="labProDpzl"></label></td>
 									</tr>
+									<tr>
+										<th height="40" class="tr">隔离片数：</th>
+										<td height="40">
+											<input type="text" name="qcstore.picCount" class="u-ipt required"/><font style="color: red;">( *注：正数为添加QC数量，负数为移除QC数量)</font>
+										</td>
+									</tr>
+									<tr>
+										<th height="40" class="tr">隔离原因：</th>
+										<td height="40">
+											<input type="text" name="qcstore.isolateReason" class="u-ipt required"/>
+										</td>
+									</tr>
 								</tbody>
 							</table>
 							<p>
@@ -309,9 +319,8 @@ ul {
 							</p>
 							<br>
 							<p align="center">
-								<input name="button" type="submit" class="u-btn" id="button"
-									value="提交"> <input name="button" type="button"
-									onclick="javascript:history.back()" class="u-btn" id="button" value="返回">
+								<input name="button" type="submit" class="u-btn" id="button" value="提交"> 
+								<input name="button" type="button" onclick="javascript:history.back()" class="u-btn" id="button" value="返回">
 							</p>
 						</form>
 

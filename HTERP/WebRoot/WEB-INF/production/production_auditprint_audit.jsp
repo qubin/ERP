@@ -9,17 +9,6 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title></title>
-<script language="javascript" src="../assets/js/LodopFuncs.js"></script>
-<object  id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
-       <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
-</object>
-<link type="text/css" rel="stylesheet" href="../assets/css/easyui.css" />
-<link type="text/css" rel="stylesheet" href="../assets/css/font-awesome.min.css" />
-<!--[if IE 7]>
-  <link type="text/css" rel="stylesheet" href="../assets/css/font-awesome-ie7.min.css"/>
-  <![endif]-->
-<link type="text/css" rel="stylesheet" href="../assets/css/base.css" />
-<link type="text/css" rel="stylesheet" href="../assets/css/style.css" />
 <style type="text/css">
 <!--
 .STYLE1 {
@@ -62,7 +51,58 @@
 	}
 	
 	function printView(){
-		var LODOP = getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
+		var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM')); 
+		//var LODOP=getLodop();
+		
+		
+				
+		LODOP.PRINT_INITA(-1,0,869,802,"lodop dome");
+		LODOP.ADD_PRINT_TEXT(20,307,232,32,"生产指令单 work order");
+		LODOP.SET_PRINT_STYLEA(0,"FontSize",14);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(80,22,87,20,"材料名称：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(80,120,120,20,"MS1835-1505-2");
+		LODOP.ADD_PRINT_TEXT(125,23,87,20,"使用重量：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(125,122,120,20,"29.2KG");
+		LODOP.ADD_PRINT_TEXT(175,21,87,20,"材料规格：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(175,120,120,20,"46*0.40");
+		LODOP.ADD_PRINT_TEXT(80,278,87,20,"华天零件号：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(80,387,120,20,"HTS4383-E105");
+		LODOP.ADD_PRINT_TEXT(125,276,87,20,"客户零件号：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(125,384,120,20,"PA8809");
+		LODOP.ADD_PRINT_TEXT(169,274,87,20,"订单号：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(169,382,120,20,"2014101603");
+		LODOP.ADD_PRINT_TEXT(80,538,87,20,"订单数量：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(80,646,120,20,"4000PCS");
+		LODOP.ADD_PRINT_TEXT(126,537,87,20,"下单日期：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(126,645,120,20,"2014-10-16");
+		LODOP.ADD_PRINT_TEXT(166,536,87,20,"完成日期：");
+		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
+		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
+		LODOP.ADD_PRINT_TEXT(166,644,120,20,"2014-10-20");
+		LODOP.ADD_PRINT_TABLE(214,17,772,364,"(超文本20表格的HTML代码内容)");
+		LODOP.ADD_PRINT_TABLE(575,30,784,279,"(超文本21表格的HTML代码内容)");
+		
+
+
+		LODOP.PREVIEW();                             
+		
 	}
 
 	window.onload = function() {
@@ -72,24 +112,29 @@
 </head>
 
 <body>
+
+	<object  id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
+	    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	</object>
+
 	<div id="container" class="container">
 		<form id="form1" action="${pageContext.request.contextPath}/admin/production/production_audit.html" method="post">
 			<div>
 				<div align="right">
 					<table>
 						<tr>
-							<td><input type="text" id="txtVerifyRemark" name="pdceistct.verifyRemark" class="u-ipt" /></td>
+							<td><input type="text" id="txtVerifyRemark" name="pdceistct.verifyRemark" class="u-ipt" />&nbsp;</td>
 							<td>
-								<button class="u-btn" onclick="return printView()">预&nbsp;&nbsp;览</button>
+								<input class="u-btn" type="button" value="预   览" onclick="javascript:printView()">&nbsp;
 							</td>
 							<td>
-								<button class="u-btn" type="submit" onclick="return audit()">审核通过并打印</button>
+								<input type="submit" onclick="return audit()" class="u-btn" value="审核通过并打印">&nbsp;
 							</td>
 							<td>
-								<button class="u-btn" type="submit" onClick="return notAudit()">未通过</button>
+								<input type="submit" onclick="return notAudit()" class="u-btn" value="未通过">&nbsp;
 							</td>
 							<td>
-								<button class="u-btn" onClick="javascript:history.back()">返&nbsp;&nbsp;回</button>
+								<input type="button" onclick="javascript:history.back()" class="u-btn" value="返回">
 							</td>
 						</tr>
 					</table>
@@ -119,7 +164,7 @@
 						<th class="tr">使用重量：</th>
 						<td>${sczldList[0].USED_MAT_WEIGHT}KG</td>
 						<th class="tr">客户零件号：</th>
-						<td>${sczldList[0].CUS_PDCT_NO}</td>
+						<td>${sczldList[0].CUS_PN}</td>
 						<th class="tr">下单日期：</th>
 						<td>${sczldList[0].ORDER_DATE}</td>
 					</tr>

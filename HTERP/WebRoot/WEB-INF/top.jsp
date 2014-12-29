@@ -28,6 +28,9 @@
 	<script src="${pageContext.request.contextPath}/assets/js/validation/validation_cn.js" type="text/javascript"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/libs/jquery-1.8.3.min.js"></script>
 	<script src="${pageContext.request.contextPath}/assets/js/myUtils.js" type="text/javascript"></script>
+	
+	<script language="javascript" src="${pageContext.request.contextPath}/assets/js/LodopFuncs.js"></script>
+	
 	 <script type="text/javascript"> 
 	 	$.noConflict();
 	 	

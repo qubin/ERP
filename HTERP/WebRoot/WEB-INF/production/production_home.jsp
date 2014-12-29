@@ -78,10 +78,11 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="CODE" title="订货编号" width="11%" style="text-align:center" />
-					<ec:column property="ORDER_DATE" title="订货日期" width="11%" style="text-align:center"/>
+					<ec:column property="CODE" title="订单号" width="11%" style="text-align:center" />
+					<ec:column property="ORDER_DATE" title="下单日期" width="11%" style="text-align:center"/>
 					<ec:column property="LEAD_DATE" title="供货日期" width="11%" style="text-align:center"/>
-					<ec:column property="SUPPLY_AREA" title="供货场地" width="11%"/>
+					<ec:column property="CUS_PN" title="客户零件号" width="11%"/>
+					<ec:column property="ORDER_COUNT" title="订单数量" width="11%"/>
 					<ec:column property="REMARK" title="备注" width="11%"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
 						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/production/production_showAddUI.html?pdceistct.uuid=${sr.ID}">转指令单</a>

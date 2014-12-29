@@ -11,7 +11,9 @@
             <result name="addUI">/WEB-INF/production/production_add.jsp</result>
             <result name="shwoAuditPrint">/WEB-INF/production/production_auditprint.jsp</result>
             <result name="showAudit">/WEB-INF/production/production_auditprint_audit.jsp</result>
-            
+            <result name="showOverProductionHome">/WEB-INF/production/production_showOverProductionHome.jsp</result>
+            <result name="productionOverHome">/WEB-INF/production/production_productionOverHome.jsp</result>
+            <result name="showOverProduction">/WEB-INF/production/production_showOverProduction.jsp</result>
         </action>
 	</package>
       

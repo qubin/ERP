@@ -55,7 +55,7 @@
                   <th width="50"><input type="text" class="u-ipt" name="pdceistct_name"/></th>        
                   <td>
 					 <button type="button" class="u-btn" onclick="javascript:document.getElementById('form1').submit()">查询</button>&emsp;                   
-                  </td>
+                   </td>
                 </tr>                				                           
              </tbody>
           </table>
@@ -77,14 +77,14 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="logoutMap"/>
+					<ec:column property="IS_OVER" title="是否结单" width="11%" style="text-align:center" mappingItem="overMap"/>
 					<ec:column property="CODE" title="订单号" width="11%"/>
 					<ec:column property="CUS_PN" title="客户零件号" width="11%"/>
 					<ec:column property="START_DATE" title="生产开始日期" width="11%" style="text-align:center"/>
 					<ec:column property="PDCE_COUNT" title="生产数量" width="11%" style="text-align:center"/>
 					<ec:column property="USED_MAT_WEIGHT" title="消耗原材料数量" width="11%"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/production/production_showAudit.html?pdceistct.uuid=${sr.ID}">预&nbsp;&nbsp;览</a>
+						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/production/production_showOverProduction.html?pdceistct.uuid=${sr.ID}">结&nbsp;&nbsp;单</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

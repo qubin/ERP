@@ -28,6 +28,8 @@ public class BasePdceistct extends BaseVO {
 		fieldMap.put("productId", "product_id");
 		fieldMap.put("verifyStatus", "verify_status");
 		fieldMap.put("verifyRemark", "verify_remark");
+		fieldMap.put("backMaterialCount", "back_material_count");
+		
 		
 		this.id = "id";
 	}
@@ -50,6 +52,7 @@ public class BasePdceistct extends BaseVO {
 	private Integer productId;
 	private String verifyStatus;
 	private String verifyRemark;
+	private BigDecimal backMaterialCount;
 	
 	public Integer getUuid() {
 		return uuid;
@@ -165,4 +168,11 @@ public class BasePdceistct extends BaseVO {
 	public void setVerifyRemark(String verifyRemark) {
 		this.verifyRemark = verifyRemark;
 	}
+	public BigDecimal getBackMaterialCount() {
+		return backMaterialCount;
+	}
+	public void setBackMaterialCount(BigDecimal backMaterialCount) {
+		this.backMaterialCount = backMaterialCount;
+	}
+	
 }

@@ -20,6 +20,7 @@ import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.dao.IWarehouse;
 import cn.joymates.erp.dao.impl.WarehouseDaoImpl;
 import cn.joymates.erp.domain.Material;
+import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.domain.QCStore;
 import cn.joymates.erp.domain.Supplier;
 import cn.joymates.erp.domain.SupplyMat;
@@ -156,9 +157,9 @@ public class QCStoreAction extends BaseAction {
 		}
 	}
 	
-	
-	
-	
+	/*
+	 * 添加材料QC
+	 */
 	public String add() {
 		String strQcType = req.getParameter("txtQcType");	//获取保存qc的类型  1：材料  2：成品
 		if(strQcType.equals("1")){
@@ -180,30 +181,87 @@ public class QCStoreAction extends BaseAction {
 				qcstore.setMatPdctId(material.getUuid());
 				service.save(qcstore);
 			}
-			
-			
-		}else{
-			
 		}
 		return showHome();
 	}
 	
-	public String showModifyUI() {
-		return "modifyUI";
+	
+	/*
+	 * 获取产品信息
+	 */
+	public void getProductInfo(){
+		try {
+			Integer productId = Integer.parseInt(req.getParameter("proid"));
+			
+			String sql  = "SELECT *,p.id AS pId,cp.id AS cpId FROM t_product AS p LEFT JOIN t_cust_pdct AS cp ON p.id=cp.product_id ";
+				   sql += "LEFT JOIN t_warehouse AS w ON cp.area=w.id ";
+				   sql += "WHERE p.id='" + productId + "'";
+				   
+			List list = getProductInfoAndDetailById(sql);
+			
+			JSONArray jo = JSONArray.fromObject(list);
+			
+			System.out.println(jo.toString());
+
+			resp.setCharacterEncoding("UTF-8");
+			resp.getWriter().write(jo.toString());
+			resp.getWriter().flush();
+			resp.getWriter().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public String delete(){
+	/*
+	 * 获取产品和产品详情信息
+	 */
+	public List getProductInfoAndDetailById(String sql) {
+		Connection conn = null;
+		PreparedStatement prst = null;
+		ResultSet rs = null;
+		try {
+			conn = DbUtils.getConnection();
+			prst = conn.prepareStatement(sql);
+			rs = prst.executeQuery();
 
+			ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+			List list = new ArrayList();
+			int columnCount = md.getColumnCount(); // Map rowData;
+			while (rs.next()) {
+				Map rowData = new HashMap();
+				for (int i = 1; i <= columnCount; i++) {
+					rowData.put(md.getColumnName(i), rs.getObject(i));
+				}
+				list.add(rowData);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} finally {
+			DbUtils.closeStatement(prst);
+		}
+	}
+	
+	/*
+	 * 增加产品QC
+	 */
+	public String qcstoreProduct(){
+		QCStore qc = new QCStore();
+		qc.setMatOrPdct("2");							//1：材料   2：产品
+		qc.setMatPdctId(product.getUuid());
+		List<QCStore> qclist = service.selectList(qc);	//查询是否存在该信息
+		if(qclist.size() > 0){	//如果存在则修改
+			qcstore.setUuid(qclist.get(0).getUuid());
+			qcstore.setPicCount(qclist.get(0).getPicCount() + qcstore.getPicCount());
+			service.update(qcstore);
+		}else{					//如果不存在则添加
+			qcstore.setMatOrPdct("2");					//1：材料   2：产品
+			qcstore.setMatPdctId(product.getUuid());
+			service.save(qcstore);
+		}
 		return showHome();
 	}
-	
-	public String modify() {
-		return showHome();
-	}
-	
-	
-
-	
 	
 	
 	
@@ -218,10 +276,12 @@ public class QCStoreAction extends BaseAction {
 	private MaterialService materialService = ServiceProxyFactory.getInstanceNoMybatis(new MaterialService());
 	private ProductService productService = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
 	private SupplyMatService supplyMatService = ServiceProxyFactory.getInstanceNoMybatis(new SupplyMatService());
+	
 	private Material material;
 	private SupplyMat supplyMat;
 	private Supplier supplier;
 	private QCStore qcstore;
+	private Product product;
 	
 	private String qcstore_key;
 	private String qcstore_name;
@@ -280,6 +340,14 @@ public class QCStoreAction extends BaseAction {
 
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 }

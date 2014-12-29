@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableMap;
 import cn.joymates.erp.domain.base.BaseQCStore;
 
 public class QCStore extends BaseQCStore {
+	//1：材料  2：成品
 	public static final String MATERIAL = "1";
 	public static final String PRODUCT = "2";
 	public static Map<String, String> qcTypeMap = ImmutableMap.of(MATERIAL, "材料",PRODUCT, "成品");
