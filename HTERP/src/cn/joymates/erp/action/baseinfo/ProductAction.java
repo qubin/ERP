@@ -5,13 +5,9 @@ import java.util.Map;
 
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.Customer;
-import cn.joymates.erp.domain.ProdDetail;
 import cn.joymates.erp.domain.Product;
-import cn.joymates.erp.domain.Warehouse;
 import cn.joymates.erp.service.CustomerService;
-import cn.joymates.erp.service.ProdDetailService;
 import cn.joymates.erp.service.ProductService;
-import cn.joymates.erp.service.WarehousService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class ProductAction extends BaseAction {
@@ -50,10 +46,7 @@ public class ProductAction extends BaseAction {
 	}
 	
 	public String add() {
-		//´ý¶¨
-		int uuid = service.save(product);
-		pd.setPdctId(uuid);
-		pdService.save(pd);
+		service.save(product);
 		return showHome();
 	}
 	
@@ -108,21 +101,10 @@ public class ProductAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private ProductService service = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
 	private CustomerService customerService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
-	private WarehousService warehousService = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
-	private ProdDetailService pdService = ServiceProxyFactory.getInstanceNoMybatis(new ProdDetailService());
 	private Product product;
 	private String product_key;
 	private String product_name;
-	private ProdDetail pd;
 	
-	
-	public ProdDetail getPd() {
-		return pd;
-	}
-
-	public void setPd(ProdDetail pd) {
-		this.pd = pd;
-	}
 
 	public String getProduct_key() {
 		return product_key;

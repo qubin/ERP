@@ -45,7 +45,7 @@
                   	查询条件：
                   </th>
                   <td width="10">
-                  	<select class="u-ipt" name="material_key">
+                  	<select class="u-ipt validate-selection" name="material_key">
                   		<option value="ALL">---查询所有---</option>
                   		<option value="NAME">供应商</option>
                   		<option value="DENSITY">面密度</option>

@@ -4,8 +4,6 @@ import java.net.URLDecoder;
 import java.util.List;
 import java.util.Map;
 
-import com.opensymphony.xwork2.ModelDriven;
-
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Customer;
@@ -13,7 +11,6 @@ import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
-import cn.joymates.erp.service.SupplierService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class CustomerAction extends BaseAction{
