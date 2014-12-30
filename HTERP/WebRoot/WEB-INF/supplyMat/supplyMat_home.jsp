@@ -83,6 +83,8 @@
 					<ec:column property="SUPPLY_ID" title="仓库ID" width="25%" style="text-align:center"/>
 					<ec:column property="MAT_SUPPLIER_NAME" title="材料名称" width="25%" style="text-align:center"/>
 					<ec:column property="HT_MAT_NO" title="华天材料号" width="25%" style="text-align:center"/>
+					<ec:column property="MAT_SUPPLIER_SCROLL_ID" title="供应商卷号" width="25%" style="text-align:center"/>
+					<ec:column property="MATERIAL_MODEL" title="材料型号" width="25%" style="text-align:center"/>
 					<ec:column property="IS_LOGOUT" title="是否注销" width="25%" style="text-align:center" mappingItem="LOGOUT"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="25%" style="text-align:center"/>
 					<ec:column property="_0" title="动作" width="25%" style="text-align:center">

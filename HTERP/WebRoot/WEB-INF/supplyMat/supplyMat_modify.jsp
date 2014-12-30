@@ -49,6 +49,16 @@
 						<td><input type="text" class="u-ipt required"
 							name="supplyMat.htMatNo" maxlength="60" value="${supplyMat.htMatNo}"></td>
 					</tr>
+					<tr>
+						<th class="tr">供应商卷号：</th>
+						<td><input type="text" class="u-ipt required"
+							name="supplyMat.matSupplierScrollId" maxlength="60" value="${supplyMat.matSupplierScrollId}"></td>
+					</tr>
+					<tr>
+						<th class="tr">材料型号：</th>
+						<td><input type="text" class="u-ipt required"
+							name="supplyMat.materialModel" maxlength="60" value="${supplyMat.materialModel}"></td>
+					</tr>
 				</tbody>
 				<tfoot>
 					<tr>

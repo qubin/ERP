@@ -29,19 +29,23 @@
 		
 		j("#txtFjRow").val(fjnum);
 		
+		var jsonData = eval('${JsonSupplyMatList}');
+		
 		var t  = "<tr>";
 			t +=    "<td>";
-			t +=		"<div align='center'><input type='text' class='u-ipt' name='txtGysjh" + fjnum + "' />";
-// 			t +=			"<select name='select2' id='select2'  class='u-ipt'>";
-// 			t +=				"<option value='1'>--请选择--</option>";
-// 			t +=			"</select>";
+			t +=		"<div align='center'>";
+			t +=			"<select name='txtGysjh" + fjnum + "' id='txtGysjh" + fjnum + "' class='u-ipt'>";
+			t +=				"<option value='-1'>--请选择--</option>";
+							for(var i=0;i<jsonData.length;i++){
+			t +=			 	"<option value='"+jsonData[i].supplyMatId+"'>"+jsonData[i].matSupplierScrollId+"</option>";
+					 		}
+			t +=			"</select>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
-			t +=		"<div align='center'><input type='text' class='u-ipt' name='txtClxh" + fjnum + "' />";
-// 			t +=			"<select name='select10' id='select10'  class='u-ipt'>";
-// 			t +=				"<option value='1' selected>--请选择--</option>";
-// 			t +=			"</select>";
+			t +=		"<div align='center'>";
+			t +=			"<label id='txtClxh"+fjnum+"'></label>";
+// 			t +=			"<input type='text' class='u-ipt' id='txtClxh' name='txtClxh" + fjnum + "' />";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
@@ -57,6 +61,16 @@
 			t += "</tr>";
 		
 		j("#cutMaterialTable").append(t);
+		
+		j("#txtGysjh"+fjnum).change(function() {
+			var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?supMatId=" + j("#txtGysjh"+fjnum).val();
+			new Ajax.Request(url, {
+				method : 'get',
+				onSuccess : function(data) {
+					j("#txtClxh"+fjnum).html(data.responseText);
+				}
+			});
+		});
 	}
 	
 	function getMmatDesc(obj){
@@ -69,6 +83,22 @@
  	  			//document.getElementById("mmatDesc").innerText = data.responseText;
   	  		}
   	  	});
+	}
+	
+	function getMaterialModel(obj) {
+		var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?supMatId=" + obj.value;
+		new Ajax.Request(url, {
+			method : 'get',
+			onSuccess : function(data) {
+				j("#txtClxh1").html(data.responseText);
+			}
+		});
+	}
+	
+
+	window.onload = function() {
+	
+		
 	}
 </script>
 </head>
@@ -111,22 +141,31 @@
 			<tbody>
 				<tr>
 					<td width="10%" rowspan="100"><div align="center">
-							<s:select name="material.mmatId"
+							<s:select name="material.uuid"
 							   onchange="getMmatDesc(this)"
 							   cssClass="u-ipt required validate-selection"
 						       list="#request.materialList"
-						       listKey="uuid" listValue="mmatId" headerKey="-1"
+						       listKey="uuid" listValue="uuid" headerKey="-1"
 						       headerValue="--请选择--" />
 						</div></td>
 					<td width="10%" rowspan="100">
 						<label id="mmatDesc"></label>
 					</td>
-					<td><div align="center">
-							<input type="text"  class="u-ipt" name="txtGysjh1"/>
-						</div></td>
-					<td><div align="center">
-							<input type="text"  class="u-ipt" name="txtClxh1" />
-						</div></td>
+					<td>
+						<div align="center">
+							<s:select name="txtGysjh1"
+							   onchange="getMaterialModel(this)"
+							   cssClass="u-ipt required validate-selection"
+						       list="#request.supplyMatList"
+						       listKey="supplyMatId" listValue="matSupplierScrollId" headerKey="-1"
+						       headerValue="--请选择--" />
+						</div>
+					</td>
+					<td>
+						<div align="center">
+							<label id="txtClxh1"></label>
+						</div>
+					</td>
 					<td><div align="center">
 							<input type="text"  class="u-ipt" name="txtCjjs1" />
 						</div></td>
