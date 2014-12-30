@@ -51,6 +51,7 @@ public class MStorageAction extends BaseAction {
 						original.setScrollId(sc.getScrollId());
 					}
 					service.update(original);
+					
 				}else if("2".equals(inOrOut)){
 					Material original = service.selectOne(material);
 					original.setWeight(original.getWeight().add(inNum));

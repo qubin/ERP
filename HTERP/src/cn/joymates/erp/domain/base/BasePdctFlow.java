@@ -14,6 +14,7 @@ public class BasePdctFlow extends BaseVO {
 		fieldMap.put("outPerson", "out_person");
 		fieldMap.put("isTctId", "istct_id");
 		fieldMap.put("boxNo", "box_no");
+		fieldMap.put("boxNum", "box_num");
 		fieldMap.put("batchCode", "batch_code");
 		fieldMap.put("remark", "reamrk");
 		fieldMap.put("remark1", "remark1");
@@ -28,7 +29,8 @@ public class BasePdctFlow extends BaseVO {
 	private String inOrOut;
 	private String outPerson;
 	private Integer isTctId;
-	private String boxNo;
+	private Integer boxNo;
+	private Integer boxNum;
 	private String batchCode;
 	private String remark;
 	private String remark1;
@@ -73,11 +75,18 @@ public class BasePdctFlow extends BaseVO {
 	public void setIsTctId(Integer isTctId) {
 		this.isTctId = isTctId;
 	}
-	public String getBoxNo() {
+	
+	public Integer getBoxNo() {
 		return boxNo;
 	}
-	public void setBoxNo(String boxNo) {
+	public void setBoxNo(Integer boxNo) {
 		this.boxNo = boxNo;
+	}
+	public Integer getBoxNum() {
+		return boxNum;
+	}
+	public void setBoxNum(Integer boxNum) {
+		this.boxNum = boxNum;
 	}
 	public String getBatchCode() {
 		return batchCode;

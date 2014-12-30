@@ -46,10 +46,10 @@ public class CustomerAction extends BaseAction{
 	}
 	public String add(){
 		try {
+			int custId = service.save(cust);
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] prodId = req.getParameterValues("prodId");
 			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){
-				int custId = service.save(cust);
 				for(int i = 0; i < cusPn.length; i ++){
 					CustPdct cp = new CustPdct();
 					cp.setCustId(custId);

@@ -98,6 +98,8 @@ public class PdctFlowAction extends BaseAction {
 					int pdId = 0;
 					if(whflag != null && !whflag.equals("-1")){
 						//客户产品
+						String flowBoxNo = "";
+						int flowBoxNum = 0;
 						if("same".equals(nowflag)){
 							cp = cpService.selectOne(cp);
 							CustPdct newCp = new CustPdct();
@@ -131,10 +133,10 @@ public class PdctFlowAction extends BaseAction {
 						//批号
 						CustPno oldCpn = new CustPno();
 						oldCpn.setcPdctId(cp.getCpId());
-						oldCpn = cpnService.selectList(oldCpn).get(0);
-						oldCpn.setArea(cp.getArea());
-						oldCpn.setBoxNo(oldCpn.getBoxNo() + Integer.valueOf(boxNum));
-						oldCpn.setBoxNum(oldCpn.getBoxNum() + Integer.valueOf(boxNum));
+						cpn = cpnService.selectList(oldCpn).get(0);
+						cpn.setArea(cp.getArea());
+						cpn.setBoxNo(oldCpn.getBoxNo() + Integer.valueOf(boxNum));
+						cpn.setBoxNum(oldCpn.getBoxNum() + Integer.valueOf(boxNum));
 						cpnService.update(oldCpn);
 					}
 					//成品重量修改
@@ -149,6 +151,9 @@ public class PdctFlowAction extends BaseAction {
 					pf.setOutTime(sdf.parse(nowTime));
 					pf.setCount(Integer.valueOf(num));
 					pf.setInOrOut("2");
+					pf.setBatchCode(cpn.getBatchCode());
+					pf.setBoxNo(cpn.getBoxNo());
+					pf.setBoxNum(cpn.getBoxNum());
 					pf.setOutPerson(u.getUserLoginId());
 					pf.setCustPdctId(pdId);
 					pf.setRemark(remark);
@@ -171,9 +176,9 @@ public class PdctFlowAction extends BaseAction {
 					p.setTotalWeight(p.getTotalWeight().subtract(tempNum));
 				
 					//批号
-					CustPno cpn = new CustPno();
-					cpn.setcPdctId(cp.getCpId());
-					cpn = cpnService.selectList(cpn).get(0);
+					CustPno newCpn = new CustPno();
+					newCpn.setcPdctId(cp.getCpId());
+					cpn = cpnService.selectList(newCpn).get(0);
 					Integer tempNum2 = cpn.getBoxNo() - Integer.valueOf(boxNum);
 					if(tempNum2 < 0){
 						//出库盒数大于库存盒数
@@ -192,6 +197,8 @@ public class PdctFlowAction extends BaseAction {
 					pf.setCount(Integer.valueOf(num));
 					pf.setInOrOut("1");
 					pf.setOutPerson(u.getUserLoginId());
+					pf.setBoxNo(cpn.getBoxNo());
+					pf.setBoxNum(cpn.getBoxNum());
 					pf.setCustPdctId(cp.getCpId());
 					pf.setRemark(remark);
 					pdctService.save(pf);

@@ -65,8 +65,9 @@
 	                  	<option value="out_time">操作时间</option>
 	                  	<option value="out_person">经办人</option>
 	                  	<option value="HT_PN">华天产品号</option>
-	                  	<option value="BOX_NO">盒号</option>
+	                  	<option value="ISTCT_ID">生产指令单ID</option>
 	                  	<option value="BATCH_CODE">批次</option>
+						<option value="SIGN1">所在仓库</option>
 						<option value="IN_OR_OUT">出/入库</option>
 	                  </select>
                   </td>  
@@ -109,11 +110,12 @@
 					<ec:column property="COUNT" title="出/入库数量" width="15%" style="text-align:center"/>
 					<ec:column property="HT_PN" title="华天成品号" width="15%" style="text-align:center"/>
 					<ec:column property="ISTCT_ID" title="生产指令单" width="15%" style="text-align:center"/>
-					<ec:column property="BOX_NO" title="盒号" width="15%" style="text-align:center"/>
+					<ec:column property="SIGN1" title="所在仓库" width="15%" style="text-align:center"/>
+					<ec:column property="BOX_NO" title="盒号" width="15%" style="text-align:center">
+						${sr.BOX_NUM - sr.BOX_NO } ~ ${sr.BOX_NUM }
+					</ec:column>
 					<ec:column property="BATCH_CODE" title="批次" width="15%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="15%" style="text-align:center"/>
-					<ec:column property="IS_LOGOUT" title="是否注销" width="15%" style="text-align:center" mappingItem="logoutMap"/>
-					<ec:column property="LOGOUT_REASON" title="注销原因" width="15%" style="text-align:center"/>
 					<ec:column property="_0" title="动作" width="15%" style="text-align:center">
 					</ec:column>
 				</ec:row>
