@@ -18,31 +18,28 @@ public class RowFlowAction extends BaseAction {
 	private RowFlow rowFlow;
 	
 	public String showHome(){
-		List<Map<String, Object>> rfList = service.findAll(ec_rd, req);
+		List<Map<String, Object>> rfList = service.findQuery(ec_rd,null,null,req);
 		req.setAttribute("rfList", rfList);
 		req.setAttribute("logoutMap", RowFlow.logoutMap);
+		req.setAttribute("inOrOut", RowFlow.inOuOut);
 		return "home";
 	}
 
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if("in".equals(serachType) || "out".equals(serachType)){
-			List<Map<String, Object>> rowFlowList = service.findQueryInOut(ec_rd,queryStr,serachType,req);
-			req.setAttribute("rfList", rowFlowList);
-			return "home";
-		}else{
-			if(queryStr != null && serachType != null){
-				if("all".equals(serachType)){
-					return showHome();
-				}else{
-					List<Map<String, Object>> rowFlowList = service.findQuery(ec_rd,queryStr,serachType,req);
-					req.setAttribute("rfList", rowFlowList);
-					return "home";
-				}
+		if(queryStr != null && !"".equals(queryStr)){
+			if("all".equals(serachType)){
+				return showHome();
+			}else{
+				List<Map<String, Object>> rowFlowList = service.findQuery(ec_rd,queryStr,serachType,req);
+				req.setAttribute("rfList", rowFlowList);
+				req.setAttribute("logoutMap", RowFlow.logoutMap);
+				req.setAttribute("inOrOut", RowFlow.inOuOut);
+				return "home";
 			}
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String modify(){

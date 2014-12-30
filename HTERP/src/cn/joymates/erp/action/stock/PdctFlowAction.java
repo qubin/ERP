@@ -17,7 +17,6 @@ import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.CustPno;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.PdctFlow;
-import cn.joymates.erp.domain.ProdDetail;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.domain.User;
 import cn.joymates.erp.domain.Warehouse;
@@ -25,7 +24,6 @@ import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustPnoService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.PdctFlowService;
-import cn.joymates.erp.service.ProdDetailService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.service.RowFlowService;
 import cn.joymates.erp.service.WarehousService;
@@ -39,7 +37,6 @@ public class PdctFlowAction extends BaseAction {
 	private WarehousService wService = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
 	private CustomerService cService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
 	private ProductService pService = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
-	private ProdDetailService pdService = ServiceProxyFactory.getInstanceNoMybatis(new ProdDetailService());
 	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
 	private CustPnoService cpnService = ServiceProxyFactory.getInstanceNoMybatis(new CustPnoService());
 	private Product product;
@@ -55,9 +52,32 @@ public class PdctFlowAction extends BaseAction {
 		Customer c = new Customer();
 		c.setIsLogout("0");
 		req.setAttribute("cList", cService.selectList(c));
-		
-
 		return "home";
+	}
+	
+	public String flowHome(){
+		List<Map<String, Object>> l = pdctService.findFlow(ec_rd, null, null, req);
+		req.setAttribute("pfList", l);
+		req.setAttribute("inOrOut", PdctFlow.inOuOut);
+		return "flow";
+	}
+	
+	public String flowFind(){
+		String serachType = req.getParameter("serachType");
+		String queryStr = req.getParameter("queryStr");
+		if(serachType != null && !"".equals(serachType)){
+			if("all".equals(serachType)){
+				flowHome();
+			}else{
+				if(queryStr != null && !"".equals(queryStr)){
+					List<Map<String, Object>> l = pdctService.findFlow(ec_rd, serachType, queryStr, req);
+					req.setAttribute("pfList", l);
+					req.setAttribute("inOrOut", PdctFlow.inOuOut);
+					return "flow";
+				}
+			}
+		}
+		return flowHome();
 	}
 	
 	public String inWarehouse(){

@@ -1,6 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
-
 <jsp:include page="../top.jsp"></jsp:include>
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -10,13 +9,9 @@
 <title></title>
 </head>
 <script type="text/javascript">
-	window.onload = function(){
-		if("${msg}" == "success"){
-			alert("操作成功");
-		}
-	}
 	var j = jQuery;
 	j(document).ready(function(){
+		j("#scId").hide();
 		var temp = "";
 		j("#supply").bind("change",function(){
 			j("#materialName").empty();
@@ -50,13 +45,26 @@
 			}
 			var uri = "${pageContext.request.contextPath}/admin/mStorage/mStorage_findDetail.html";
 			j.getJSON(uri,{id:id},function(data){
-				if(data != null){
+				if(data != ""){
 						j("#materialId").val(data[0].uuid);
 						j("#den").html(data[0].density);
 						j("#thick").html(data[0].thickness);
 						j("#desc").html(data[0].desc);
 						j("#stan").html(data[0].standard);
 						j("#remark").html(data[0].remark);
+						j("#scValue").val(data[0].scrollId);
+						if(data[0].scrollId != ""){
+							j("#scInput").hide();
+							j("#scId").html(data[0].scrollId);
+							j("#scId").show();
+							j("#bar1").hide();
+							j("#bar2").hide();
+						}else{
+							j("#scInput").show();
+							j("#scId").html("");
+							j("#bar1").show();
+							j("#bar2").show();
+						}
 				}else{
 					alert("该型号没有原材料");
 				}
@@ -64,10 +72,9 @@
 		});
 		
 		j("#mWeight").bind("change",function(){
-			var bar = j("input:radio:checked").val();
 			var materialId = j("#materialId").val();
 			if(materialId != ""){
-				if(bar == 0){
+				if(j("#outRadio").attr("checked") == "checked"){
 					var num = j("#mWeight").val();
 					var r = /^[0-9]+\.{0,1}[0-9]{0,2}$/;
 					if(r.test(num)){
@@ -78,6 +85,9 @@
 								alert("出库数量不能超过库存！");
 							}
 						});
+					}else{
+						alert("请输入合法数字");
+						j("#mWeight").val("");
 					}
 				}
 			}else{
@@ -85,6 +95,42 @@
 			}
 	
 		});
+		j("#cRadio").bind("click",function(){
+			j("#scInput").hide();
+			j("#scInput").val("");
+		});
+		j("#mRadio").bind("click",function(){
+			j("#scInput").show();
+		});
+		
+		j("#inRadio").bind("click",function(){
+			if(j(this).attr("checked") == "checked"){
+				if(j("#scValue").val() != ""){
+					j("#scId").show();
+					j("#scId").html(j("#scValue").val());
+					j("#bar1").hide();
+					j("#bar2").hide();
+					j("#scInput").hide();
+				}else{
+					j("#scId").hide();
+					j("#scId").html("");
+					j("#bar1").show();
+					j("#bar2").show();
+					j("#scInput").show();
+				}
+			}
+		});
+		j("#outRadio").bind("click",function(){
+			if(j(this).attr("checked") == "checked"){
+				j("#bar1").hide();
+				j("#bar2").hide();
+				j("#scInput").hide();
+				j("#scId").show();
+				j("#scId").val(j("#scValue").val());
+				j("#scInput").val("");
+			}
+		});
+		
 	});
 	
 </script>
@@ -97,6 +143,7 @@
 			method="post">
 			<input type="hidden" name="material.uuid" value="" id="materialId"/>
 			<input type="hidden" name="rawFlow.outPerson" value="${sessionScope.loggedUser.userLoginId}" />
+			<input type="hidden" name="" value="" id="scValue"/>
 			<table class="m-table-form">
 				<tbody>
 					<tr>
@@ -159,8 +206,18 @@
 					<tr>
 						<th height="40" class="tr" width="42%">入库/出库：</th>
 						<td height="40">
-						入库<input type="radio" name="rawFlow.inOrOut" id="" value="1" checked="checked"/>&nbsp;&nbsp;&nbsp;
-						出库<input type="radio" name="rawFlow.inOrOut" id="outRadio" value="0"/>
+						入库<input type="radio" name="rawFlow.inOrOut" id="inRadio" value="2" checked="checked"/>&nbsp;&nbsp;&nbsp;
+						出库<input type="radio" name="rawFlow.inOrOut" id="outRadio" value="1"/>
+					
+						</td>
+					</tr>
+					<tr>
+						<th height="40" class="tr" width="42%" id="th1">母卷ID</th>
+						<td height="40" id="td1">
+						<span id="bar1">	母卷<input type="radio" name="foo" id="mRadio" />&nbsp;&nbsp;&nbsp;</span>
+						<span id="bar2">子卷<input type="radio" name="foo" id="cRadio" /></span>
+							<label for="" id="scId"></label>
+							<input type="text" class="u-ipt required" id="scInput" name="material.scrollId"/>
 						</td>
 					</tr>
 					<tr>

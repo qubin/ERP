@@ -41,7 +41,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
 	                  	<option value="all">全部</option>
 	                  	<option value="name">名称</option>
 	                  	<option value="telephone">联系电话</option>
@@ -74,7 +74,8 @@
 				sortable="false" 
 				useAjax="false" 
 				style="align:center"
-				autoIncludeParameters="true">
+				autoIncludeParameters="true"
+				xlsFileName="test.xls">
 				<ec:row>
 					<ec:column property="NAME" title="名称" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PHONE" title="联系电话" width="11%" style="text-align:center"/>

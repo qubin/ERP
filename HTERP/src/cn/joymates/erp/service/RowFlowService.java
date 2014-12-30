@@ -16,37 +16,20 @@ public class RowFlowService extends BaseService<RowFlow> {
 		dao = new RowFlowImpl();
 	}
 	
-	public List<Map<String, Object>> findAll(String ec_rd, HttpServletRequest req){
-		StringBuffer resultsql = new StringBuffer();
-		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_raw_flow where 1=1 ORDER BY id DESC limit ?, ? ");
-		searchsql.append("SELECT COUNT(*) FROM t_raw_flow where 1=1 ");
-		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
-	}
-	
 	public List<Map<String, Object>> findQuery(String ec_rd,String queryStr, String serachType,HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_raw_flow where 1=1 ");
-		searchsql.append("SELECT COUNT(*) FROM t_raw_flow where 1=1 ");
-		resultsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
-		searchsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
-		resultsql.append(" ORDER BY id DESC limit ?, ? ");
-		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
-	}
-	public List<Map<String, Object>> findQueryInOut(String ec_rd,String queryStr, String serachType,HttpServletRequest req) {
-		StringBuffer resultsql = new StringBuffer();
-		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_raw_flow where 1=1 ");
-		searchsql.append("SELECT COUNT(*) FROM t_raw_flow where 1=1 ");
-		if("in".equals(serachType)){
-			resultsql.append(" AND in_or_out=1");
-			searchsql.append(" AND in_or_out=1");
-		}else if("out".equals(serachType)){
-			resultsql.append(" AND in_or_out=0");
-			searchsql.append(" AND in_or_out=0");
+		resultsql.append("SELECT rf.`out_person`,rf.`in_or_out`,rf.`out_time`,rf.`weight`,sm.`ht_mat_no`,rf.`reamrk`,rf.`is_logout`,rf.`logout_reason` FROM "
+				+ "`t_raw_flow` AS rf LEFT JOIN `t_material` AS m ON rf.`material_id` = m.`id` "
+				+ "LEFT JOIN `t_supply_mat` AS sm ON m.`supplymat_id` = sm.`id` where 1 = 1 ");
+		if(queryStr != null && serachType != null){
+			resultsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
 		}
-		resultsql.append(" ORDER BY id DESC limit ?, ? ");
+		resultsql.append("  ORDER BY rf.`id` DESC limit ?, ?  ");
+		searchsql.append("SELECT count(*) FROM `t_raw_flow` AS rf LEFT JOIN `t_material` AS m ON rf.`material_id` = m.`id`LEFT JOIN `t_supply_mat` AS sm ON m.`supplymat_id` = sm.`id` where 1 = 1 ");
+		if(queryStr != null && serachType != null){
+			searchsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
+		}
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
 	}
 	

@@ -28,10 +28,6 @@
 					  	<td><input type="text" class="u-ipt required" name="product.htPn" maxlength="13" /></td>
 				  </tr>
 				  <tr>
-				  		<th align="right" class="tr">客户产品编号：</th>
-						<td><input type="text" class="u-ipt required" name="pd.cusPn" maxlength="60"></td>
-				  </tr>
-				  <tr>
 						<th align="right" class="tr">车型/钢背应用：</th>
 					  	<td><input type="text" class="u-ipt" name="product.appFor" maxlength="60"></td>
 				  </tr>

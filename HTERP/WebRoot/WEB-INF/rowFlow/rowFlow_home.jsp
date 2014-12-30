@@ -27,6 +27,25 @@
 			}
 		}	
 	}
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#inouts").hide();
+		
+		j("#serachStr").bind("change",function(){
+			var val = j(this).val();
+			if(val == "IN_OR_OUT"){
+				j("#inouts").show();
+				j("#queryStr").hide();
+			}else{
+				j("#inouts").hide();
+				j("#queryStr").show();
+			}
+		});
+		
+		j("#inouts").bind("change",function(){
+			j("#queryStr").val(j("#inouts").val());
+		});
+	});
   </script>
 </head>
 <body>
@@ -40,15 +59,24 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  	<option value="-1">-请选择-</option>
 	                  	<option value="all">全部</option>
-	                  	<option value="out_person">经办人</option>
-	                  	<option value="material_id">材料</option>
-	                  	<option value="in" >入库</option>
-	                  	<option value="out">出库</option>
+	                  	<option value="OUT_TIME">操作时间</option>
+	                  	<option value="OUT_PERSON">经办人</option>
+	                  	<option value="HT_MAT_NO">华天材料号</option>
+	                  	<option value="IN_OR_OUT" >出/入库</option>
 	                  </select>
                   </td>  
-                  <td><input type="text" class="u-ipt" name="queryStr"></td>       
+                  <td>
+                 	<select name="" id="inouts" class="u-slt">
+                  		<option value="-1">-请选择-</option>
+                  		<option value="1">出库</option>
+                  		<option value="2">入库</option>
+                  	</select>
+                  <input type="text" class="u-ipt" name="queryStr" id="queryStr">
+                  <img onclick="WdatePicker({el:'queryStr'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+                  </td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   
                    </td>
@@ -74,10 +102,10 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="OUT_PERSON" title="经办人" width="15%" style="text-align:center"/>
-					<ec:column property="IN_OR_OUT" title="入库/出库" width="15%" style="text-align:center"/>
+					<ec:column property="IN_OR_OUT" title="入库/出库" width="15%" style="text-align:center" mappingItem="inOrOut"/>
 					<ec:column property="OUT_TIME" title="操作时间" width="15%" style="text-align:center"/>
 					<ec:column property="WEIGHT" title="重量" width="15%" style="text-align:center"/>
-					<ec:column property="MATERIAL_ID" title="材料ID" width="15%" style="text-align:center"/>
+					<ec:column property="HT_MAT_NO" title="华天材料号" width="15%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="15%" style="text-align:center"/>
 					<ec:column property="IS_LOGOUT" title="是否注销" width="15%" style="text-align:center" mappingItem="logoutMap"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="15%" style="text-align:center"/>
