@@ -17,15 +17,26 @@
 			if(confirm("确定是否结单")){
 				var sbId = j("#sbId").val();
 				var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkFinish.html?sb.sbId=" + sbId;
-				j.get(uri,function(data){
-					if(data == ""){
+				var checkUri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkFinishBill.html?sb.sbId=" + sbId;
+				j.get(checkUri,function(data){
+					if(data != ""){
 						if(data == "false"){
-							alert("生产指令单未结单，销售单不能结单！");
-						}else if(data == "true"){
-							window.location.href = "${pageContext.request.contextPath}/admin/sellbill/sellbill_finishSellBill.html?sb.sbId=" + sbId;
+							alert("该销售单未通过审核！");
+						}else{
+							j.get(uri,function(data){
+								if(data == ""){
+									if(data == "false"){
+										alert("生产指令单未结单，销售单不能结单！");
+									}else if(data == "true"){
+										window.location.href = "${pageContext.request.contextPath}/admin/sellbill/sellbill_finishSellBill.html?sb.sbId=" + sbId;
+									}
+								}else{
+									alert("结单失败!");
+								}
+							});
 						}
 					}else{
-						alert("结单失败!");
+						alert("该销售单未通过审核！");
 					}
 				});
 			}
@@ -178,6 +189,8 @@
 			});
 		});
 	});
+	
+	
 </script>
 </head>
 <body>
@@ -185,7 +198,7 @@
 	<div id="container" class="container">
 		<div class="hr10"></div>
 		<div class="hr10"></div>
-		<h2>修改订单</h2>
+		<h2>结单</h2>
 		<form id="form1"
 			action="${pageContext.request.contextPath}/admin/sellbill/sellbill_modify.html"
 			method="post">

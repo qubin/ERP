@@ -60,7 +60,7 @@
                   <th class="tr">查询类型：</th>
                   <td>
 	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
-	                  	<option value="-1">-请选择-</option>
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="out_time">操作时间</option>
 	                  	<option value="out_person">经办人</option>
@@ -68,6 +68,7 @@
 	                  	<option value="ISTCT_ID">生产指令单ID</option>
 	                  	<option value="BATCH_CODE">批次</option>
 						<option value="SIGN1">所在仓库</option>
+						<option value="BOX_NO">所在仓库</option>
 						<option value="IN_OR_OUT">出/入库</option>
 	                  </select>
                   </td>  

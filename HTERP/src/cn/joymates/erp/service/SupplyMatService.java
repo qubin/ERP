@@ -32,11 +32,15 @@ public class SupplyMatService extends BaseService<SupplyMat> {
 	public List<Map<String, Object>> findQuery(String ec_rd,String queryStr, String serachType,HttpServletRequest req) {
 		StringBuffer resultsql = new StringBuffer();
 		StringBuffer searchsql = new StringBuffer();
-		resultsql.append("SELECT * FROM t_supply_mat where 1=1 ");
-		searchsql.append("SELECT COUNT(*) FROM t_supply_mat where 1=1 ");
-		resultsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
-		searchsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
-		resultsql.append(" ORDER BY id DESC limit ?, ? ");
+		resultsql.append("SELECT sm.`material_model`,sm.`mat_supplier_scroll_id`,s.`code`,s.`name`,sm.`mat_supplier_name`,sm.`ht_mat_no`,sm.`is_logout`,sm.`logout_reason` FROM `t_supply_mat` AS sm LEFT JOIN `t_supplier` AS s ON sm.`supply_id` = s.`id` where 1 = 1 ");
+		if(queryStr != null && serachType != null){
+			resultsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
+		}
+		resultsql.append(" ORDER BY sm.`id` DESC limit ?, ? ");
+		searchsql.append("SELECT count(*) FROM `t_supply_mat` AS sm LEFT JOIN `t_supplier` AS s ON sm.`supply_id` = s.`id` where 1 = 1 ");
+		if(queryStr != null && serachType != null){
+			searchsql.append(" AND ").append(serachType).append(" LIKE '%").append(queryStr).append("%'");
+		}
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(), req);
 	} 
 	

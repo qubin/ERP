@@ -55,7 +55,12 @@
 						<td><input type="text" class="u-ipt" name="cust.address"
 							maxlength="60"></td>
 						<th class="tr">备注：</th>
-						<td><input type="text" class="u-ipt required" name="cust.remark"
+						<td><input type="text" class="u-ipt" name="cust.remark"
+							maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr">登陆名：</th>
+						<td><input type="text" class="u-ipt required" name="loginName"
 							maxlength="60"></td>
 					</tr>
 					<s:iterator value="#request.pList" id="p">

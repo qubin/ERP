@@ -153,6 +153,12 @@
 							src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif"
 							width="16" height="22" align="absmiddle"></td>
 					</tr>
+					<tr height="40">
+						<th class="tr">备注:</th>
+						<td>
+							<input type="text" class="u-ipt" name="sb.remark">
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<div class="hr10">&nbsp;</div>

@@ -90,7 +90,8 @@
                   <th class="tr">查询类型：</th>
                   <td>
 	                  <select name="secStr" id="secStr" class="u-slt validate-selection">
-	                  	<option value="all">-全部-</option>
+	                  	<option value="">-请选择-</option>
+	                  	<option value="all">全部</option>
 	                  	<option value="ht_pn">华天产品编号</option>
 	                  	<option value="app_for">车型/刚被应用</option>
 	                  	<option value="properties">产品性质</option>

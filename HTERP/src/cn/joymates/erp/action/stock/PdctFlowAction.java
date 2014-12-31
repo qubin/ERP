@@ -68,6 +68,8 @@ public class PdctFlowAction extends BaseAction {
 		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				flowHome();
+			}else if("BOX_NO".equals(serachType)){
+				//盒号搜索
 			}else{
 				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> l = pdctService.findFlow(ec_rd, serachType, queryStr, req);
@@ -135,9 +137,9 @@ public class PdctFlowAction extends BaseAction {
 						oldCpn.setcPdctId(cp.getCpId());
 						cpn = cpnService.selectList(oldCpn).get(0);
 						cpn.setArea(cp.getArea());
-						cpn.setBoxNo(oldCpn.getBoxNo() + Integer.valueOf(boxNum));
-						cpn.setBoxNum(oldCpn.getBoxNum() + Integer.valueOf(boxNum));
-						cpnService.update(oldCpn);
+						cpn.setBoxNo(cpn.getBoxNo() + Integer.valueOf(boxNum));
+						cpn.setBoxNum(cpn.getBoxNum() + Integer.valueOf(boxNum));
+						cpnService.update(cpn);
 					}
 					//成品重量修改
 					Product p = new Product();
@@ -232,6 +234,10 @@ public class PdctFlowAction extends BaseAction {
 					list.add(false);
 				}
 				list.add(cpn);
+				Warehouse wh = new Warehouse();
+				wh.setWarehouseId(cp.getArea());
+				wh = wService.selectOne(wh);
+				list.add(wh);
 				JSONArray obj = JSONArray.fromObject(list);
 				resp.getWriter().write(obj.toString());
 			}else{

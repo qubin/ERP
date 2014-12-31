@@ -1,6 +1,8 @@
 package cn.joymates.erp.action.baseinfo;
 
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -8,9 +10,11 @@ import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Product;
+import cn.joymates.erp.domain.User;
 import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
+import cn.joymates.erp.service.UserService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class CustomerAction extends BaseAction{
@@ -47,6 +51,16 @@ public class CustomerAction extends BaseAction{
 	public String add(){
 		try {
 			int custId = service.save(cust);
+			String loginName = req.getParameter("loginName");
+			UserService userService = ServiceProxyFactory.getInstanceNoMybatis(new UserService());
+			User u = new User();
+			u.setUserId("300");
+			u.setUserLoginId(loginName);
+			u.setPassword1("123");
+			Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			//未完
+			
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] prodId = req.getParameterValues("prodId");
 			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){
@@ -62,7 +76,7 @@ public class CustomerAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String delete(){
@@ -106,7 +120,7 @@ public class CustomerAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String showModifyUI(){

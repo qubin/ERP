@@ -12,10 +12,12 @@ import cn.joymates.erp.domain.Material;
 import cn.joymates.erp.domain.RowFlow;
 import cn.joymates.erp.domain.Supplier;
 import cn.joymates.erp.domain.SupplyMat;
+import cn.joymates.erp.domain.Warehouse;
 import cn.joymates.erp.service.MaterialService;
 import cn.joymates.erp.service.RowFlowService;
 import cn.joymates.erp.service.SupplierService;
 import cn.joymates.erp.service.SupplyMatService;
+import cn.joymates.erp.service.WarehousService;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class MStorageAction extends BaseAction {
@@ -25,6 +27,7 @@ public class MStorageAction extends BaseAction {
 	private SupplyMatService SMservice = ServiceProxyFactory.getInstanceNoMybatis(new SupplyMatService());	
 	private SupplierService supplierService = ServiceProxyFactory.getInstanceNoMybatis(new SupplierService());
 	private RowFlowService rowFlowService = ServiceProxyFactory.getInstanceNoMybatis(new RowFlowService());
+	private WarehousService wService = ServiceProxyFactory.getInstanceNoMybatis(new WarehousService());
 	private Material material;
 	private RowFlow rawFlow;
 	
@@ -32,6 +35,10 @@ public class MStorageAction extends BaseAction {
 		Supplier s = new Supplier();
 		s.setIsLogout("0");
 		List<Supplier> sList = supplierService.selectList(s);
+		Warehouse wh = new Warehouse();
+		wh.setIsLogout("0");
+		JSONArray obj = JSONArray.fromObject(wService.selectList(wh));
+		req.setAttribute("wList", obj.toString());
 		req.setAttribute("sList", sList);
 		return "home";
 	}
@@ -47,8 +54,8 @@ public class MStorageAction extends BaseAction {
 					Material sc = material;
 					Material original = service.selectOne(material);
 					original.setWeight(original.getWeight().subtract(inNum));
-					if(sc.getScrollId() != null){
-						original.setScrollId(sc.getScrollId());
+					if(sc.getMmatId() != null){
+						original.setMmatId(sc.getMmatId());
 					}
 					service.update(original);
 					

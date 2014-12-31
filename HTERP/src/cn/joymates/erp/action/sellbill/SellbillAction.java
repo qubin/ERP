@@ -226,7 +226,8 @@ public class SellbillAction extends BaseAction {
 				for(int i = 0 ; i < sdList.size(); i ++){
 					Pdceistct pi = new Pdceistct();
 					pi.setsDetailId(sdList.get(i).getSellDetailId());
-					piList.add(piService.selectList(pi).get(0));
+					pi = piService.selectList(pi).get(0);
+					piList.add(pi);
 				}
 				String flag = "true";
 				for(Pdceistct pi : piList){
@@ -304,7 +305,44 @@ public class SellbillAction extends BaseAction {
 		
 		return addUI();
 	}
-
+	
+	public void checkModify(){
+		try {
+			sb = sService.selectOne(sb);
+			if("0".equals(sb.getVerifyStatus())){
+				resp.getWriter().write("true");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void checkExam(){
+		try {
+			sb = sService.selectOne(sb);
+			if("1".equals(sb.getVerifyStatus())){
+				resp.getWriter().write("false");
+			}else{
+				resp.getWriter().write("true");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void checkFinishBill(){
+		try {
+			sb = sService.selectOne(sb);
+			if(!"1".equals(sb.getVerifyStatus())){
+				resp.getWriter().write("false");
+			}else{
+				resp.getWriter().write("true");
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Customer getCust() {
 		return cust;
 	}

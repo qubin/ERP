@@ -47,14 +47,17 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
-	                  	<option value="supply_id">仓库ID</option>
+	                  	<option value="code">供应商编号</option>
+	                  	<option value="name">供应商名</option>
 	                  	<option value="mat_supplier_name">材料名称</option>
 	                  	<option value="ht_mat_no">华天材料号</option>
+	                  	<option value="MATERIAL_MODEL">材料型号</option>
 	                  </select>
                   </td>  
-                  <td><input type="text" class="u-ipt" name="queryStr"></td>       
+                  <td><input type="text" class="u-ipt validate-selection" name="queryStr"></td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   
                      <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/supplyMat/supplyMat_showAddUI.html'">新增</button>&emsp;           
@@ -80,7 +83,8 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="SUPPLY_ID" title="仓库ID" width="25%" style="text-align:center"/>
+					<ec:column property="CODE" title="供应商编号" width="25%" style="text-align:center"/>
+					<ec:column property="NAME" title="供应商名" width="25%" style="text-align:center"/>
 					<ec:column property="MAT_SUPPLIER_NAME" title="材料名称" width="25%" style="text-align:center"/>
 					<ec:column property="HT_MAT_NO" title="华天材料号" width="25%" style="text-align:center"/>
 					<ec:column property="MAT_SUPPLIER_SCROLL_ID" title="供应商卷号" width="25%" style="text-align:center"/>

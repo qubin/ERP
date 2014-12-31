@@ -31,7 +31,7 @@
 					<tr>
 						<th class="tr">名称：</th>
 						<td><input type="text" class="u-ipt required"
-							name="cust.name" maxlength="13" value="${cust.custName}"/></td>
+							name="cust.custName" maxlength="13" value="${cust.custName}"/></td>
 							<th class="tr">电话：</th>
 						<td><input type="text" class="u-ipt" name="cust.telephone"
 							maxlength="60" value="${cust.telephone}"></td>

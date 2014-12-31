@@ -139,6 +139,25 @@
 				}
 			});
 		});
+		
+		j("#submitBtn").bind("click",function(){
+			if(confirm("确定提交修改么")){
+				var sbId = j("#sbId").val();
+				var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkModify.html?sb.sbId=" + sbId;
+				j.get(uri,function(data){
+					if(data != ""){
+						if(data != "true"){
+							alert("该订单已审核不可修改");
+							return false;
+						}
+					}else{
+						alert("订单不可修改");
+						return false;
+					}
+				});
+			}
+			return false;
+		});
 	});
 </script>
 </head>
@@ -151,7 +170,7 @@
 		<form id="form1"
 			action="${pageContext.request.contextPath}/admin/sellbill/sellbill_modify.html"
 			method="post">
-			<input type="hidden" id="" name="sb.sbId" value="${sb.sbId}"/>
+			<input type="hidden" id="sbId" name="sb.sbId" value="${sb.sbId}"/>
 		<input type="hidden" name="sdNum" value="" id="sdNum"/>
 			<table class="m-table-form">
 				<tbody>

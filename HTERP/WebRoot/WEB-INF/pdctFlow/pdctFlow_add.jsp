@@ -155,7 +155,7 @@
 							j("#picCount").html(data[1].picCount);
 							j("#remark").val(data[1].remark);
 							//批号label
-							var prefix = data[1].area + data[3].batchCode + "";
+							var prefix = data[4].sign1 + data[3].batchCode + "";
 							var tempNum = data[3].boxNum - data[3].boxNo;
 							if(tempNum == 0){
 								tempNum = 0;

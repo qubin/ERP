@@ -48,7 +48,6 @@
   </script>
 </head>
 <body>
-<input type="button" value="asdddd" id="btn"/>
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
@@ -59,7 +58,8 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="sign1">代码</option>
 	                  	<option value="area">地区</option>

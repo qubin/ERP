@@ -60,7 +60,7 @@
                   <th class="tr">查询类型：</th>
                   <td>
 	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
-	                  	<option value="-1">-请选择-</option>
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="OUT_TIME">操作时间</option>
 	                  	<option value="OUT_PERSON">经办人</option>

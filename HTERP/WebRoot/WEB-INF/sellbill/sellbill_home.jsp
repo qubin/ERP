@@ -36,7 +36,26 @@
 				j("#d12").removeAttr("readonly");
 			}
 		});
-	});
+	});	
+	
+	function checkModify(sbId){
+		j(document).ready(function(){
+			var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkModify.html?sb.sbId=" + sbId;
+			j.get(uri,function(data){
+				if(data != ""){
+					if(data == "true"){
+						window.location.href="${pageContext.request.contextPath}/admin/sellbill/sellbill_modifyUI.html?sb.sbId=" + sbId;
+					}else{
+						alert("该订单已审核不可修改");
+						return false;
+					}
+				}else{
+					alert("订单不可修改");
+					return false;
+				}
+			});
+		});
+	}
   </script>
 </head>
 <body>
@@ -50,7 +69,8 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="code">订货编号</option>
 	                  	<option value="order_date">订货日期</option>
@@ -97,7 +117,7 @@
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="STATUS"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_modifyUI.html?sb.sbId=${sr.ID}">修改</a>
+						<a href="" onclick="checkModify(${sr.ID});">修改</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

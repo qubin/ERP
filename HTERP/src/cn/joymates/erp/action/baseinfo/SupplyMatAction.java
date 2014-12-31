@@ -23,7 +23,7 @@ public class SupplyMatAction extends BaseAction {
 		if(supplyMat == null){
 			supplyMat = new SupplyMat();
 		}
-		List<Map<String, Object>> smList = service.findAll(supplyMat, ec_rd, req);
+		List<Map<String, Object>> smList = service.findQuery(ec_rd, null, null, req);
 		req.setAttribute("LOGOUT", Customer.logoutMap);
 		req.setAttribute("smList", smList);
 		return "home";
@@ -55,7 +55,7 @@ public class SupplyMatAction extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String find(){
@@ -70,7 +70,7 @@ public class SupplyMatAction extends BaseAction {
 				return "home";
 			}
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String add(){

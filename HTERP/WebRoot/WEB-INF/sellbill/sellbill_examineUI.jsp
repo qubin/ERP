@@ -26,7 +26,19 @@
 		j("#confirm").bind("click",function(){
 			var sbId = j("#sbId").val();
 			if(confirm("确认审核通过")){
-				window.location.href="${pageContext.request.contextPath}/admin/sellbill/sellbill_pass.html?sb.sbId=" + sbId;
+				var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkExam.html?sb.sbId=" + sbId;
+				j.get(uri,function(data){
+					if(data != ""){
+						if(data == "false"){
+							alert("该销售单已通过审核！");
+						}else{
+							window.location.href="${pageContext.request.contextPath}/admin/sellbill/sellbill_pass.html?sb.sbId=" + sbId;
+						}
+					}else{
+						alert("该销售单已通过审核！");
+					}
+				});
+				
 			}
 		});
 		

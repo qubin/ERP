@@ -85,7 +85,8 @@
                   <th class="tr">查询类型：</th>
                   <td>
 	                  <select name="queryType" id="secStr" class="u-slt validate-selection">
-	                  	<option value='all'>-全部-</option>
+	                  	<option value=''>-请选择-</option>
+	                  	<option value='all'>全部</option>
 	                  	<option value='sign1'>所在仓库</option>
 	                  	<option value='ht_mat_no'>华天材料号</option>
 	                  	<option value='mat_supplier_name'>供应商材料名</option>

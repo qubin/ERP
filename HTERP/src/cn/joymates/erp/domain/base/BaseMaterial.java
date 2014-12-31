@@ -16,7 +16,7 @@ public class BaseMaterial extends BaseVO {
 		fieldMap.put("weight", "weight");
 		fieldMap.put("standard", "standard");
 		fieldMap.put("scrollCount", "scroll_count");
-		//fieldMap.put("scrollId", "scroll_id");
+		fieldMap.put("scrollId", "scroll_id");
 		fieldMap.put("isAlarm", "is_alarm");
 		fieldMap.put("alarmWeight", "alarm_weight");
 		fieldMap.put("isLogout", "is_logout");
@@ -37,7 +37,7 @@ public class BaseMaterial extends BaseVO {
 	private BigDecimal weight;
 	private String standard;
 	private BigDecimal scrollCount;
-	//private String scrollId;
+	private String scrollId;
 	private String isAlarm;
 	private BigDecimal alarmWeight;
 	private String isLogout;
@@ -141,10 +141,10 @@ public class BaseMaterial extends BaseVO {
 	public void setSupplymatId(Integer supplymatId) {
 		this.supplymatId = supplymatId;
 	}
-//	public String getScrollId() {
-//		return scrollId;
-//	}
-//	public void setScrollId(String scrollId) {
-//		this.scrollId = scrollId;
-//	}
+	public String getScrollId() {
+		return scrollId;
+	}
+	public void setScrollId(String scrollId) {
+		this.scrollId = scrollId;
+	}
 }

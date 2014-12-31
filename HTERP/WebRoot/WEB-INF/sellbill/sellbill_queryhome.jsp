@@ -67,7 +67,8 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validation-passed">
+	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="code">订货编号</option>
 	                  	<option value="order_date">订货日期</option>
@@ -103,7 +104,7 @@
           <div align="center">
           <ec:table items="list" var="sr"
 				retrieveRowsCallback="limit"
-				action="${pageContext.request.contextPath}/admin/sellbill/sellbill_showHome.html"
+				action="${pageContext.request.contextPath}/admin/sellbill/sellbill_queryhome.html"
 				rowsDisplayed='12' 
 				pageSizeList="2,5,12,20,50,100,all"
 				resizeColWidth="true" width="100%" listWidth="100%" height="600px"

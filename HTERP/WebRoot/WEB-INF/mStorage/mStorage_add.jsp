@@ -52,10 +52,10 @@
 						j("#desc").html(data[0].desc);
 						j("#stan").html(data[0].standard);
 						j("#remark").html(data[0].remark);
-						j("#scValue").val(data[0].scrollId);
-						if(data[0].scrollId != ""){
+						j("#scValue").val(data[0].mmatId);
+						if(data[0].mmatId != ""){
 							j("#scInput").hide();
-							j("#scId").html(data[0].scrollId);
+							j("#scId").html(data[0].mmatId);
 							j("#scId").show();
 							j("#bar1").hide();
 							j("#bar2").hide();
@@ -64,6 +64,19 @@
 							j("#scId").html("");
 							j("#bar1").show();
 							j("#bar2").show();
+						}
+						var whList = ${wList};
+						if(data[0].warehouseId != ""){
+							for(var i in whList){
+								if(whList[i].warehouseId == data[0].warehouseId){
+									j("#wh").attr("disabled",true);
+									j("#wh").append("<option>" + whList[i].sign1  + "</option>");
+								}
+							}
+						}else{
+							for(var i = 0 ; i < whList.length; i ++){
+								j("#wh").append("<option value='" + whList[i].warehouseId + "'>"+ whList[i].sign1 +"</option>");
+							}
 						}
 				}else{
 					alert("该型号没有原材料");
@@ -170,6 +183,15 @@
 							</td>
 					</tr>
 					<tr>
+						<th height="40" class="tr" width="42%">所在仓库：</th>
+						<td height="40" >
+						<select class="u-ipt required validate-selection" name="material.warehouseId" id="wh">
+							
+						</select>
+						
+						</td>
+					</tr>
+					<tr>
 						<th height="40" class="tr" width="42%">面密度：</th>
 						<td height="40" ><label id="den"></label>
 							</td>
@@ -217,7 +239,7 @@
 						<span id="bar1">	母卷<input type="radio" name="foo" id="mRadio" />&nbsp;&nbsp;&nbsp;</span>
 						<span id="bar2">子卷<input type="radio" name="foo" id="cRadio" /></span>
 							<label for="" id="scId"></label>
-							<input type="text" class="u-ipt required" id="scInput" name="material.scrollId"/>
+							<input type="text" class="u-ipt required" id="scInput" name="material.mmatId"/>
 						</td>
 					</tr>
 					<tr>

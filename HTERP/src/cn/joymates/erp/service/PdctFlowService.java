@@ -19,7 +19,7 @@ public class PdctFlowService extends BaseService<PdctFlow> {
 		resultsql.append("SELECT w.`sign1`,pf.`box_num`,pf.`istct_id`,pf.`batch_code`,pf.`box_no`,pf.`out_person`,pf.`in_or_out`,pf.`out_time`,pf.`count`,p.`ht_pn`,pf.`reamrk`,pf.`is_logout`,pf.`logout_reason` "
 				+ "FROM `t_pdct_flow` AS pf  LEFT JOIN `t_cust_pdct` AS cp ON pf.`cust_pdct_Id` = cp.`id` "
 				+ "LEFT JOIN `t_product` AS p ON cp.`product_id` = p.`id` "
-				+ "LEFT JOIN `t_warehouse` AS w ON cp.`area` = w.`area` where 1 = 1 ");
+				+ "LEFT JOIN `t_warehouse` AS w ON cp.`area` = w.`id` where 1 = 1 ");
 		if(queryType != null && queryStr != null){
 			resultsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
 		}
