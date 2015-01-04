@@ -57,10 +57,8 @@ public class CustomerAction extends BaseAction{
 			u.setUserId("300");
 			u.setUserLoginId(loginName);
 			u.setPassword1("123");
-			Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			//未完
-			
+			u.setCreateTime(new Date());
+			userService.save(u);
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] prodId = req.getParameterValues("prodId");
 			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){

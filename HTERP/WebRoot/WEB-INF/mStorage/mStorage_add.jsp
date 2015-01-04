@@ -69,17 +69,20 @@
 						if(data[0].warehouseId != ""){
 							for(var i in whList){
 								if(whList[i].warehouseId == data[0].warehouseId){
-									j("#wh").attr("disabled",true);
 									j("#wh").append("<option>" + whList[i].sign1  + "</option>");
+									j("#wh").removeClass("validate-selection");
+									j("#wh").attr("disabled",true);
 								}
 							}
 						}else{
+							j("#wh").attr("disabled",false);
+							j("#wh").addClass("validate-selection");
 							for(var i = 0 ; i < whList.length; i ++){
 								j("#wh").append("<option value='" + whList[i].warehouseId + "'>"+ whList[i].sign1 +"</option>");
 							}
 						}
 				}else{
-					alert("该型号没有原材料");
+					alert("该型号没有对应原材料");
 				}
 			});
 		});
@@ -186,7 +189,6 @@
 						<th height="40" class="tr" width="42%">所在仓库：</th>
 						<td height="40" >
 						<select class="u-ipt required validate-selection" name="material.warehouseId" id="wh">
-							
 						</select>
 						
 						</td>
@@ -236,7 +238,7 @@
 					<tr>
 						<th height="40" class="tr" width="42%" id="th1">母卷ID</th>
 						<td height="40" id="td1">
-						<span id="bar1">	母卷<input type="radio" name="foo" id="mRadio" />&nbsp;&nbsp;&nbsp;</span>
+						<span id="bar1">	母卷<input type="radio" name="foo" id="mRadio" checked="checked"/>&nbsp;&nbsp;&nbsp;</span>
 						<span id="bar2">子卷<input type="radio" name="foo" id="cRadio" /></span>
 							<label for="" id="scId"></label>
 							<input type="text" class="u-ipt required" id="scInput" name="material.mmatId"/>
