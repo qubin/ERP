@@ -90,20 +90,20 @@
 			j(oc).bind("change",function(){
 				var bar,foo = 0;
 				if(j(oc).val() != ""){
-					bar = parseInt(j(oc).val());
+					bar = parseFloat(j(oc).val());
 				}
 				if(j(p).val() != ""){
-					foo = parseInt(j(p).val());
+					foo = parseFloat(j(p).val());
 				}
 				j(a).val(bar * foo);
 			});
 			j(p).bind("change",function(){
 				var bar,foo = 0;
 				if(j(oc).val() != ""){
-					bar = parseInt(j(oc).val());
+					bar = parseFloat(j(oc).val());
 				}
 				if(j(p).val() != ""){
-					foo = parseInt(j(p).val());
+					foo = parseFloat(j(p).val());
 				}
 				j(a).val(bar * foo);
 			});
