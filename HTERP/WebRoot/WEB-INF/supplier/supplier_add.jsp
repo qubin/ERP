@@ -76,7 +76,17 @@
 							maxlength="20"></td>
 					</tr>
 					<tr>
-						<th class="tr">地址：</th>
+						<th class="tr">开户银行：</th>
+						<td><input type="text" class="u-ipt" name="supplier.bank"
+							maxlength="120"></td>
+					</tr>
+					<tr>
+						<th class="tr">银行账号：</th>
+						<td><input type="text" class="u-ipt" name="supplier.account"
+							maxlength="120"></td>
+					</tr>
+					<tr>
+						<th class="tr">单位地址：</th>
 						<td><input type="text" class="u-ipt" name="supplier.address"
 							maxlength="120"></td>
 					</tr>

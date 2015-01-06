@@ -25,6 +25,21 @@
 	
 	function addTableTr(){
 		
+		var txtMjid = j("#txtMjid").val();
+		var txtGysjh = j("#txtGysjh" + fjnum).val();
+		var txtCjjs = j("#txtCjjs" + fjnum).val();
+		var txtCjcc = j("#txtCjcc" + fjnum).val();
+		
+// 		alert("txtMjid:"+txtMjid);
+// 		alert("txtGysjh:"+txtGysjh);
+// 		alert("txtCjjs:"+txtCjjs);
+// 		alert("txtCjcc:"+txtCjcc);
+		
+		if(txtMjid == "-1" || txtGysjh == "-1" || txtCjjs == "" || txtCjcc == ""){
+			alert("请先将以上信息填写完整！");
+			return false;
+		}
+		
 		fjnum = fjnum + 1;
 		
 		j("#txtFjRow").val(fjnum);
@@ -37,7 +52,7 @@
 			t +=			"<select name='txtGysjh" + fjnum + "' id='txtGysjh" + fjnum + "' class='u-ipt'>";
 			t +=				"<option value='-1'>--请选择--</option>";
 							for(var i=0;i<jsonData.length;i++){
-			t +=			 	"<option value='"+jsonData[i].supplyMatId+"'>"+jsonData[i].matSupplierScrollId+"</option>";
+			t +=			 	"<option value='"+jsonData[i].uuid+"'>"+jsonData[i].scrollId+"</option>";
 					 		}
 			t +=			"</select>";
 			t +=		"</div>";
@@ -45,17 +60,17 @@
 			t +=	"<td>";
 			t +=		"<div align='center'>";
 			t +=			"<label id='txtClxh"+fjnum+"'></label>";
-// 			t +=			"<input type='text' class='u-ipt' id='txtClxh' name='txtClxh" + fjnum + "' />";
+			t +=			"<input type='hidden' id='txtClxh"+fjnum+"' name='txtClxh" + fjnum + "' />";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
 			t +=		"<div align='center'>";
-			t +=			"<input type='text' class='u-ipt' name='txtCjjs" + fjnum + "'>";
+			t +=			"<input type='text' class='u-ipt' id='txtCjjs" + fjnum + "' name='txtCjjs" + fjnum + "'>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
 			t +=		"<div align='center'>";
-			t +=			"<input type='text' class='u-ipt'name='txtCjcc" + fjnum + "'>";
+			t +=			"<input type='text' class='u-ipt' id='txtCjcc" + fjnum + "' name='txtCjcc" + fjnum + "'>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t += "</tr>";
@@ -63,11 +78,12 @@
 		j("#cutMaterialTable").append(t);
 		
 		j("#txtGysjh"+fjnum).change(function() {
-			var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?supMatId=" + j("#txtGysjh"+fjnum).val();
+			var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?materId=" + j("#txtGysjh"+fjnum).val();
 			new Ajax.Request(url, {
 				method : 'get',
 				onSuccess : function(data) {
 					j("#txtClxh"+fjnum).html(data.responseText);
+					j("#txtClxh"+fjnum).val(data.responseText);
 				}
 			});
 		});
@@ -80,17 +96,17 @@
   	  		method:'get',
   	  		onSuccess: function(data){
   	  			j("#mmatDesc").html(data.responseText);
- 	  			//document.getElementById("mmatDesc").innerText = data.responseText;
   	  		}
   	  	});
 	}
 	
 	function getMaterialModel(obj) {
-		var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?supMatId=" + obj.value;
+		var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?materId=" + obj.value;
 		new Ajax.Request(url, {
 			method : 'get',
 			onSuccess : function(data) {
 				j("#txtClxh1").html(data.responseText);
+				j("#txtClxh1").val(data.responseText);
 			}
 		});
 	}
@@ -142,10 +158,11 @@
 				<tr>
 					<td width="10%" rowspan="100"><div align="center">
 							<s:select name="material.uuid"
+							   id="txtMjid"
 							   onchange="getMmatDesc(this)"
 							   cssClass="u-ipt required validate-selection"
 						       list="#request.materialList"
-						       listKey="uuid" listValue="uuid" headerKey="-1"
+						       listKey="uuid" listValue="mmatId" headerKey="-1"
 						       headerValue="--请选择--" />
 						</div></td>
 					<td width="10%" rowspan="100">
@@ -156,21 +173,22 @@
 							<s:select name="txtGysjh1"
 							   onchange="getMaterialModel(this)"
 							   cssClass="u-ipt required validate-selection"
-						       list="#request.supplyMatList"
-						       listKey="supplyMatId" listValue="matSupplierScrollId" headerKey="-1"
+						       list="#request.sonList"
+						       listKey="uuid" listValue="scrollId" headerKey="-1"
 						       headerValue="--请选择--" />
 						</div>
 					</td>
 					<td>
 						<div align="center">
 							<label id="txtClxh1"></label>
+							<input type="hidden" id="txtClxh1" name="txtClxh1">
 						</div>
 					</td>
 					<td><div align="center">
-							<input type="text"  class="u-ipt" name="txtCjjs1" />
+							<input type="text"  class="u-ipt" name="txtCjjs1" id="txtCjjs1"/>
 						</div></td>
 					<td><div align="center">
-							<input type="text" class="u-ipt" name="txtCjcc1" />
+							<input type="text" class="u-ipt" name="txtCjcc1" id="txtCjcc1"/>
 						</div></td>
 				</tr>
 			</tbody>
@@ -178,32 +196,6 @@
 		</table>
 
 		<br>
-
-		<table width="100%" class="m-table-form">
-			<tbody>
-				<tr>
-					<th width="10%" class="tr">&nbsp;</th>
-					<th width="19%" class="tr">
-						<div align="right">下单人签名 Singnature：</div>
-					</th>
-					<th width="71%" class="tr">
-						<div align="left">
-							<input name="txt30" type="text" class="text-box" id="txt30">
-						</div>
-					</th>
-				</tr>
-				<tr>
-					<th class="tr">&nbsp;</th>
-					<th class="tr"><div align="right">日期 Date：</div></th>
-					<th class="tr">
-						<div align="left">
-							<input name="txt30" type="text" class="text-box" id="txt30">
-						</div>
-					</th>
-				</tr>
-			</tbody>
-		</table>
-
 
 		<div align="center">
 			<input type="submit" class="u-btn" value="提交"> 

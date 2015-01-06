@@ -10,24 +10,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <title></title>
   <script type="text/javascript">
-  	function delMsg(id,isLogout) {
-  		if(isLogout == 0){
-			if (confirm('您确定要注销此信息吗？')) {
-				var str=prompt("注销原因？","");
-				if(str!=null && str!=""){
-					var h = "${pageContext.request.contextPath}/admin/qcstore/qcstore_delete.html?qcstore.uuid="+id+"&qcstore.isLogout=1&qcstore.logoutReason="+str;
-					window.location.href=h;
-				}else{
-					return false;
-				}
-			}else{
-				return false;
-			}
-		}else{
-			if (confirm('您确定要恢复此信息吗？')) {
-				var h = "${pageContext.request.contextPath}/admin/qcstore/qcstore_delete.html?qcstore.uuid="+id+"&qcstore.isLogout=0&qcstore.logoutReason=' '";
-				window.location.href=h;
-			}
+  	function delMsg(id) {
+		if (!confirm('您确定要将此QC移除隔离库吗？')) {
+			return false;
 		}
 	}
   </script>
@@ -86,6 +71,9 @@
 					<ec:column property="WEIGHT" title="QC重量" width="11%" style="text-align:right"/>
 					<ec:column property="PIC_COUNT" title="QC数量" width="11%" style="text-align:right"/>
 					<ec:column property="ISOLATE_REASON" title="隔离原因" width="11%"/>
+					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
+						<a onclick="return delMsg(${sr.ID})" href="${pageContext.request.contextPath}/admin/qcstore/qcstore_delete.html?qcstore.uuid=${sr.ID}" style="color:blue;text-decoration:underline;">转出隔离库</a>
+					</ec:column>
 				</ec:row>
 			</ec:table>
 		</div>

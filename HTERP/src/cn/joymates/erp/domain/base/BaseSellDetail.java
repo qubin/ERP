@@ -81,5 +81,4 @@ public class BaseSellDetail extends BaseVO {
 	public void setRemark1(String remark1) {
 		this.remark1 = remark1;
 	}
-	
 }

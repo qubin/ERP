@@ -16,7 +16,6 @@ public class BaseMaterial extends BaseVO {
 		fieldMap.put("weight", "weight");
 		fieldMap.put("standard", "standard");
 		fieldMap.put("scrollCount", "scroll_count");
-		fieldMap.put("scrollId", "scroll_id");
 		fieldMap.put("isAlarm", "is_alarm");
 		fieldMap.put("alarmWeight", "alarm_weight");
 		fieldMap.put("isLogout", "is_logout");
@@ -24,7 +23,8 @@ public class BaseMaterial extends BaseVO {
 		fieldMap.put("mmatId", "mmat_id");
 		fieldMap.put("remark", "remark");
 		fieldMap.put("remark1", "remark1");
-		
+		fieldMap.put("scrollId", "scroll_id");
+		fieldMap.put("materialModel", "material_model");
 		this.id = "id";
 	}
 
@@ -36,8 +36,7 @@ public class BaseMaterial extends BaseVO {
 	private String desc;
 	private BigDecimal weight;
 	private String standard;
-	private BigDecimal scrollCount;
-	private String scrollId;
+	private Integer scrollCount;
 	private String isAlarm;
 	private BigDecimal alarmWeight;
 	private String isLogout;
@@ -45,6 +44,9 @@ public class BaseMaterial extends BaseVO {
 	private Integer mmatId;
 	private String remark;
 	private String remark1;
+	private String scrollId;
+	private String materialModel;
+	
 	public Integer getUuid() {
 		return uuid;
 	}
@@ -87,10 +89,10 @@ public class BaseMaterial extends BaseVO {
 	public void setStandard(String standard) {
 		this.standard = standard;
 	}
-	public BigDecimal getScrollCount() {
+	public Integer getScrollCount() {
 		return scrollCount;
 	}
-	public void setScrollCount(BigDecimal scrollCount) {
+	public void setScrollCount(Integer scrollCount) {
 		this.scrollCount = scrollCount;
 	}
 	public String getIsAlarm() {
@@ -146,5 +148,11 @@ public class BaseMaterial extends BaseVO {
 	}
 	public void setScrollId(String scrollId) {
 		this.scrollId = scrollId;
+	}
+	public String getMaterialModel() {
+		return materialModel;
+	}
+	public void setMaterialModel(String materialModel) {
+		this.materialModel = materialModel;
 	}
 }

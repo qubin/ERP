@@ -64,16 +64,21 @@ public class MaterialAction extends BaseAction {
 	public String showModifyUI() {
 		material = service.selectOne(material);
 		
-		String searchsql = "SELECT COUNT(*) FROM t_warehouse where is_logout='0' ";		
-		String resultsql = "SELECT * FROM t_warehouse where is_logout='0'  limit ?, ? ";
-		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
+		supplyMat = new SupplyMat();
+		supplyMat.setSupplyMatId(material.getSupplymatId());
+		List<SupplyMat> smlist = supplyMatService.selectList(supplyMat);
+		
+		supplyMat = smlist.get(0);
 		
 		supplier = new Supplier();
 		supplier.setIsLogout("0");
 		List<Supplier> supplierList = supplierService.selectList(supplier);
 		
-		req.setAttribute("warehouseList", warehouseList);
+		Supplier s = new Supplier();
+		s.setUuid(supplyMat.getSupplyId());
+		supplier = supplierService.selectOne(s);
 		req.setAttribute("supplierList", supplierList);
+		
 		return "modifyUI";
 	}
 	

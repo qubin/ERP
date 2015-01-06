@@ -25,7 +25,7 @@
     <include file="erpMatsoflow.xml"/>
     
     <include file="erpProduction.xml"/>
-    
+     <include file="erpFinance.xml"/>
      <include file="erpSupplyMat.xml"/>
      <include file="erpPdctFlow.xml"/>
      <include file="erpRowFlow.xml"/>

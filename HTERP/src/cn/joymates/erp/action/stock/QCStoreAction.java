@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.stock;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ import com.mysql.jdbc.ResultSetMetaData;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.dao.IWarehouse;
 import cn.joymates.erp.dao.impl.WarehouseDaoImpl;
+import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Material;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.domain.QCStore;
@@ -26,6 +28,7 @@ import cn.joymates.erp.domain.Supplier;
 import cn.joymates.erp.domain.SupplyMat;
 import cn.joymates.erp.domain.Warehouse;
 import cn.joymates.erp.exceptions.DaoException;
+import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.MaterialService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.service.QCStoreService;
@@ -68,8 +71,8 @@ public class QCStoreAction extends BaseAction {
 		warehous.setIsLogout("0");
 		List<Warehouse> warehouseList = warehouse.selectList(warehous);
 
-		String searchsql = "SELECT COUNT(*) FROM T_PRODUCT AS this_ WHERE 1=1 AND is_logout='0' ";
-		String resultsql = "SELECT * FROM T_PRODUCT AS this_ WHERE 1=1 AND is_logout='0' limit ?, ?";
+		String searchsql = "SELECT count(*) FROM t_product AS p INNER JOIN t_cust_pdct AS cp ON p.id=cp.product_id WHERE p.is_logout='0' ";
+		String resultsql = "SELECT * FROM t_product AS p INNER JOIN t_cust_pdct AS cp ON p.id=cp.product_id WHERE p.is_logout='0' limit ?, ?";
 		List<Map<String, Object>> productList = productService.getEcsideList("1000", searchsql, resultsql, req);
 		
 		req.setAttribute("supplierList", supplierList);
@@ -163,24 +166,15 @@ public class QCStoreAction extends BaseAction {
 	public String add() {
 		String strQcType = req.getParameter("txtQcType");	//获取保存qc的类型  1：材料  2：成品
 		if(strQcType.equals("1")){
-			if(qcstore == null){
-				qcstore = new QCStore();
-			}
+			qcstore.setMatOrPdct("1");
+			qcstore.setMatPdctId(material.getUuid());
+			service.save(qcstore);
 			
-			QCStore qc = new QCStore();
-			qc.setMatPdctId(material.getUuid());
-			List<QCStore> qclist = service.selectList(qc);	//查询是否存在该信息
-			if(qclist.size() > 0){	//如果存在则修改
-				qcstore.setUuid(qclist.get(0).getUuid());
-				qcstore.setMatOrPdct("1");
-				qcstore.setMatPdctId(material.getUuid());
-				qcstore.setWeight(qcstore.getWeight().add(qclist.get(0).getWeight()));
-				service.update(qcstore);
-			}else{					//如果不存在则添加
-				qcstore.setMatOrPdct("1");
-				qcstore.setMatPdctId(material.getUuid());
-				service.save(qcstore);
-			}
+			//减去材料表中QC数量
+			material = materialService.selectOne(material);
+			BigDecimal w = material.getWeight().subtract(qcstore.getWeight());
+			material.setWeight(w);
+			materialService.update(material);
 		}
 		return showHome();
 	}
@@ -247,24 +241,50 @@ public class QCStoreAction extends BaseAction {
 	 * 增加产品QC
 	 */
 	public String qcstoreProduct(){
-		QCStore qc = new QCStore();
-		qc.setMatOrPdct("2");							//1：材料   2：产品
-		qc.setMatPdctId(product.getUuid());
-		List<QCStore> qclist = service.selectList(qc);	//查询是否存在该信息
-		if(qclist.size() > 0){	//如果存在则修改
-			qcstore.setUuid(qclist.get(0).getUuid());
-			qcstore.setPicCount(qclist.get(0).getPicCount() + qcstore.getPicCount());
-			service.update(qcstore);
-		}else{					//如果不存在则添加
-			qcstore.setMatOrPdct("2");					//1：材料   2：产品
-			qcstore.setMatPdctId(product.getUuid());
-			service.save(qcstore);
-		}
+		qcstore.setMatOrPdct("2");					//1：材料   2：产品
+		qcstore.setMatPdctId(product.getUuid());
+		service.save(qcstore);
+		
+		//产品数量减去qc数量
+		cusPdct = new CustPdct();
+		cusPdct.setProdId(product.getUuid());
+		List<CustPdct> lp = custPdctService.selectList(cusPdct);
+		
+		int picCount = lp.get(0).getPicCount() - qcstore.getPicCount();
+		cusPdct.setCpId(lp.get(0).getCpId());
+		cusPdct.setPicCount(picCount);
+		custPdctService.update(cusPdct);
+		
 		return showHome();
 	}
 	
-	
-	
+	/*
+	 * 移除隔离
+	 */
+	public String delete(){
+		//查询该qc信息
+		qcstore = service.selectOne(qcstore);
+		if(qcstore.getMatOrPdct().equals("1")){  //材料
+			material = new Material();
+			material.setUuid(qcstore.getMatPdctId());
+			Material minfo = materialService.selectOne(material);
+			BigDecimal weight = minfo.getWeight().add(qcstore.getWeight());
+			material.setWeight(weight);
+			materialService.update(material);
+		}else{   //成品
+			cusPdct = new CustPdct();
+			cusPdct.setProdId(qcstore.getMatPdctId());
+			List<CustPdct> cpinfo = custPdctService.selectList(cusPdct);
+			int piccount = cpinfo.get(0).getPicCount()+qcstore.getPicCount();
+			cusPdct.setPicCount(piccount);
+			cusPdct.setCpId(cpinfo.get(0).getCpId());
+			custPdctService.update(cusPdct);
+		}
+		//qc的数量增加到仓库
+		service.delete(qcstore);   //移除该QC
+		
+		return showHome();
+	}
 	
 	
 	
@@ -276,12 +296,15 @@ public class QCStoreAction extends BaseAction {
 	private MaterialService materialService = ServiceProxyFactory.getInstanceNoMybatis(new MaterialService());
 	private ProductService productService = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
 	private SupplyMatService supplyMatService = ServiceProxyFactory.getInstanceNoMybatis(new SupplyMatService());
+	private CustPdctService custPdctService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
+	
 	
 	private Material material;
 	private SupplyMat supplyMat;
 	private Supplier supplier;
 	private QCStore qcstore;
 	private Product product;
+	private CustPdct cusPdct;
 	
 	private String qcstore_key;
 	private String qcstore_name;
@@ -348,6 +371,14 @@ public class QCStoreAction extends BaseAction {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public CustPdct getCusPdct() {
+		return cusPdct;
+	}
+
+	public void setCusPdct(CustPdct cusPdct) {
+		this.cusPdct = cusPdct;
 	}
 	
 }
