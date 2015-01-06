@@ -8,6 +8,7 @@ public class BaseCustPdct extends BaseVO {
 		fieldMap.put("cpId", "id");
 		fieldMap.put("custId", "customer_id");
 		fieldMap.put("cus_pn", "cus_pn");
+		fieldMap.put("code", "code");
 		fieldMap.put("prodId", "product_id");
 		fieldMap.put("isLogOut", "is_logout");
 		fieldMap.put("logOutReason", "logout_reason");
@@ -15,12 +16,14 @@ public class BaseCustPdct extends BaseVO {
 		fieldMap.put("remark", "remark");
 		fieldMap.put("weight", "weight");
 		fieldMap.put("area", "area");
+		fieldMap.put("picNum", "pic_num");
 		this.id = "id";
 	}
 	
 	private Integer cpId;
 	private Integer custId;
 	private String cus_pn;
+	private String code;
 	private Integer prodId;
 	private String isLogOut;
 	private String logOutReason;
@@ -28,7 +31,20 @@ public class BaseCustPdct extends BaseVO {
 	private String remark;
 	private BigDecimal weight;
 	private Integer area;
+	private Integer picNum;
 	
+	public Integer getPicNum() {
+		return picNum;
+	}
+	public void setPicNum(Integer picNum) {
+		this.picNum = picNum;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
 	public Integer getPicCount() {
 		return picCount;
 	}

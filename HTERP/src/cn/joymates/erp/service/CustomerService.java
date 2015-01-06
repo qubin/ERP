@@ -53,7 +53,7 @@ public class CustomerService extends BaseService<Customer> {
 			Connection conn = null;
 			PreparedStatement prst = null;
 			ResultSet rs = null;
-			String sql = "SELECT p.`ht_pn`,cp.`id`,cp.`cus_pn`,w.sign1 "
+			String sql = "SELECT cp.`code`,p.`ht_pn`,cp.`id`,cp.`cus_pn`,w.sign1 "
 					+ "FROM `t_product` AS p LEFT JOIN `t_cust_pdct` AS cp "
 					+ "ON cp.`product_id` = p.`id`LEFT JOIN `t_warehouse` AS w ON cp.`area` = w.`id` "
 					+ "WHERE cp.`customer_id` = " + custId;

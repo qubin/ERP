@@ -91,6 +91,7 @@ public class PdctFlowAction extends BaseAction {
 			String remark = req.getParameter("remark");
 			String boxNum = req.getParameter("boxNum");
 			String nowflag = req.getParameter("nowflag");
+			String picNum = req.getParameter("picNum");
 			if(num != null && nowTime != null && choice != null && boxNum != null && nowTime != null){
 				User u = (User) req.getSession().getAttribute("loggedUser");
 				BigDecimal inOutNum = new BigDecimal(num);
@@ -110,12 +111,14 @@ public class PdctFlowAction extends BaseAction {
 							newCp.setCus_pn(cp.getCus_pn());
 							newCp.setPicCount(Integer.valueOf(num));
 							newCp.setWeight(cp.getWeight());
+							newCp.setPicNum(cp.getPicNum());
 							newCp.setArea(Integer.valueOf(whflag));
 							pdId = cpService.save(newCp);
 						}else{
 							cp = cpService.selectOne(cp);
 							cp.setPicCount(Integer.valueOf(num));
 							cp.setArea(Integer.valueOf(whflag));
+							cp.setPicNum(Integer.valueOf(picNum));
 							pdId = cp.getCpId();
 							cpService.update(cp);
 						}

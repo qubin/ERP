@@ -114,14 +114,15 @@
 		
 		function initSellDetail(){
 			var data =${sdList};
+			var cpList = ${cp2List};
 			if(data != ""){
 				for(var i = 0; i < data.length; i ++){
 					no += 1;
 					var str = "<tr height='40'>";
 					str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
-					str += 	"<td class='tr'><div align='center'>" + data[i].sdCode + "</div></label>";
+					str += 	"<td class='tr'><div align='center'>" + cpList[i].cus_pn + "</div></label>";
 					str +=	"</td>";
-					str +=  "<td class='tr'><div align='center'>" + data[i].cpn + "</div>";
+					str +=  "<td class='tr'><div align='center'>" + cpList[i].code + "</div>";
 					str +=	"</td>";
 					str +=  "<td class='tr'><div align='center'>pic</div></td>";
 					str +=  "<td class='tr'><div align='center'>"+ data[i].orderCount +"</div>";

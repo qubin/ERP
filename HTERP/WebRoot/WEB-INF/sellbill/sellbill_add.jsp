@@ -45,15 +45,17 @@
 			if(checkAdd()){
 				init();
 			}
+			if(j("#cust").val() != ""){
+				bindSelect();
+			}
 		});
 		
 		function checkAdd(){
 			var code = "#code" + no;
-			var cpn = "#cpn" + no;
 			var oc = "#oc" + no;
 			var p = "#p" + no;
 			
-			if(j(code).val() != "" && j(cpn).val() != "" && j(oc).val() != "" && j(p).val() != ""){
+			if(j(code).val() != "" && j(oc).val() != "" && j(p).val() != ""){
 				return true;
 			}else{
 				alert("请把当前记录填写完整！");
@@ -64,10 +66,10 @@
 			no += 1;
 			var str = "<tr>";
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
-				str += 	"<td class='tr'><input type='text' class='u-ipt required ' name='sdCode'";
-				str +=	"maxlength='60' style='width:110px;' id='code" + no +"'></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='cpn'";
-				str +=	"maxlength='60' style='width:110px;' id='cpn" + no +"'></td>";
+				str += 	"<td class='tr'><select name='cpList' id='' class='u-ipt required validate-selection'><option value=''>-请选择-</option></select>";
+				str +=	"</td>";
+				str +=  "<td class='tr'><div align='center'><label for='' name='cpn'></label></div>";
+				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
 				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"'></td>";
@@ -105,7 +107,44 @@
 					alert("该客户信息不完整！");
 				}
 			});
+			bindSelect();
 		});
+		
+		function bindSelect(){
+			var custId = j("#cust").val();
+			var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_findCP.html?cust.custId=" + custId;
+			j.getJSON(uri,function(data){
+				if(data != ""){
+					j.each(j("select[name='cpList']"),function(k,v){
+						v.innerHTML = "";
+						var jtemp = j(v);
+						j.each(data,function(k2,v2){
+							jtemp.append("<option value=''>-请选择-</option>");
+							jtemp.append("<option value='" + v2.cpId + "'>" + v2.cus_pn + "</option>");
+						});
+					});
+					var tempL =  j("select[name='cpList']");
+					var laL = j("label[name='cpn']");
+					tempL.each(function(k,v){
+						var jtemp2 = j(v);
+						jtemp2.bind("change",function(){
+							for(var i = 0; i < data.length;i ++){
+								if(j(this).val() == data[i].cpId){
+									laL[i].innerHTML = data[i].code;
+								}else{
+									laL[i].innerHTML = "";
+								}
+							}
+						});
+					});
+				}else{
+					alert("该客户没有对应成品");
+					j.each(j("select[name='cpList']"),function(k,v){
+						j(this).html("");
+					});
+				}
+			});
+		}
 	});
 </script>
 </head>

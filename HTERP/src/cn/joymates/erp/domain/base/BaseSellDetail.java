@@ -7,8 +7,7 @@ public class BaseSellDetail extends BaseVO {
 		tablename = "t_sell_details";
 		fieldMap.put("sellDetailId", "id");
 		fieldMap.put("sbId", "sell_bill_id");
-		fieldMap.put("sdCode", "sell_detail_code");
-		fieldMap.put("cpn", "cus_pdct_no");
+		fieldMap.put("cpId", "cust_pdct_id");
 		fieldMap.put("price", "price");
 		fieldMap.put("amount", "amount");
 		fieldMap.put("orderCount", "order_count");
@@ -19,8 +18,7 @@ public class BaseSellDetail extends BaseVO {
 	
 	private Integer sellDetailId;
 	private Integer sbId;
-	private String sdCode;
-	private String cpn;
+	private Integer cpId;
 	private BigDecimal price;
 	private BigDecimal amount;
 	private Integer orderCount;
@@ -39,17 +37,12 @@ public class BaseSellDetail extends BaseVO {
 	public void setSbId(Integer sbId) {
 		this.sbId = sbId;
 	}
-	public String getSdCode() {
-		return sdCode;
+	
+	public Integer getCpId() {
+		return cpId;
 	}
-	public void setSdCode(String sdCode) {
-		this.sdCode = sdCode;
-	}
-	public String getCpn() {
-		return cpn;
-	}
-	public void setCpn(String cpn) {
-		this.cpn = cpn;
+	public void setCpId(Integer cpId) {
+		this.cpId = cpId;
 	}
 	public BigDecimal getPrice() {
 		return price;
@@ -81,5 +74,4 @@ public class BaseSellDetail extends BaseVO {
 	public void setRemark1(String remark1) {
 		this.remark1 = remark1;
 	}
-	
 }

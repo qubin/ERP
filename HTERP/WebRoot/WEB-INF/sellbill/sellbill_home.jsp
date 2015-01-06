@@ -117,7 +117,7 @@
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="STATUS"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="" onclick="checkModify(${sr.ID});">修改</a>
+						<a href="#" onclick="checkModify(${sr.ID});">修改</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

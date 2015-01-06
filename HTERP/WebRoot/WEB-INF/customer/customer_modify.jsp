@@ -80,6 +80,12 @@
 								<input type="hidden" name="cpId" value="${data.id}"/>
 							</td>
 						</tr>
+							<tr>
+							<th class="tr">CODE：</th>
+							<td><input type="text" class="u-ipt required" name="code" value="${data.code}"
+								maxlength="60">
+							</td>
+						</tr>
 					</s:iterator>
 				</tbody>
 				<tfoot>

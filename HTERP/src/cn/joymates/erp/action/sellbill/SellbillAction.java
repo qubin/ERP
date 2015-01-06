@@ -9,11 +9,13 @@ import java.util.Map;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
+import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Pdceistct;
 import cn.joymates.erp.domain.SellBill;
 import cn.joymates.erp.domain.SellDetail;
 import cn.joymates.erp.domain.User;
+import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.PdceistctService;
 import cn.joymates.erp.service.SellBillService;
@@ -26,6 +28,7 @@ public class SellbillAction extends BaseAction {
 	private CustomerService cService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
 	private SellBillService sService = ServiceProxyFactory.getInstanceNoMybatis(new SellBillService());
 	private SellDetailService sdService = ServiceProxyFactory.getInstanceNoMybatis(new SellDetailService());
+	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
 	private Customer cust;
 	private SellBill sb;
 	
@@ -134,6 +137,13 @@ public class SellbillAction extends BaseAction {
 		JSONArray list = JSONArray.fromObject(sdService.selectList(sd));
 		req.setAttribute("sdList", list.toString());
 		req.setAttribute("cust", cService.selectOne(c));
+		CustPdct cp = new CustPdct();
+		cp.setCustId(sb.getCustId());
+		List c1 = cpService.selectList(cp);
+		req.setAttribute("list", c1);
+		JSONArray jsonList = JSONArray.fromObject(c1);
+		System.out.println(jsonList.toString());
+		req.setAttribute("jsonList", jsonList.toString());
 		return "modifyUI";
 	}
 	
@@ -147,10 +157,20 @@ public class SellbillAction extends BaseAction {
 		if(sdService.selectList(sd).size() == 0){
 			req.setAttribute("sdList", "");
 		}else{
-			JSONArray list = JSONArray.fromObject(sdService.selectList(sd));
+			List<SellDetail> sdList = sdService.selectList(sd);
+			JSONArray list = JSONArray.fromObject(sdList);
+			List<CustPdct> cp2List = new ArrayList<CustPdct>();
+			for(int i = 0; i < sdList.size(); i ++){
+				CustPdct cp2 = new CustPdct();
+				cp2.setCpId(sdList.get(i).getCpId());
+				cp2List.add(cpService.selectOne(cp2));
+			}
+			JSONArray jsonList = JSONArray.fromObject(cp2List);
+			req.setAttribute("cp2List", jsonList);
 			req.setAttribute("sdList", list.toString());
 		}
 		req.setAttribute("cust", cService.selectOne(c));
+		
 		String detail = req.getParameter("detail");
 		if("true".equals(detail)){
 			return "detail";
@@ -167,6 +187,17 @@ public class SellbillAction extends BaseAction {
 		return "addUI";
 	}
 	
+	public void findCP(){
+		try {
+			CustPdct cp = new CustPdct();
+			cp.setCustId(cust.getCustId());
+			JSONArray list = JSONArray.fromObject(cpService.selectList(cp));
+			resp.getWriter().write(list.toString());
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String examine(){
 		req.setAttribute("STATUS", SellBill.STATUS);
 		req.setAttribute("list", sService.findAll(ec_rd, req,"showHome"));
@@ -179,19 +210,17 @@ public class SellbillAction extends BaseAction {
 			sService.update(sb);
 			String sdNum = req.getParameter("sdNum");
 			int num = Integer.valueOf(sdNum);
-			String[] sdCode = req.getParameterValues("sdCode");
-			String[] cpn = req.getParameterValues("cpn");
 			String[] orderCount = req.getParameterValues("orderCount");
 			String[] price = req.getParameterValues("price");
 			String[] amount = req.getParameterValues("amount");
 			String[] remark = req.getParameterValues("remark");
 			String[] sdId = req.getParameterValues("sdId");
+			String[] cpList = req.getParameterValues("cpList");
 			for(int i = 0 ; i < num; i ++){
 				SellDetail sd = new SellDetail();
 				sd.setSellDetailId(Integer.valueOf(sdId[i]));
 				sd.setSbId(sbId);
-				sd.setSdCode(sdCode[i]);
-				sd.setCpn(cpn[i]);
+				sd.setCpId(Integer.valueOf(cpList[i]));
 				sd.setOrderCount(Integer.valueOf(orderCount[i]));
 				sd.setPrice(new BigDecimal(price[i]));
 				sd.setAmount(new BigDecimal(amount[i]));
@@ -282,17 +311,15 @@ public class SellbillAction extends BaseAction {
 			int sbId = sService.save(sb);
 			String sdNum = req.getParameter("sdNum");
 			int num = Integer.valueOf(sdNum);
-			String[] sdCode = req.getParameterValues("sdCode");
-			String[] cpn = req.getParameterValues("cpn");
 			String[] orderCount = req.getParameterValues("orderCount");
 			String[] price = req.getParameterValues("price");
 			String[] amount = req.getParameterValues("amount");
 			String[] remark = req.getParameterValues("remark");
+			String[] cpList = req.getParameterValues("cpList");
 			for(int i = 0 ; i < num; i ++){
 				SellDetail sd = new SellDetail();
 				sd.setSbId(sbId);
-				sd.setSdCode(sdCode[i]);
-				sd.setCpn(cpn[i]);
+				sd.setCpId(Integer.valueOf(cpList[i]));
 				sd.setOrderCount(Integer.valueOf(orderCount[i]));
 				sd.setPrice(new BigDecimal(price[i]));
 				sd.setAmount(new BigDecimal(amount[i]));
@@ -311,6 +338,8 @@ public class SellbillAction extends BaseAction {
 			sb = sService.selectOne(sb);
 			if("0".equals(sb.getVerifyStatus())){
 				resp.getWriter().write("true");
+			}else{
+				resp.getWriter().write("false");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -73,6 +73,12 @@
 								<input type="hidden" name="prodId" value="${p.uuid}"/>
 							</td>
 						</tr>
+						<tr>
+							<th class="tr">CODE：</th>
+							<td><input type="text" class="u-ipt required" name="code"
+								maxlength="60">
+							</td>
+						</tr>
 					</s:iterator>
 					
 				</tbody>

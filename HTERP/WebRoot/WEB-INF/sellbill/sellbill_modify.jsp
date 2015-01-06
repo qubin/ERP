@@ -12,7 +12,68 @@
 <script type="text/javascript">
 	var j = jQuery;
 	var no = 0;
+	
+	
+	window.onload=function initSellDetail(){
+		var l = eval('${jsonList}');
+		var temp = 0;
+		var data = eval('${sdList}');
+		for(var i = 0; i < data.length; i ++){
+			no += 1;
+			var str = "<tr>";
+			str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
+			str += 	"<td class='tr'>";
+			str +=  "<select name='cpList' id='' class='u-ipt required validate-selection'><option value=''>-请选择-</option>";
+			for(var j = 0; j < l.length; j ++){
+				if(l[j].cpId == data[i].cpId){
+					str += "<option value='" + l[j].cpId + "' selected='selected'>" + l[j].cus_pn + "</option>";
+					temp = j;
+				}else{
+					str += "<option value='" + l[j].cpId + "'>" + l[j].cus_pn + "</option>";
+				}
+			}
+			str +=  "</select>";
+			str +=	"</td>";
+			str +=  "<td class='tr'><div align='center'><label for='' name='cpn'>"+l[temp].code+"</label></div>";
+			str +=	"</td>";
+			str +=  "<td class='tr'><div align='center'>pic</div></td>";
+			str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'";
+			str +=	"maxlength='60' style='width:110px;' id='oc" + no +"' value='" + data[i].orderCount +"'></td>";
+			str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='price'";
+			str +=	"maxlength='60' style='width:110px;' id='p" + no +"' value='" + data[i].price +"'></td>";
+			str +=	"<td class='tr'><input type='text' class='u-ipt' name='amount'";
+			str +=	"maxlength='60' style='width:110px;' id='a" + no +"' readonly='readonly' value='" + data[i].amount +"'></td>";		
+			str +=	"<td class='tr'><input type='text' class='u-ipt' name='remark'";
+			str +=	"maxlength='60' style='width:110px;' value='"+ data[i].remark +"'></td>";		
+			str +=	"<input type='hidden' value='" + data[i].sellDetailId + "' name='sdId'/>";		
+			str +=	"</tr>";
+		}
+		document.getElementById("add").innerHTML=str;
+		
+		bindCode2();
+		document.getElementById("sdNum").value=no;
+	}
+	
+	function bindCode2(){
+		j(document).ready(function(){
+			var tempL = eval('${jsonList}');
+			var laL = j("label[name='cpn']")
+			j("select[name='cpList']").each(function(i){
+				j(this).bind("change",function(){
+					for(var j = 0; j < tempL.length; j ++){
+						if(j(this).val() == tempL[j].cpId){
+							laL[i].innerHTML = tempL[j].code;
+						}
+					}
+				
+				});
+			});
+		});
+	}
+	
 	j(document).ready(function(){
+		
+		
 		j("#textReason").hide();
 		if( ${sb.verifyStatus} == 2){
 			j("#textReason").show();
@@ -20,7 +81,7 @@
 		
 		j("#cust").val("${cust.custId}");
 		
-		initSellDetail();
+		
 		
 		function bindCalc(no){
 			var oc = "#oc" + no;
@@ -56,51 +117,30 @@
 		
 		function checkAdd(){
 			var code = "#code" + no;
-			var cpn = "#cpn" + no;
 			var oc = "#oc" + no;
 			var p = "#p" + no;
 			
-			if(j(code).val() != "" && j(cpn).val() != "" && j(oc).val() != "" && j(p).val() != ""){
+			if(j(code).val() != "" && j(oc).val() != "" && j(p).val() != ""){
 				return true;
 			}else{
 				alert("请把当前记录填写完整！");
 			}
 		}
 		
-		function initSellDetail(){
-			var data =${sdList};
-			for(var i = 0; i < data.length; i ++){
-				no += 1;
-				var str = "<tr>";
-				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
-				str += 	"<td class='tr'><input type='text' class='u-ipt required ' name='sdCode'";
-				str +=	"maxlength='60' style='width:110px;' id='code" + no +"' value='" + data[i].sdCode +"'></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='cpn'";
-				str +=	"maxlength='60' style='width:110px;' id='cpn" + no +"' value='" + data[i].cpn +"'></td>";
-				str +=  "<td class='tr'><div align='center'>pic</div></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'";
-				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"' value='" + data[i].orderCount +"'></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='price'";
-				str +=	"maxlength='60' style='width:110px;' id='p" + no +"' value='" + data[i].price +"'></td>";
-				str +=	"<td class='tr'><input type='text' class='u-ipt' name='amount'";
-				str +=	"maxlength='60' style='width:110px;' id='a" + no +"' readonly='readonly' value='" + data[i].amount +"'></td>";		
-				str +=	"<td class='tr'><input type='text' class='u-ipt' name='remark'";
-				str +=	"maxlength='60' style='width:110px;' value='"+ data[i].remark +"'></td>";		
-				str +=	"<input type='hidden' value='" + data[i].sellDetailId + "' name='sdId'/>";		
-				str +=	"</tr>";
-				j("#selltable").append(str);
-				j("#sdNum").val(no);
-			}
-		}
 		
 		function init(){
 			no += 1;
+			var data = eval('${jsonList}');
 			var str = "<tr>";
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
-				str += 	"<td class='tr'><input type='text' class='u-ipt required ' name='sdCode'";
-				str +=	"maxlength='60' style='width:110px;' id='code" + no +"'></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='cpn'";
-				str +=	"maxlength='60' style='width:110px;' id='cpn" + no +"'></td>";
+				str += 	"<td class='tr'><select name='cpList' id='' class='u-ipt required validate-selection'><option value=''>-请选择-</option>";
+				for(var i = 0; i < data.length; i ++){
+					str += "<option value='"+data[i].cpId+"'>"+data[i].cus_pn+"</option>";
+				}
+				str +=  "</select>";
+				str +=	"</td>";
+				str +=  "<td class='tr'><div align='center'><label for='' name='cpn'></label></div></label>";
+				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
 				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"'></td>";
@@ -125,20 +165,9 @@
 				});
 			});
 			bindCalc(no);
+			bindCode();
 		}
-		
-		j("#cust").bind("change",function(){
-			var custId = j("#cust").val();
-			var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_findCust.html?cust.custId=" + custId;
-			j.getJSON(uri,function(data){
-				if(data != ""){
-					j("#custConPerson").html(data.custConPerson);					
-					j("#custPhone").html(data.custPhone);					
-				}else{
-					alert("该客户信息不完整！");
-				}
-			});
-		});
+	
 		
 		j("#submitBtn").bind("click",function(){
 			if(confirm("确定提交修改么")){
@@ -158,6 +187,21 @@
 			}
 			return false;
 		});
+		function bindCode(){
+			var tempL = eval('${jsonList}');
+			var laL = j("label[name='cpn']")
+			j("select[name='cpList']").each(function(i){
+				var temp = j(this);
+				temp.bind("change",function(){
+					for(var j = 0; j < tempL.length; j ++){
+						if(temp.val() == tempL[j].cpId){
+							laL[i].innerHTML = tempL[j].code;
+						}
+					}
+				
+				});
+			});
+		}
 	});
 </script>
 </head>
@@ -182,11 +226,7 @@
 					</tr>
 					<tr>
 						<th class="tr">订货部门:</th>
-						<td><s:select name="sb.custId"
-								cssClass="u-ipt required validate-selection"
-								cssStyle="width:178px" list="#request.cList" listKey="custId"
-								listValue="custName" headerKey="-1" headerValue="--请选择--"
-								id="cust"/></td>
+						<td><label for="">${cust.custName}</label></td>
 						<th class="tr">TEL:</th>
 						<td><label for="">86559185</label></td>
 					</tr>
@@ -213,19 +253,19 @@
 			<input type="button" value="添加一行" class="u-btn" id="addbtn"
 				style="float:right;" />
 			<table class="m-table" id="selltable">
-				<tbody>
+				<tbody id="">
 					<tr>
 						<th class="tr"><div align="center">NO</div></th>
+						<th class="tr"><div align="center">编号</div></th>
 						<th class="tr"><div align="center">CODE</div></th>
-						<th class="tr"><div align="center">型号</div></th>
 						<th class="tr"><div align="center">单位</div></th>
 						<th class="tr"><div align="center">订单数量</div></th>
 						<th class="tr"><div align="center">单价(含税)</div></th>
 						<th class="tr"><div align="center">金额</div></th>
 						<th class="tr"><div align="center">备注</div></th>
 					</tr>
-				
-
+				<tr id="add">
+				</tr>
 				</tbody>
 			</table>
 			<table class="m-table" id="">

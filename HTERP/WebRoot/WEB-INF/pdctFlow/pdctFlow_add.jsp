@@ -14,17 +14,24 @@
 		j("#batchCodeLa").hide();
 		j("#boxNoLa").hide();
 		j("#swLa").hide();
+		j("#picNumLa").hide();
 		j("#batchCode").hide();
 		//入库点击
 		j("#in").bind("click",function(){
 			j("#swLa").hide();
+			j("#picNumLa").hide();
 			j("#sw").show();
 			j("#sw").attr("disabled",false);
+			j("#picNum").show();
+			j("#picNum").attr("disabled",false);
 			findWh("in");
 			checkSame();
 		});
 		//出库点击
 		j("#out").bind("click",function(){
+			j("#picNumLa").show();
+			j("#picNum").hide();
+			j("#picNum").attr("disabled",true);
 			j("#swLa").show();
 			j("#sw").hide();
 			j("#sw").attr("disabled",true);
@@ -164,9 +171,11 @@
 							j("#batchCodeLa").html(data[3].batchCode);
 							j("#boxNoLa").html(str);
 							j("#swLa").html(data[1].weight);
+							j("#picNumLa").html(data[1].picNum);
 							
 							j("#batchCode").val(data[3].batchCode);
 							j("#sw").val(data[1].weight);
+							j("#picNum").val(data[1].picNum);
 							j("#boxNumLa").html(data[3].boxNum);
 						}else{
 							j("#nowflag").val("diff");
@@ -181,12 +190,14 @@
 								j("#batchCodeLa").show();
 								j("#boxNoLa").show();
 								j("#swLa").show();
+								j("#picNumLa").show();
 								//input
 								j("#batchCode").hide();
 								j("#batchCode").attr("disabled",true);
 								j("#sw").hide();
 								j("#sw").attr("disabled",true);
-								//j("#area").val(data[1].warehouseId);
+								j("#picNum").hide();
+								j("#picNum").attr("disabled",true);
 							}else{
 								j("#batchCode").show();
 								j("#batchCode").attr("disabled",false);
@@ -194,6 +205,8 @@
 								j("#whselect").val(-1);
 								j("#sw").show();
 								j("#sw").attr("disabled",false);
+								j("#picNum").show();
+								j("#picNum").attr("disabled",false);
 							}
 						}else{
 							j("#whselect").attr("disabled",true);
@@ -362,10 +375,11 @@
 							<label id="boxNumLa"></label>
 						</td>
 						
-						<th class="tr">备注：</th>
+						<th class="tr">每盒片数：</th>
 						<td>
 							<input type="text" class="u-ipt "
-							name="remark" maxlength="13" id="remark"/>
+							name="picNum" maxlength="13" id="picNum"/>
+							<label for="" id="picNumLa"></label>
 						</td>
 					</tr>		
 					<tr height="40">
@@ -379,6 +393,13 @@
 						<th class="tr">出入库盒号：</th>
 						<td>
 							<label for="" id="boxNoLa"></label>
+						</td>
+					</tr>		
+					<tr height="40">
+						<th class="tr">备注：</th>
+						<td>
+							<input type="text" class="u-ipt "
+							name="remark" maxlength="13" id="remark"/>
 						</td>
 					</tr>		
 				</tbody>
