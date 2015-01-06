@@ -118,8 +118,8 @@
 					j.each(j("select[name='cpList']"),function(k,v){
 						v.innerHTML = "";
 						var jtemp = j(v);
+						jtemp.append("<option value=''>-请选择-</option>");
 						j.each(data,function(k2,v2){
-							jtemp.append("<option value=''>-请选择-</option>");
 							jtemp.append("<option value='" + v2.cpId + "'>" + v2.cus_pn + "</option>");
 						});
 					});
@@ -130,9 +130,7 @@
 						jtemp2.bind("change",function(){
 							for(var i = 0; i < data.length;i ++){
 								if(j(this).val() == data[i].cpId){
-									laL[i].innerHTML = data[i].code;
-								}else{
-									laL[i].innerHTML = "";
+									laL[k].innerHTML = data[i].code;
 								}
 							}
 						});

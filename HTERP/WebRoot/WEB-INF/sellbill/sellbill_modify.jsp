@@ -61,7 +61,7 @@
 			j("select[name='cpList']").each(function(i){
 				j(this).bind("change",function(){
 					for(var j = 0; j < tempL.length; j ++){
-						if(j(this).val() == tempL[j].cpId){
+						if(this.value == tempL[j].cpId){
 							laL[i].innerHTML = tempL[j].code;
 						}
 					}
