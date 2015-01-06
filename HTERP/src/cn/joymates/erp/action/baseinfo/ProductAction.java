@@ -82,8 +82,8 @@ public class ProductAction extends BaseAction {
 	public String showDetailUI() {
 		
 		String searchsql = "",resultsql = "";
-		searchsql = " SELECT COUNT(*) FROM t_product AS p LEFT JOIN t_customer AS c ON p.customer_id=c.id LEFT JOIN t_pdct_detail AS pd ON p.id=pd.pdct_id LEFT JOIN t_warehouse AS w ON p.area=w.id WHERE p.id=" + product.getUuid() + " ";
-		resultsql = " SELECT p.*,c.name AS cusName,pd.batch_code,pd.box_no,w.sign1,w.area FROM t_product AS p LEFT JOIN t_customer AS c ON p.customer_id=c.id LEFT JOIN t_pdct_detail AS pd ON p.id=pd.pdct_id LEFT JOIN t_warehouse AS w ON p.area=w.id WHERE p.id=" + product.getUuid() + " ";
+		searchsql = " SELECT count(*) FROM t_product AS p LEFT JOIN t_cust_pdct AS cp ON p.id = cp.product_id LEFT JOIN t_customer AS c ON c.id=cp.customer_id LEFT JOIN t_warehouse AS w  ON cp.area = w.id WHERE p.id=" + product.getUuid() + " ";
+		resultsql = " SELECT p.*,c.name AS cusName,cp.cus_pn,w.sign1,w.area AS whArea FROM t_product AS p LEFT JOIN t_cust_pdct AS cp ON p.id = cp.product_id LEFT JOIN t_customer AS c ON c.id=cp.customer_id LEFT JOIN t_warehouse AS w  ON cp.area = w.id WHERE p.id=" + product.getUuid() + " ";
 		resultsql += " ORDER BY p.id DESC limit ?, ? ";
 		List<Map<String, Object>> productList = service.getEcsideList(ec_rd, searchsql, resultsql, req);
 

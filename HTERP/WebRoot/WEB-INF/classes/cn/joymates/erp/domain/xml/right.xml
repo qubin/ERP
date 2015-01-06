@@ -110,12 +110,16 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
   	<!--根据供应商id查询供应商材料编号 -->
   	<select id="getSupplierMaterialIdBySuppyId" parameterType="integer" resultType="String">
 		SELECT 
-		  GROUP_CONCAT(sm.id,sm.mat_supplier_name)
+		  GROUP_CONCAT(sm.id, sm.mat_supplier_name) 
 		FROM
 		  t_supplier AS s 
 		  LEFT JOIN t_supply_mat AS sm 
 		    ON s.id = sm.supply_id 
-		WHERE s.id = #{id} 
+		  LEFT JOIN t_material AS m 
+		    ON sm.id = m.supplymat_id 
+		  LEFT JOIN t_warehouse AS w 
+		    ON m.warehouse_id = w.id 
+		WHERE w.id IS NOT NULL AND s.id = #{id}
   	</select>
   	
 </mapper>  

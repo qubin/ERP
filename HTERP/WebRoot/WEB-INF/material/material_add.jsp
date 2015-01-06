@@ -51,16 +51,16 @@
 						<td><input type="text" class="u-ipt required" name="material.standard"
 							maxlength="60"></td>
 					</tr>
-<!-- 					<tr> -->
-<!-- 						<th class="tr">卷数：</th> -->
-<!-- 						<td><input type="text" class="u-ipt validate-number" name="material.scrollCount" -->
-<!-- 							maxlength="60"></td> -->
-<!-- 					</tr> -->
-<!-- 					<tr> -->
-<!-- 						<th class="tr">母卷：</th> -->
-<!-- 						<td><input type="text" class="u-ipt" name="material.mmatId" -->
-<!-- 							maxlength="60"></td> -->
-<!-- 					</tr> -->
+					<tr>
+						<th class="tr">卷号：</th>
+						<td><input type="text" class="u-ipt required" name="material.scrollId"
+							maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr">材料型号：</th>
+						<td><input type="text" class="u-ipt required" name="material.materialModel"
+							maxlength="60"></td>
+					</tr>
 					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="material.remark"

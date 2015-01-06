@@ -10,8 +10,6 @@ public class BaseSupplyMat extends BaseVO{
 		fieldMap.put("htMatNo", "ht_mat_no");
 		fieldMap.put("isLogout", "is_logout");
 		fieldMap.put("logoutReason", "logout_reason");
-		fieldMap.put("matSupplierScrollId", "mat_supplier_scroll_id");
-		fieldMap.put("materialModel", "material_model");
 		this.id = "id";
 	}
 
@@ -21,8 +19,6 @@ public class BaseSupplyMat extends BaseVO{
 	private Integer supplyId;
 	private String isLogout;
 	private String logoutReason;
-	private String matSupplierScrollId;
-	private String materialModel;
 	
 	public Integer getSupplyMatId() {
 		return supplyMatId;
@@ -60,17 +56,4 @@ public class BaseSupplyMat extends BaseVO{
 	public void setLogoutReason(String logoutReason) {
 		this.logoutReason = logoutReason;
 	}
-	public String getMatSupplierScrollId() {
-		return matSupplierScrollId;
-	}
-	public void setMatSupplierScrollId(String matSupplierScrollId) {
-		this.matSupplierScrollId = matSupplierScrollId;
-	}
-	public String getMaterialModel() {
-		return materialModel;
-	}
-	public void setMaterialModel(String materialModel) {
-		this.materialModel = materialModel;
-	}
-	
 }

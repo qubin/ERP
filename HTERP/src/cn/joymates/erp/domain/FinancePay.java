@@ -3,13 +3,12 @@ package cn.joymates.erp.domain;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
+import cn.joymates.erp.domain.base.BasetFinancePay;
 
-import cn.joymates.erp.domain.base.BaseSellDetail;
-
-public class SellDetail extends BaseSellDetail {
+public class FinancePay extends BasetFinancePay {
 	public static final String AUDIT = "0";
 	public static final String PASS = "1";
 	public static final String NOTPASS = "2";
-	public static Map<String, String> STATUS = ImmutableMap.of(AUDIT,"Î´ÉóºË",PASS, "ÉóºËÍ¨¹ý",
-			NOTPASS, "ÉóºËÎ´Í¨¹ý");
+	public static Map<String, String> STATUS = ImmutableMap.of(AUDIT,"æœªå®¡æ ¸",PASS, "å®¡æ ¸é€šè¿‡",
+			NOTPASS, "å®¡æ ¸æœªé€šè¿‡");
 }

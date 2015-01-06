@@ -17,6 +17,8 @@ public class BaseSupplier extends BaseVO {
 		fieldMap.put("isLogout", "is_logout");
 		fieldMap.put("logoutReason", "logout_reason");
 		fieldMap.put("remark", "remark");
+		fieldMap.put("bank", "bank");
+		fieldMap.put("account", "account");
 		
 		this.id = "id";
 	}
@@ -33,6 +35,8 @@ public class BaseSupplier extends BaseVO {
 	private String isLogout;
 	private String logoutReason;
 	private String remark;
+	private String bank;
+	private String account;
 	
 	public Integer getUuid() {
 		return uuid;
@@ -105,6 +109,18 @@ public class BaseSupplier extends BaseVO {
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getBank() {
+		return bank;
+	}
+	public void setBank(String bank) {
+		this.bank = bank;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
 	}
 
 }

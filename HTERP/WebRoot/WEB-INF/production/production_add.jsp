@@ -107,9 +107,15 @@
 							<img onclick="WdatePicker({el:'d12'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
 						</td>
 					</tr>
+					<!-- <tr>
+						<th class="tr">O E件：</th>
+						<td><input name="product.market" type="radio" value="radio" checked="checked"></td>
+						<th class="tr">售后件：</th>
+						<td><input name="product.market" type="radio" value="radio"></td>
+					</tr> -->
 				</tbody>
 			</table>
-			<br />
+			<br/>
 			<div>
 				<div align="center">
 					<button class="u-btn" onClick="javascript:window.location.href='生产指令单.html';alert('提交成功！')">提&nbsp;&nbsp;交</button>

@@ -2,504 +2,624 @@
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <%@ taglib uri="http://www.ecside.org" prefix="ec"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="../top.jsp"></jsp:include>
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<title></title>
-<style type="text/css">
-<!--
-.STYLE1 {
-	color: #000000;
-	font-size: 18px;
-}
+<link type="text/css" rel="stylesheet"
+	href="${pageContext.request.contextPath }/assets/css/font-awesome.min.css" />
+<link rel="stylesheet" type="text/css"
+	href='${pageContext.request.contextPath}/ecside/css/ecside_style.css' />
+<script type="text/javascript"
+	src='${pageContext.request.contextPath}/ecside/js/prototype_mini.js'></script>
+<script type="text/javascript"
+	src='${pageContext.request.contextPath}/ecside/js/ecside_msg_utf8_cn.js'></script>
+<script type="text/javascript"
+	src='${pageContext.request.contextPath}/ecside/js/ecside.js'></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/libs/jquery-1.8.3.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/libs/jquery.easyui.custom.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/jquery.easyui.extend.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/jquery.plugins.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/jquery.syadmin.js"></script>
+<script language="JavaScript"
+	src="${pageContext.request.contextPath}/assets/js/My97DatePicker/WdatePicker.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/validation/prototype.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/validation/effects.js"
+	type="text/javascript"></script>
+<script
+	src="${pageContext.request.contextPath}/assets/js/validation/validation_cn.js"
+	type="text/javascript"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/assets/js/libs/jquery-1.8.3.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/myUtils.js"
+	type="text/javascript"></script>
 
-.text-box {
-	border-bottom: #666 1px solid;
-	border-left-width: 0px;
-	border-right-width: 0px;
-	border-top-width: 0px;
-	background: #F6F5F5
+<script language="javascript"
+	src="${pageContext.request.contextPath}/assets/js/LodopFuncs.js"></script>
+
+<title></title>
+
+<style type="text/css" id="style1">
+<!--
+.input {
+	border-style: none;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: black;
+}
+.m-table-form {
+	font-size: 12px;
 }
 -->
 </style>
 <script type="text/javascript">
 	//审核
-	function audit(){
-		if(confirm("确定要通过审核吗？")){
-			document.getElementById("txtVerifyStatus").value = "1";	//设置审核状态
-		
+	function audit() {
+		if (confirm("确定要通过审核吗？")) {
+			document.getElementById("txtVerifyStatus").value = "1"; //设置审核状态
+
 			var valVerifyRemark = document.getElementById("txtVerifyRemark").value;
-			if(valVerifyRemark == ""){
+			if (valVerifyRemark == "") {
 				document.getElementById("txtVerifyRemark").value = "审核通过";
 			}
-		}else{
+		} else {
 			return false;
 		}
 	}
 	//未通过
-	function notAudit(){
+	function notAudit() {
 		var valVerifyRemark = document.getElementById("txtVerifyRemark").value;
-		if(valVerifyRemark == ""){
+		if (valVerifyRemark == "") {
 			alert("请填写未通过审核原因！");
 			return false;
-		}else{
-			document.getElementById("txtVerifyStatus").value = "0";	//设置审核状态
+		} else {
+			document.getElementById("txtVerifyStatus").value = "0"; //设置审核状态
 		}
 	}
-	
-	function printView(){
-		var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM')); 
-		//var LODOP=getLodop();
-		
-		
-				
-		LODOP.PRINT_INITA(-1,0,869,802,"lodop dome");
-		LODOP.ADD_PRINT_TEXT(20,307,232,32,"生产指令单 work order");
-		LODOP.SET_PRINT_STYLEA(0,"FontSize",14);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(80,22,87,20,"材料名称：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(80,120,120,20,"MS1835-1505-2");
-		LODOP.ADD_PRINT_TEXT(125,23,87,20,"使用重量：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(125,122,120,20,"29.2KG");
-		LODOP.ADD_PRINT_TEXT(175,21,87,20,"材料规格：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(175,120,120,20,"46*0.40");
-		LODOP.ADD_PRINT_TEXT(80,278,87,20,"华天零件号：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(80,387,120,20,"HTS4383-E105");
-		LODOP.ADD_PRINT_TEXT(125,276,87,20,"客户零件号：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(125,384,120,20,"PA8809");
-		LODOP.ADD_PRINT_TEXT(169,274,87,20,"订单号：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(169,382,120,20,"2014101603");
-		LODOP.ADD_PRINT_TEXT(80,538,87,20,"订单数量：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(80,646,120,20,"4000PCS");
-		LODOP.ADD_PRINT_TEXT(126,537,87,20,"下单日期：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(126,645,120,20,"2014-10-16");
-		LODOP.ADD_PRINT_TEXT(166,536,87,20,"完成日期：");
-		LODOP.SET_PRINT_STYLEA(0,"Alignment",3);
-		LODOP.SET_PRINT_STYLEA(0,"Bold",1);
-		LODOP.ADD_PRINT_TEXT(166,644,120,20,"2014-10-20");
-		LODOP.ADD_PRINT_TABLE(214,17,772,364,"(超文本20表格的HTML代码内容)");
-		LODOP.ADD_PRINT_TABLE(575,30,784,279,"(超文本21表格的HTML代码内容)");
-		
 
+	function printView() {
 
-		LODOP.PREVIEW();                             
-		
+		//window.open("${pageContext.request.contextPath}/admin/production/showView.html");
+
+		var LODOP = getLodop(document.getElementById('LODOP_OB'), document
+				.getElementById('LODOP_EM'));
+		var strBodyStyle = "<style>"
+				+ document.getElementById("style1").innerHTML + "</style>";
+		LODOP.PRINT_INITA(0, 0, 1120, 1200, "打印控件功能演示_Lodop功能_表单一");
+		LODOP.SET_PRINT_STYLE("FontSize", 18);
+		LODOP.SET_PRINT_STYLE("Bold", 1);
+		LODOP.ADD_PRINT_HTM(0, 0, 1100, 1000, strBodyStyle + "<body>"
+				+ document.getElementById("container").innerHTML + "</body>");
+		LODOP.SET_SHOW_MODE("LANDSCAPE_DEFROTATED", 1);//横向时的正向显示
+		//LODOP.PRINT_DESIGN();
+		LODOP.PREVIEW();
 	}
 
 	window.onload = function() {
-
+		
 	}
 </script>
 </head>
 
 <body>
 
-	<object  id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0> 
-	    <embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	<object id="LODOP_OB"
+		classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
 	</object>
 
-	<div id="container" class="container">
-		<form id="form1" action="${pageContext.request.contextPath}/admin/production/production_audit.html" method="post">
-			<div>
-				<div align="right">
-					<table>
-						<tr>
-							<td><input type="text" id="txtVerifyRemark" name="pdceistct.verifyRemark" class="u-ipt" />&nbsp;</td>
-							<td>
-								<input class="u-btn" type="button" value="预   览" onclick="javascript:printView()">&nbsp;
-							</td>
-							<td>
-								<input type="submit" onclick="return audit()" class="u-btn" value="审核通过并打印">&nbsp;
-							</td>
-							<td>
-								<input type="submit" onclick="return notAudit()" class="u-btn" value="未通过">&nbsp;
-							</td>
-							<td>
-								<input type="button" onclick="javascript:history.back()" class="u-btn" value="返回">
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-			<div align="right">
-				<br />
-			</div>
-			
-			<input type="hidden" value="${sczldList[0].SCZLDID}" name="pdceistct.uuid" />
-			<input type="hidden" name="pdceistct.verifyStatus" id="txtVerifyStatus"/>
-			
-			<table width="100%" class="m-table-form">
+	<form id="form1"
+		action="${pageContext.request.contextPath}/admin/production/production_audit.html"
+		method="post">
+
+		<input type="hidden" name="txtVerifyStatus" id="txtVerifyStatus">
+
+		<table align="right">
+			<tr>
+				<td><input type="text" id="txtVerifyRemark"
+					name="pdceistct.verifyRemark" class="u-ipt" /></td>
+				<td><input class="u-btn" type="button" value="预   览"
+					onclick="javascript:printView()"></td>
+				<td><input type="submit" onclick="return audit()" class="u-btn"
+					value="审核通过并打印"></td>
+				<td><input type="submit" onclick="return notAudit()"
+					class="u-btn" value="未通过"></td>
+				<td><input type="button" onclick="javascript:history.back()"
+					class="u-btn" value="返回"></td>
+			</tr>
+		</table>
+
+
+		<div id="container" class="container">
+			&nbsp;&nbsp; &nbsp; &nbsp; <img
+				src="<%=request.getContextPath()%>/assets/images/log.png">
+			<table width="95%" align="center" class="m-table-form" widtd="102%">
 				<tbody>
-					<tr height="40">
-						<th class="tr" colspan="6"><h1 align="center" class="STYLE1">生产指令单( work order )</h1></th>
-					</tr>
-					<tr height="30">
-						<th class="tr">材料名称：</th>
-						<td>${sczldList[0].MAT_SUPPLIER_NAME}</td>
-						<th class="tr">华天零件号：</th>
-						<td>${sczldList[0].HT_PN}</td>
-						<th class="tr">订单数量：</th>
-						<td>${sczldList[0].ORDER_COUNT}</td>
-					</tr>
-					<tr height="30">
-						<th class="tr">使用重量：</th>
-						<td>${sczldList[0].USED_MAT_WEIGHT}KG</td>
-						<th class="tr">客户零件号：</th>
-						<td>${sczldList[0].CUS_PN}</td>
-						<th class="tr">下单日期：</th>
-						<td>${sczldList[0].ORDER_DATE}</td>
-					</tr>
-					<tr height="30">
-						<th class="tr">材料规格：</th>
-						<td>${sczldList[0].STANDARD}</td>
-						<th class="tr">订单号：</th>
-						<td>${sczldList[0].CODE}</td>
-						<th class="tr">完成日期：</th>
-						<td>${sczldList[0].END_DATE}</td>
-					</tr>
-				</tbody>
-			</table>
-			<br />
-			<table class="m-table">
-				<thead>
 					<tr>
-						<th class="cola" width="1%">工序</th>
-						<th class="cola">日期</th>
-						<th class="colb">完成数量</th>
-						<th class="cola">签名</th>
-						<th class="cola">单盒数量</th>
-						<th class="cola">重量</th>
-						<th class="cola">报废数量</th>
-						<th class="colb">备注</th>
+						<td colspan="8">
+							<div align="center">
+								<h3>生产指令单 Work Order</h3>
+							</div>
+						</td>
 					</tr>
-				</thead>
+					<tr>
+						<td width="9%" height="20" align="right" class="tr"><span
+							class="m-table-form">材料名称：</span></td>
+						<td width="19%" height="20"><span class="m-table-form">
+								<input name="txt1" type="text" class="input" id="txt1" value="${sczldList[0].MAT_SUPPLIER_NAME}" readonly>
+						</span></td>
+						<td width="11%" height="20" align="right" class="tr">
+							<span class="m-table-form">华天零件号：</span></td>
+						<td width="17%" height="20"><span class="m-table-form">
+								<input name="txt2" type="text" class="input" id="txt2" value="${sczldList[0].HT_PN}" readonly>
+						</span></td>
+						<td width="12%" height="20" align="right" class="tr"><span
+							class="m-table-form">订单数量：</span></td>
+						<td width="18%" height="20"><span class="m-table-form">
+								<input name="txt3" type="text" class="input" id="txt3" readonly value="${sczldList[0].ORDER_COUNT}pcs">
+						</span></td>
+						<td width="7%" height="20" align="right"><span
+							class="m-table-form">O E件：</span></td>
+						<td width="7%" height="20"><span class="m-table-form">
+								<input name="radio" type="radio" id="radio" value="radio"
+								checked="">
+						</span></td>
+					</tr>
+
+					<tr>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">使用重量：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt4" type="text" class="input" id="txt4" readonly value="${sczldList[0].USED_MAT_WEIGHT}KG">
+								
+						</span></td>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">客户零件号：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt4" type="text" class="input" value="LJH-1001" readonly value="${sczldList[0].CUS_PN}">
+						</span></td>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">下单日期：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt5" type="text" class="input" id="txt5" readonly value="${sczldList[0].ORDER_DATE}">
+						</span></td>
+						<td height="20" align="right">&nbsp;</td>
+						<td height="20">&nbsp;</td>
+					</tr>
+					<tr>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">材料规格：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt6" type="text" class="input" id="txt6" readonly value="${sczldList[0].STANDARD}">
+						</span></td>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">订单号：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt7" type="text" class="input" id="txt7" readonly value="${sczldList[0].CODE}">
+						</span></td>
+						<td height="20" align="right" class="tr"><span
+							class="m-table-form">完成日期：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								name="txt8" type="text" class="input" id="txt8" readonly value="${sczldList[0].END_DATE}">
+						</span></td>
+						<td height="20" align="right"><span class="m-table-form">售后件：</span></td>
+						<td height="20"><span class="m-table-form"> <input
+								type="radio" name="radio" id="radio2" value="radio">
+						</span></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<table width="95%" border="1" align="center"
+				style="border-collapse: collapse; font-size: 12px; ">
 				<tbody>
+					<tr>
+						<td width="5%" height="30" align="center" class="cola" widtd="100">工序</td>
+						<td width="10%" height="30" align="center" class="cola"
+							widtd="150">机台号/工序名称</td>
+						<td width="12%" height="30" align="center" class="colb">单工序完成数量(pcs)</td>
+						<td width="13%" height="30" align="center" class="cola">签名/日期(月-日)</td>
+						<td width="10%" height="30" align="center" class="cola">单盒数量(pcs)</td>
+						<td width="10%" height="30" align="center" class="cola">单盒重量(kg)</td>
+						<td width="14%" height="30" align="center" class="cola">单工序不良品数量(pcs)</td>
+						<td width="10%" height="30" align="center" class="cola"
+							widtd="100">调机品数量(pcs)</td>
+						<td width="16%" height="30" align="center" class="colb">备注</td>
+					</tr>
 					<tr class="even">
-						<td rowspan="3"><div align="center">
-								<strong>1</strong>
+						<td height="25" valign="middle" widtd="50"><div
+								align="center">1</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="hover">
+						<td height="25" valign="middle" widtd="50"><div
+								align="center">2</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="even">
+						<td height="25" valign="middle" widtd="50"><div
+								align="center">3</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="hover">
+						<td height="25" valign="middle"><div align="center">4</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="even">
+						<td height="25" valign="middle"><div align="center">5</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="hover">
+						<td height="25" valign="middle"><div align="center">6</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="even">
+						<td height="25" valign="middle"><div align="center">7</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="hover">
+						<td height="25" valign="middle"><div align="center">8</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="even">
+						<td height="25" valign="middle"><div align="center">9</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+					<tr class="hover">
+						<td height="25" valign="middle"><div align="center">10</div></td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+						<td height="25">&nbsp;</td>
+					</tr>
+				</tbody>
+			</table>
+			<table width="95%" align="center" class="m-table-form">
+				<tbody>
+					<tr class="aa">
+						<td width="18%" height="30"><div align="right">完成总数（pcs）：</div></td>
+						<td width="16%" height="25"><div align="left">
+								<input name="txt24" type="text" class="input" id="txt24"
+									readonly>
 							</div></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+						<td width="14%" height="25"><div align="right">不良品总数(pcs):</div></td>
+						<td width="21%" height="25"><input name="txt55" type="text"
+							class="input" id="txt55" readonly></td>
+						<td width="10%" height="25"><div align="right">不良率(%):</div></td>
+						<td width="21%" height="25"><input name="txt56" type="text"
+							class="input" id="txt56" readonly></td>
 					</tr>
-					<tr class="hover">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+				</tbody>
+			</table>
+
+
+			<table width="95%" border="0" align="center" cellpadding="0"
+				cellspacing="0" class="m-table-form" widtd="100%">
+				<tbody>
+					<tr>
+						<td width="178" height="20" align="center" widtd="189"><div
+								align="center">用料信息(卷号)</div></td>
+						<td width="99" height="20" align="center" widtd="96"><div
+								align="center">重量</div></td>
+						<td width="36" height="20" align="center" widtd="96">&nbsp;</td>
+						<td width="168" height="20" align="center" widtd="136"><div
+								align="center">签名/日期</div></td>
+						<td height="20" colspan="3" align="center" widtd="102"><div
+								align="center">退料信息(卷号)</div>
+							<div align="center"></div></td>
+						<td height="20" colspan="3" align="center" widtd="58"><div
+								align="center">重量</div></td>
+						<td width="195" height="20" align="center" widtd="136"><div
+								align="center">签名/日期</div></td>
 					</tr>
-					<tr class="even">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="hover">
-						<td rowspan="3"><div align="center">
-								<strong>2</strong>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt24" type="text"
+									class="input" id="txt24" readonly>
 							</div></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="even">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="hover">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="even">
-						<td rowspan="3"><div align="center">
-								<strong>3</strong>
+						<td width="99" height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt12" type="text" class="input"
+									id="txt12" readonly>
 							</div></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="hover">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="even">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
-					<tr class="hover">
-						<td rowspan="3"><div align="center">
-								<strong>4</strong>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt10" type="text" style="widtd:120px;"
+									class="input" id="txt10" readonly>
 							</div></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td width="85" height="20" widtd="110">退&nbsp;&nbsp;料：</td>
+						<td width="120" height="20"><input style="width:120px"
+							name="txt30" type="text" class="input" id="txt30" readonly></td>
+						<td width="55" height="20"><div align="center">重量：</div></td>
+						<td width="80" height="20"><input style="width:80px;"
+							name="txt37" type="text" class="input" id="txt37" readonly></td>
+						<td width="29" height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt44" type="text" style="widtd:120px;"
+									class="input" id="txt44" readonly>
+							</div></td>
 					</tr>
-					<tr class="even">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt23" type="text"
+									class="input" id="txt23" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt11" type="text" class="input"
+									id="txt11" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt9" type="text" style="widtd:120px;"
+									class="input" id="txt9" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">退&nbsp;&nbsp;料：</td>
+						<td height="20"><input style="width:120px" name="txt31"
+							type="text" class="input" id="txt31" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt38"
+							type="text" class="input" id="txt38" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt45" type="text" style="widtd:120px;"
+									class="input" id="txt45" readonly>
+							</div></td>
 					</tr>
-					<tr class="hover">
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt22" type="text"
+									class="input" id="txt22" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt13" type="text" class="input"
+									id="txt13" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt25" type="text" style="widtd:120px;"
+									class="input" id="txt25" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">退&nbsp;&nbsp;料：</td>
+						<td height="20"><input style="width:120px" name="txt32"
+							type="text" class="input" id="txt32" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt39"
+							type="text" class="input" id="txt39" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt46" type="text" style="widtd:120px;"
+									class="input" id="txt46" readonly>
+							</div></td>
+					</tr>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt18" type="text"
+									class="input" id="txt18" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt14" type="text" class="input"
+									id="txt14" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt26" type="text" style="widtd:120px;"
+									class="input" id="txt26" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">退&nbsp;&nbsp;料：</td>
+						<td height="20"><input style="width:120px" name="txt33"
+							type="text" class="input" id="txt33" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt40"
+							type="text" class="input" id="txt40" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt51" type="text" style="widtd:120px;"
+									class="input" id="txt51" readonly>
+							</div></td>
+					</tr>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt19" type="text"
+									class="input" id="txt19" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt15" type="text" class="input"
+									id="txt15" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt27" type="text" style="widtd:120px;"
+									class="input" id="txt27" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">退&nbsp;&nbsp;料：</td>
+						<td height="20"><input style="width:120px" name="txt34"
+							type="text" class="input" id="txt34" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt41"
+							type="text" class="input" id="txt41" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt48" type="text" style="widtd:120px;"
+									class="input" id="txt48" readonly>
+							</div></td>
+					</tr>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt20" type="text"
+									class="input" id="txt20" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt16" type="text" class="input"
+									id="txt16" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt28" type="text" style="widtd:120px;"
+									class="input" id="txt28" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">退&nbsp;&nbsp;料:</td>
+						<td height="20"><input style="width:120px" name="txt35"
+							type="text" class="input" id="txt35" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt42"
+							type="text" class="input" id="txt42" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt47" type="text" style="widtd:120px;"
+									class="input" id="txt47" readonly>
+							</div></td>
+					</tr>
+					<tr>
+						<td height="20"><div align="center">
+								<input style="width:120px" name="txt21" type="text"
+									class="input" id="txt21" readonly>
+							</div></td>
+						<td height="20" align="center"><div align="center">
+								<input style="width:80px" name="txt17" type="text" class="input"
+									id="txt17" readonly>
+							</div></td>
+						<td height="20" align="left">KG</td>
+						<td height="20" widtd="136"><div align="center">
+								<input name="txt29" type="text" style="widtd:120px;"
+									class="input" id="txt29" readonly>
+							</div></td>
+						<td width="62" height="20" widtd="110">&nbsp;</td>
+						<td height="20" widtd="110">原材料报废：</td>
+						<td height="20"><input style="width:120px" name="txt36"
+							type="text" class="input" id="txt36" readonly></td>
+						<td height="20"><div align="center">重量：</div></td>
+						<td height="20"><input style="width:80px;" name="txt43"
+							type="text" class="input" id="txt43" readonly></td>
+						<td height="20"><div align="left">KG</div></td>
+						<td height="20"><div align="center">
+								<input name="txt49" type="text" style="widtd:120px;"
+									class="input" id="txt49" readonly>
+							</div></td>
+					</tr>
+				</tbody>
+			</table>
+			<table width="95%" align="center" class="m-table-form">
+				<tbody>
+					<tr>
+						<td height="30" colspan="9">补充说明：(例)若生产过程中每道工序的不良率大于5%，需要进行情况说明，等等.</td>
+					</tr>
+					<tr>
+						<td height="30" colspan="9">&nbsp;</td>
+					</tr>
+					<tr>
+						<td width="85"><div align="right">
+								<span class="dfd">生产负责人</span>：
+							</div></td>
+						<td width="168"><div align="left">
+								<input name="txt50" type="text" style="widtd:120px;"
+									class="input" id="txt50" readonly>
+							</div></td>
+						<td width="44"><div align="right">
+								<span class="dfd">日期</span>：
+							</div></td>
+						<td width="200"><input name="txt52" type="text"
+							style="widtd:120px;" class="input" id="txt52" readonly></td>
+						<td width="30"><div align="right">
+								<span class="dfd">QC</span>：
+							</div></td>
+						<td width="168"><input name="txt53" type="text"
+							style="widtd:120px;" class="input" id="txt53" readonly></td>
+						<td width="46"><div align="right">
+								<span class="dfd">日期</span>：
+							</div></td>
+						<td width="319"><input name="txt54" type="text"
+							style="widtd:120px;" class="input" id="txt54" readonly></td>
+						<td width="7">&nbsp;</td>
 					</tr>
 				</tbody>
 			</table>
 			<br />
-			<table width="100%" class="m-table-form">
-				<tr>
-					<th width="189" align="center"><div align="center">用料信息、钢卷号</div></th>
-					<th width="96" align="center"><div align="center">重量</div></th>
-					<th width="136" align="center"><div align="center">签名、日期</div></th>
-					<th width="102" align="center"><div align="center"></div></th>
-					<th width="206" align="center"><div align="center"></div></th>
-					<th width="58" align="center"><div align="center"></div></th>
-					<th width="107" align="center"><div align="center"></div></th>
-					<th width="136" align="center"><div align="center">签名、日期</div></th>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt24" type="text" class="text-box" id="txt24"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt12" type="text" style="width:50px;"
-								class="text-box" id="txt12" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt10" type="text"
-						style="width:120px;" class="text-box" id="txt10" readonly></td>
-					<td width="102">退料：</td>
-					<td><input name="txt30" type="text" class="text-box"
-						id="txt30" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt37" type="text" style="width:50px;"
-						class="text-box" id="txt37" readonly> KG</td>
-					<td><input name="txt44" type="text" style="width:120px;"
-						class="text-box" id="txt44" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt23" type="text" class="text-box" id="txt23"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt11" type="text" style="width:50px;"
-								class="text-box" id="txt11" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt9" type="text"
-						style="width:120px;" class="text-box" id="txt9" readonly></td>
-					<td width="102">退料：</td>
-					<td><input name="txt31" type="text" class="text-box"
-						id="txt31" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt38" type="text" style="width:50px;"
-						class="text-box" id="txt38" readonly> KG</td>
-					<td><input name="txt45" type="text" style="width:120px;"
-						class="text-box" id="txt45" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt22" type="text" class="text-box" id="txt22"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt13" type="text" style="width:50px;"
-								class="text-box" id="txt13" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt25" type="text"
-						style="width:120px;" class="text-box" id="txt25" readonly></td>
-					<td width="102">退料：</td>
-					<td><input name="txt32" type="text" class="text-box"
-						id="txt32" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt39" type="text" style="width:50px;"
-						class="text-box" id="txt39" readonly> KG</td>
-					<td><input name="txt46" type="text" style="width:120px;"
-						class="text-box" id="txt46" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt18" type="text" class="text-box" id="txt18"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt14" type="text" style="width:50px;"
-								class="text-box" id="txt14" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt26" type="text"
-						style="width:120px;" class="text-box" id="txt26" readonly></td>
-					<td width="102">退料：</td>
-					<td><input name="txt33" type="text" class="text-box"
-						id="txt33" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt40" type="text" style="width:50px;"
-						class="text-box" id="txt40" readonly> KG</td>
-					<td><input name="txt51" type="text" style="width:120px;"
-						class="text-box" id="txt51" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt19" type="text" class="text-box" id="txt19"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt15" type="text" style="width:50px;"
-								class="text-box" id="txt15" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt27" type="text"
-						style="width:120px;" class="text-box" id="txt27" readonly></td>
-					<td width="102">退料：</td>
-					<td><input name="txt34" type="text" class="text-box"
-						id="txt34" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt41" type="text" style="width:50px;"
-						class="text-box" id="txt41" readonly> KG</td>
-					<td><input name="txt48" type="text" style="width:120px;"
-						class="text-box" id="txt48" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt20" type="text" class="text-box" id="txt20"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt16" type="text" style="width:50px;"
-								class="text-box" id="txt16" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt28" type="text"
-						style="width:120px;" class="text-box" id="txt28" readonly></td>
-					<td width="102">报 废：</td>
-					<td><input name="txt35" type="text" class="text-box"
-						id="txt35" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt42" type="text" style="width:50px;"
-						class="text-box" id="txt42" readonly> KG</td>
-					<td><input name="txt47" type="text" style="width:120px;"
-						class="text-box" id="txt47" readonly></td>
-				</tr>
-				<tr>
-					<td><div align="center">
-							<input name="txt21" type="text" class="text-box" id="txt21"
-								readonly>
-						</div></td>
-					<td>
-						<div align="center">
-							<input name="txt17" type="text" style="width:50px;"
-								class="text-box" id="txt17" readonly> KG
-						</div>
-					</td>
-					<td width="136"><input name="txt29" type="text"
-						style="width:120px;" class="text-box" id="txt29" readonly></td>
-					<td width="102">原材料报废：</td>
-					<td><input name="txt36" type="text" class="text-box"
-						id="txt36" readonly></td>
-					<td>重量：</td>
-					<td><input name="txt43" type="text" style="width:50px;"
-						class="text-box" id="txt43" readonly> KG</td>
-					<td><input name="txt49" type="text" style="width:120px;"
-						class="text-box" id="txt49" readonly></td>
-				</tr>
-			</table>
-			<br />
-			<table class="m-table-form3">
-				<tr>
-					<td height="50" colspan="4">补充说明：</td>
-				</tr>
-				<tr>
-					<td>生产负责人：</td>
-					<td><input name="txt49" type="text" style="width:120px;"
-						class="text-box" id="txt49" readonly></td>
-					<td>QC：</td>
-					<td><input name="txt49" type="text" style="width:120px;"
-						class="text-box" id="txt49" readonly></td>
-				</tr>
-			</table>
+		</div>
 
+	</form>
 
-		</form>
-	</div>
-	<!-- /#container -->
 </body>
 </html>

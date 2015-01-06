@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <title></title>
+    <style type="text/css">
+	<!--
+	.STYLE1 {
+	color: #000000;
+	font-size: 20px;
+	}
+	.text-box{
+	   border-bottom:#666 1px solid;
+	   border-left-widtd:0px;
+	   border-right-widtd:0px;
+	   border-top-widtd:0px;
+	   background:#F6F5F5}
+#container table {
+	font-size: 12px;
+}
+#container table {
+	font-size: 13px;
+	font-weight: bold;
+}
+#container table {
+	font-size: 14px;
+}
+.input {
+        border-style:none;
+        border-bottom-style:solid;
+        border-bottom-width:thin;
+        border-bottom-color: #000;
+}
+#container .m-table-form tbody tr .tr h1 {
+	font-size: 18px;
+}
+.text-box1 {	   border-bottom:#666 1px solid;
+	   border-left-widtd:0px;
+	   border-right-widtd:0px;
+	   border-top-widtd:0px;
+	   background:#F6F5F5}
+	-->
+    </style>
+<script type="text/javascript">
+  	window.onload=function(){
+		document.getElementById("txt1").value = "MS18035-1505-2";
+		document.getElementById("txt2").value = "HTS4383-E105";
+		document.getElementById("txt3").value = "400pcs";
+		document.getElementById("txt4").value = "29.2";
+		document.getElementById("txt5").value = "2014-10-16";
+		document.getElementById("txt6").value = "46*0.40";
+		document.getElementById("txt7").value = "2014101603";
+		document.getElementById("txt8").value = "2014-10-20";
+	}
+  </script>
+</head>
+
+<body>
+    <div id="container" class="container">
+		   &nbsp;&nbsp; &nbsp; &nbsp;  <img src="<%=request.getContextPath()%>/assets/images/log.png">
+           <table width="95%" align="center" class="m-table-form" widtd="102%">
+             <tbody>
+             	<tr>
+                   <td colspan="8"><h2 align="center">
+                     <div align="center">生产指令单  Work Order 
+                     </h1>
+                   </div></td>
+                </tr>
+                <tr>
+                  <td width="9%" align="right" class="tr">材料名称：</td>
+                  <td width="19%"><input name="txt1" type="text" class="input" id="txt1" readonly></td>
+                  <td width="11%" align="right" class="tr">华天零件号：</td>
+                  <td width="17%"><input name="txt2" type="text" class="input" id="txt2" readonly></td>
+                  <td width="12%" align="right" class="tr">订单数量：</td>
+                  <td width="18%"><input name="txt3" type="text" class="input" id="txt3" readonly></td>
+                  <td width="7%" align="right">O E件：</td>
+                  <td width="7%"><input name="radio" type="radio" id="radio" value="radio" checked>
+                  <label for="radio"></label></td>                  
+                </tr>
+                
+                <tr>
+                  <td align="right" class="tr">使用重量：</td>
+                  <td><input name="txt4" type="text" class="input" id="txt4" readonly>KG</td>
+                  <td align="right" class="tr">客户零件号：</td>
+                  <td><input name="txt4" type="text" class="input" value="LJH-1001" readonly></td>
+                  <td align="right" class="tr">下单日期：</td>
+                  <td><input name="txt5" type="text" class="input" id="txt5" readonly></td>
+                  <td align="right">&nbsp;</td>
+                  <td>&nbsp;</td>  
+                </tr>
+                 <tr>
+                  <td align="right" class="tr">材料规格：</td>
+                  <td><input name="txt6" type="text" class="input" id="txt6" readonly></td>
+                  <td align="right" class="tr">订单号：</td>
+                  <td><input name="txt7" type="text" class="input" id="txt7" readonly></td>
+                  <td align="right" class="tr">完成日期：</td>
+                  <td><input name="txt8" type="text" class="input" id="txt8" readonly></td>
+                  <td align="right">售后件：</td>
+                  <td><input type="radio" name="radio" id="radio2" value="radio"></td>  
+                </tr>
+            </tbody>
+      </table>
+			<br/>
+      <table width="95%" border="1" align="center" style="border-collapse:collapse;">
+              <tr>
+              	<td width="5%" height="40" align="center" class="cola" widtd="100">工序</td>
+              	<td width="10%" align="center" class="cola" widtd="150">机台号/工序名称</strong></td>
+              	<td width="12%" align="center" class="colb">单工序完成数量(pcs)</strong></td>
+              	<td width="13%" align="center" class="cola">签名/日期(年-月-日)</strong></td>
+              	<td width="10%" align="center" class="cola">单盒数量(pcs)</strong></td>
+              	<td width="10%" align="center" class="cola">单盒重量(kg)</strong></td>
+              	<td width="14%" align="center" class="cola">单工序不良品数量(pcs)</strong></td>          
+                <td width="10%" align="center" class="cola" widtd="100">调机品数量(pcs)</strong></td>
+                <td width="16%" align="center" class="colb">备注</strong></td>
+              </tr>
+              <tr class="even">
+                <td height="25" valign="middle" widtd="50"><div align="center">1</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="hover">
+                <td height="25" valign="middle" widtd="50"><div align="center">2</div></td>
+              	<td height="25">&nbsp;</td>
+              	<td height="25">&nbsp;</td>
+              	<td height="25">&nbsp;</td>
+              	<td height="25">&nbsp;</td>
+              	<td height="25">&nbsp;</td>
+              	<td height="25">&nbsp;</td> 
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="even">
+                <td height="25" valign="middle" widtd="50"><div align="center">3</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="hover">
+                <td height="25" valign="middle"><div align="center">4</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="even">
+                <td height="25" valign="middle"><div align="center">5</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="hover">
+                <td height="25" valign="middle"><div align="center">6</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="even">
+                <td height="25" valign="middle"><div align="center">7</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="hover">
+                <td height="25" valign="middle"><div align="center">8</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="even">
+                <td height="25" valign="middle"><div align="center">9</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              <tr class="hover">
+                <td height="25" valign="middle"><div align="center">10</div></td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+                <td height="25">&nbsp;</td>
+              </tr>
+              </tbody>
+      </table>
+      <table width="95%" align="center">
+      	<tr>
+        	<td width="18%" height="30"><div align="right">完成总数（pcs）：</div></td>
+            <td width="16%" height="25"><div align="left">
+              <input name="txt24" type="text" class="input" id="txt24" readonly>
+            </div></td>
+            <td width="14%" height="25"><div align="right">不良品总数(pcs):</div></td>
+            <td width="21%" height="25"><input name="txt55" type="text" class="input" id="txt55" readonly></td>
+            <td width="10%" height="25"><div align="right">不良率(%):</div></td>
+            <td width="21%" height="25"><input name="txt56" type="text" class="input" id="txt56" readonly></td>
+        </tr>
+      </table>
+     
+      <br/>
+		<table width="95%" border="0" align="center" cellpadding="0" cellspacing="0" class="m-table-form" widtd="100%">
+             <tr>
+                    <td width="173" height="30" align="center" widtd="189"><div align="center">用料信息(卷号)</div></td>
+                    <td width="80" height="30" align="center" widtd="96"><div align="center">重量</div></td>
+                    <td width="29" height="30" align="center" widtd="96">&nbsp;</td>
+               <td width="168" height="30" align="center" widtd="136"><div align="center">签名/日期</div></td>
+               <td height="30" colspan="3" align="center" widtd="102"><div align="center">退料信息(卷号)</div>                 <div align="center"></div></td>
+                    <td height="30" colspan="2" align="center" widtd="58"><div align="center">重量</div></td>
+                    <td width="197" height="30" align="center" widtd="136"><div align="center">签名/日期</div></td>
+          </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt24" type="text" class="input" id="txt24" readonly>
+                    </div></td>
+                    <td width="80" height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt12" type="text"  class="input" id="txt12" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt10" type="text" style="widtd:120px;" class="input" id="txt10" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td width="87" height="30" widtd="102">退&nbsp; 料：</td>
+                    <td width="168" height="30"><input name="txt30" type="text" class="input" id="txt30" readonly></td>
+                    <td width="49" height="30"><div align="center">重量：</div></td>
+                    <td width="118" height="30"><div align="left">
+                      <input style="width:80px;" name="txt37" type="text"  class="input" id="txt37" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt44" type="text" style="widtd:120px;" class="input" id="txt44" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt23" type="text" class="input" id="txt23" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt11" type="text"  class="input" id="txt11" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt9" type="text" style="widtd:120px;" class="input" id="txt9" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">退&nbsp; 料：</td>
+                    <td height="30"><input name="txt31" type="text" class="input" id="txt31" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt38" type="text"  class="input" id="txt38" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt45" type="text" style="widtd:120px;" class="input" id="txt45" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt22" type="text" class="input" id="txt22" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt13" type="text"  class="input" id="txt13" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt25" type="text" style="widtd:120px;" class="input" id="txt25" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">退&nbsp; 料：</td>
+                    <td height="30"><input name="txt32" type="text" class="input" id="txt32" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt39" type="text"  class="input" id="txt39" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt46" type="text" style="widtd:120px;" class="input" id="txt46" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt18" type="text" class="input" id="txt18" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt14" type="text"  class="input" id="txt14" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt26" type="text" style="widtd:120px;" class="input" id="txt26" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">退&nbsp; 料：</td>
+                    <td height="30"><input name="txt33" type="text" class="input" id="txt33" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt40" type="text"  class="input" id="txt40" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt51" type="text" style="widtd:120px;" class="input" id="txt51" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt19" type="text" class="input" id="txt19" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt15" type="text"  class="input" id="txt15" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt27" type="text" style="widtd:120px;" class="input" id="txt27" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">退&nbsp; 料：</td>
+                    <td height="30"><input name="txt34" type="text" class="input" id="txt34" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt41" type="text"  class="input" id="txt41" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt48" type="text" style="widtd:120px;" class="input" id="txt48" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt20" type="text" class="input" id="txt20" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt16" type="text"  class="input" id="txt16" readonly>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt28" type="text" style="widtd:120px;" class="input" id="txt28" readonly>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">退&nbsp; 料:</td>
+                    <td height="30"><input name="txt35" type="text" class="input" id="txt35" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt42" type="text"  class="input" id="txt42" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt47" type="text" style="widtd:120px;" class="input" id="txt47" readonly>
+                    </div></td>
+                  </tr>
+                  <tr>
+                    <td height="30"><div align="center">
+                      <input name="txt21" type="text" class="input" id="txt21" readonly>
+                    </div></td>
+                    <td height="30" align="center"><div align="center">
+                      <input style="width:80px" name="txt17" type="text"  class="input" id="txt17" readonly/>
+                    </div></td>
+                    <td height="30" align="left">KG</td>
+                    <td height="30" widtd="136"><div align="center">
+                      <input name="txt29" type="text" style="widtd:120px;" class="input" id="txt29" readonly/>
+                    </div></td>
+                    <td width="96" widtd="102">&nbsp;</td>
+                    <td height="30" widtd="102">原材料报废：</td>
+                    <td height="30"><input name="txt36" type="text" class="input" id="txt36" readonly></td>
+                    <td height="30"><div align="center">重量：</div></td>
+                    <td height="30"><div align="left">
+                      <input style="width:80px;" name="txt43" type="text"  class="input" id="txt43" readonly>
+                    KG</div></td>
+                    <td height="30"><div align="center">
+                      <input name="txt49" type="text" style="widtd:120px;" class="input" id="txt49" readonly>
+                    </div></td>
+                  </tr>     
+        </table>
+        <table width="95%" align="center" class="m-table-form3">
+          <tr>
+            <td height="50" colspan="9">补充说明：(例)若生产过程中每道工序的不良率大于5%，需要进行情况说明，等等.</td>
+          </tr>
+          <tr>
+            <td height="50" colspan="9">&nbsp;</td>
+          </tr>
+          <tr>
+            <td width="85"><div align="right">生产负责人：</div></td>
+            <td width="168"><div align="left">
+              <input name="txt50" type="text" style="widtd:120px;" class="input" id="txt50">
+            </div></td>
+            <td width="44"><div align="right">日期：</div></td>
+            <td width="200"><input name="txt52" type="text" style="widtd:120px;" class="input" id="txt52"></td>
+            <td width="30"><div align="right">QC：</div></td>
+            <td width="168"><input name="txt53" type="text" style="widtd:120px;" class="input" id="txt53"></td>
+            <td width="46"><div align="right">日期：</div></td>
+            <td width="319"><input name="txt54" type="text" style="widtd:120px;" class="input" id="txt54"></td>
+            <td width="7">&nbsp;</td>
+          </tr>
+        </table>
+        <br/>
+</div><!-- /#container -->
+  	<!--javascript start-->
+    <script type="text/javascript" src="../assets/js/libs/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../assets/js/libs/jquery.easyui.custom.min.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.easyui.extend.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.plugins.js"></script>
+    <script type="text/javascript" src="../assets/js/jquery.syadmin.js"></script>
+    <script type="text/javascript">
+
+    </script>
+  	<!--javascript end-->
+</body>
+</html>

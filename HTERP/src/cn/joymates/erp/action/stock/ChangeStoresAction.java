@@ -15,7 +15,6 @@ import org.apache.ibatis.session.SqlSession;
 import com.mysql.jdbc.ResultSetMetaData;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.dao.IWarehouse;
 import cn.joymates.erp.dao.impl.WarehouseDaoImpl;
@@ -53,8 +52,10 @@ public class ChangeStoresAction extends BaseAction {
 		if(product == null){
 			product = new Product();
 		}
-		String searchsql = "SELECT COUNT(*) FROM T_PRODUCT AS this_ WHERE 1=1 AND is_logout='0' ";
-		String resultsql = "SELECT * FROM T_PRODUCT AS this_ WHERE 1=1 AND is_logout='0' limit ?, ?";
+		String searchsql = "SELECT COUNT(*) FROM t_product AS this_ WHERE 1=1 AND is_logout='0' ";
+		String resultsql  = "SELECT *,p.id AS pId,cp.id AS cpId FROM t_product AS p LEFT JOIN t_cust_pdct AS cp ON p.id=cp.product_id ";
+		resultsql += "LEFT JOIN t_warehouse AS w ON cp.area=w.id ";
+		resultsql += "WHERE w.id IS NOT NULL AND p.is_logout='0' limit ?, ?";
 		List<Map<String, Object>> productList = productService.getEcsideList("1000", searchsql, resultsql, req);
 		
 		req.setAttribute("supplierList", supplierList);
@@ -70,11 +71,11 @@ public class ChangeStoresAction extends BaseAction {
 			}
 			Integer strSupId = Integer.parseInt(req.getParameter("supid"));
 			SqlSession sess = SessionFactoryUtil.getSession();
-			String strMatSupplierName = sess.selectOne(
-					"right.getSupplierMaterialIdBySuppyId", strSupId);
-
-			strMatSupplierName = new String(strMatSupplierName.getBytes("GBK"),
-					"UTF-8");
+			String strMatSupplierName = sess.selectOne("right.getSupplierMaterialIdBySuppyId", strSupId);
+			if(strMatSupplierName == null){
+				strMatSupplierName = "";
+			}
+			strMatSupplierName = new String(strMatSupplierName.getBytes("GBK"),"UTF-8");
 
 			System.out.println(strMatSupplierName);
 
@@ -155,7 +156,7 @@ public class ChangeStoresAction extends BaseAction {
 			
 			String sql  = "SELECT *,p.id AS pId,cp.id AS cpId FROM t_product AS p LEFT JOIN t_cust_pdct AS cp ON p.id=cp.product_id ";
 				   sql += "LEFT JOIN t_warehouse AS w ON cp.area=w.id ";
-				   sql += "WHERE p.id='" + productId + "'";
+				   sql += "WHERE w.id IS NOT NULL AND p.id='" + productId + "'";
 				   
 			List list = getProductInfoAndDetailById(sql);
 			

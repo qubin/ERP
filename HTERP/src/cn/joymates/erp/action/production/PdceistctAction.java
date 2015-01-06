@@ -171,28 +171,11 @@ public class PdceistctAction extends BaseAction {
 			
 			//材料QC增加报废用料
 			qcStore = new QCStore();
-			qcStore.setMatOrPdct("1");					//1：材料  2：成品
+			qcStore.setMatOrPdct("1");				//1：材料  2：成品
 			qcStore.setMatPdctId(material.getUuid());
-			List<QCStore> qcMatList = qcStoreService.selectList(qcStore);
-			if(qcMatList.size() > 0){					//判断QC中是否存在该材料(存在则更新，不存在则增加)
-				qcStore = new QCStore();
-				qcStore.setUuid(qcMatList.get(0).getUuid());
-				BigDecimal qcWeight;
-				if(qcMatList.get(0).getWeight() == null){
-					qcWeight = pdceistct.getMatScpWeight();
-				}else{
-					qcWeight = qcMatList.get(0).getWeight().add(pdceistct.getMatScpWeight());	//给QC库增加报废材料数量
-				}
-				qcStore.setWeight(qcWeight);
-				qcStoreService.update(qcStore);
-			}else{
-				qcStore = new QCStore();
-				qcStore.setMatOrPdct("1");				//1：材料  2：成品
-				qcStore.setMatPdctId(material.getUuid());
-				qcStore.setWeight(pdceistct.getMatScpWeight());
-				qcStore.setIsolateReason("生产指令单报废材料");
-				qcStoreService.save(qcStore);
-			}
+			qcStore.setWeight(pdceistct.getMatScpWeight());
+			qcStore.setIsolateReason("生产指令单报废材料");
+			qcStoreService.save(qcStore);
 			
 			//产品库增加完成产品数量
 			List<CustPdct> cusPdctList = custPdctService.selectList(cusPdct); //根据客户产品编号查询客户产品表信息
@@ -213,26 +196,9 @@ public class PdceistctAction extends BaseAction {
 			qcStore = new QCStore();
 			qcStore.setMatOrPdct("2");				//1：材料  2：成品
 			qcStore.setMatPdctId(productInfo.getUuid());
-			List<QCStore> qcProductList = qcStoreService.selectList(qcStore);
-			if(qcProductList.size() > 0){
-				qcStore = new QCStore();
-				qcStore.setUuid(qcMatList.get(0).getUuid());
-				int qcPicCount;
-				if(qcProductList.get(0).getPicCount() == null){
-					qcPicCount = pdceistct.getScpCount();
-				}else{
-					qcPicCount = qcProductList.get(0).getPicCount() + pdceistct.getScpCount();	//给QC库增加报废材料数量
-				}
-				qcStore.setPicCount(qcPicCount);
-				qcStoreService.update(qcStore);
-			}else{
-				qcStore = new QCStore();
-				qcStore.setMatOrPdct("2");				//1：材料  2：成品
-				qcStore.setMatPdctId(productInfo.getUuid());
-				qcStore.setPicCount(pdceistct.getScpCount());
-				qcStore.setIsolateReason("生产指令单报废产品");
-				qcStoreService.save(qcStore);
-			}
+			qcStore.setPicCount(pdceistct.getScpCount());
+			qcStore.setIsolateReason("生产指令单报废产品");
+			qcStoreService.save(qcStore);
 			
 			//更新生产指令单信息
 			pdceistct.setIsOver("1");

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.Material;
 import cn.joymates.erp.domain.Supplier;
@@ -22,17 +23,13 @@ public class CutMaterialAction extends BaseAction {
 			if (material == null) {
 				material = new Material();
 			}
-			List<Material> materialList = materialService.selectList(material, " AND mmat_id IS NULL");
-			List<SupplyMat> supplyMatList = supplyMatService.selectList(new SupplyMat());
+			List<Material> materialList = materialService.selectList(material, " AND mmat_id IS NOT NULL"); //查询所有母卷
+			List<Material> sonList = materialService.selectList(material, " AND mmat_id IS NULL ");		//查询所有子卷
 
 			req.setAttribute("materialList", materialList);
-			req.setAttribute("supplyMatList", supplyMatList);
-
-			JSONArray jo = JSONArray.fromObject(supplyMatList);
+			req.setAttribute("sonList", sonList);
 			
-			System.out.println("--------"+jo.toString());
-			
-			session.setAttribute("JsonSupplyMatList", jo.toString());
+			JSONArray jo = JSONArray.fromObject(sonList);
 			
 			req.setAttribute("JsonSupplyMatList", jo.toString());
 			
@@ -71,53 +68,62 @@ public class CutMaterialAction extends BaseAction {
 	 */
 	public void getMaterialModel(){
 		try {
-			if(supplyMat == null){
-				supplyMat = new SupplyMat();
+			if(material == null){
+				material = new Material();
 			}
-			Integer supMatId = Integer.parseInt(req.getParameter("supMatId"));
+			Integer materId = Integer.parseInt(req.getParameter("materId"));
 			
-			supplyMat.setSupplyMatId(supMatId);
-			SupplyMat supplyMatInfo = supplyMatService.selectOne(supplyMat);
+			material.setUuid(materId);
+			material = materialService.selectOne(material);
 			
 			resp.setCharacterEncoding("UTF-8");
-			resp.getWriter().write(supplyMatInfo.getMaterialModel());
+			resp.getWriter().write(material.getMaterialModel().toString());
 			resp.getWriter().flush();
 			resp.getWriter().close();
-		} catch (NumberFormatException e) {
+			
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} 
 	}
 	
 	public void cutmaterial(){
-		Integer materUuid = material.getUuid();	//材料表ID（为母卷）
+		Integer materUuid = material.getUuid();	//材料表ID
 		
 		int intFjRow = Integer.parseInt(req.getParameter("txtFjRow")); 
 		
+		//根据材料表id查出该母卷的信息
+		material = new Material();
+		material.setUuid(materUuid);
+		Material minfo = materialService.selectOne(material);
+		
+		int js = 0;	//获取裁剪卷数之和
 		for(int i=1;i <= intFjRow;i++){
-			String strGysjh = req.getParameter("txtGysjh"+i);
-			String strClxh = req.getParameter("txtClxh"+i);
-			String strCjjs = req.getParameter("txtCjjs"+i);
-			BigDecimal cjjs = new BigDecimal(strCjjs);
-			String strCjcc = req.getParameter("txtCjcc"+i);
+			int cjjs = Integer.parseInt(req.getParameter("txtCjjs"+i));
+			js += cjjs;
+		}
+		
+		for(int i=1;i <= intFjRow;i++){
+			String strGysjh = req.getParameter("txtGysjh"+i);	//材料表id(卷号)
+			int cjjs = Integer.parseInt(req.getParameter("txtCjjs"+i));//裁剪卷数
+			String strCjcc = req.getParameter("txtCjcc"+i);		//裁剪尺寸及公差
 			
+			BigDecimal sdsd = new BigDecimal(js);
+			BigDecimal mjz = minfo.getWeight().divide(new BigDecimal(js)).multiply(new BigDecimal(cjjs));		//获取小卷的重量
 			
-			material = new Material();
-			material.setUuid(materUuid);
-			Material m = materialService.selectOne(material);	//查出该母卷的信息
+			//根据材料id查询卷号
+			Material ma = new Material();
+			ma.setUuid(Integer.parseInt(strGysjh));
+			Material ml = materialService.selectOne(ma);
 			
-			//根据供应商卷号查询供应材料表id
-			SupplyMat sm = new SupplyMat();
-			sm.setMatSupplierScrollId(strGysjh);
-			List<SupplyMat> smlist = supplyMatService.selectList(sm);
-			
-			m.setUuid(null);
-			m.setSupplymatId(smlist.get(0).getSupplyMatId());
-			m.setScrollCount(cjjs);
-			//m.setScrollId(strGysjh);
-			m.setStandard(strCjcc);
-			materialService.save(m);
+			minfo.setUuid(null);
+			minfo.setWeight(mjz);
+			minfo.setStandard(strCjcc);
+			minfo.setScrollCount(cjjs);
+			minfo.setMmatId(null);
+			minfo.setScrollId(ml.getScrollId());
+			minfo.setMaterialModel(ml.getMaterialModel());
+			minfo.setRemark("分卷而来");
+			materialService.save(minfo);
 		}
 		
 		

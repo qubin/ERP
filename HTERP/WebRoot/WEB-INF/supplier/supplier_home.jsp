@@ -88,7 +88,9 @@
 					<ec:column property="CON_PERSON" title="联系人" width="11%" />
 					<ec:column property="CON_PHONE" title="联系电话" width="11%" style="text-align:center"/>
 					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
-					<ec:column property="ADDRESS" title="地址" width="11%" />
+					<ec:column property="BANK" title="开户银行" width="11%" />
+					<ec:column property="ACCOUNT" title="银行账号" width="11%" />
+					<ec:column property="ADDRESS" title="单位地址" width="11%" />
 					<ec:column property="EMAIL" title="邮箱" width="11%" />
 					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap" style="text-align:center"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
