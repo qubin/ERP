@@ -20,15 +20,13 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		
 		searchsql  = " SELECT COUNT(*) FROM t_sell_bill AS sb ";
 		searchsql += " LEFT JOIN t_sell_details AS sd ON sb.id = sd.sell_bill_id ";
-		searchsql += " LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		searchsql += " LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		searchsql += " LEFT JOIN t_cust_pdct AS cp  ON sd.cust_pdct_id = cp.id ";
 		searchsql += " WHERE sd.id NOT IN (SELECT DISTINCT s_detail_id FROM t_pdce_istct) ";
 		searchsql += " AND sb.verify_status='1' ";
 		
 		resultsql  = " SELECT *,sb.id as billId,sd.id as detailsId FROM t_sell_bill AS sb ";
 		resultsql += " LEFT JOIN t_sell_details AS sd ON sb.id = sd.sell_bill_id ";
-		resultsql += " LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += " LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		resultsql += " LEFT JOIN t_cust_pdct AS cp  ON sd.cust_pdct_id = cp.id ";
 		resultsql += " WHERE sd.id NOT IN (SELECT DISTINCT s_detail_id FROM t_pdce_istct) ";
 		resultsql += " AND sb.verify_status='1' ";
 		
@@ -47,12 +45,14 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		
 		String searchsql = "", resultsql = "";
 		
-		searchsql = "SELECT COUNT(*) FROM t_pdce_istct AS PI LEFT JOIN t_sell_details AS sd ON pi.s_detail_id=sd.id LEFT JOIN t_sell_bill AS sb ON sb.id=sd.sell_bill_id WHERE pi.verify_status='0' ";
+		searchsql  = " SELECT COUNT(*) FROM t_pdce_istct AS PI LEFT JOIN t_sell_details AS sd ON pi.s_detail_id=sd.id ";
+		searchsql += " LEFT JOIN t_sell_bill AS sb ON sb.id=sd.sell_bill_id ";
+		searchsql += " LEFT JOIN t_cust_pdct AS cp  ON cp.id = sd.cust_pdct_id ";
+		searchsql += " WHERE pi.verify_status='0' ";
 		
 		resultsql  = " SELECT *,pi.id AS pdceIstctId,sd.id AS sellDetailsId,sb.id AS sellBillId FROM t_pdce_istct AS PI LEFT JOIN t_sell_details AS sd ON pi.s_detail_id=sd.id ";
 		resultsql += " LEFT JOIN t_sell_bill AS sb ON sb.id=sd.sell_bill_id ";
-		resultsql += " LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += " LEFT JOIN t_cust_pdct AS cp ON cp.customer_id=c.id ";
+		resultsql += " LEFT JOIN t_cust_pdct AS cp  ON cp.id = sd.cust_pdct_id ";
 		resultsql += " WHERE pi.verify_status='0' ";
 		
 		if (!"ALL".equals(pdceistct_key) && pdceistct_key != null && !pdceistct_key.equals("")) {
@@ -83,8 +83,7 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		resultsql += "LEFT JOIN t_product AS p ON pi.product_id = p.id ";
 		resultsql += "LEFT JOIN t_sell_details AS sd ON pi.s_detail_id = sd.id ";
 		resultsql += "LEFT JOIN t_sell_bill AS sb ON sd.sell_bill_id = sb.id ";
-		resultsql += "LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += "LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		resultsql += "LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id = cp.id ";
 		resultsql += "where pi.id=" + pdceistct.getUuid() + " ";
 		resultsql += "ORDER BY pi.id DESC limit ?, ?";
 		
@@ -115,8 +114,7 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		
 		resultsql  = "SELECT *,pi.id AS pdceIstctId,sd.id AS sellDetailsId,sb.id AS sellBillId FROM t_pdce_istct AS PI LEFT JOIN t_sell_details AS sd ON pi.s_detail_id=sd.id ";
 		resultsql += "LEFT JOIN t_sell_bill AS sb ON sb.id=sd.sell_bill_id  ";
-		resultsql += "LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += "LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		resultsql += "LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id= cp.id ";
 		resultsql += "WHERE pi.verify_status='" + verifyStatus + "' AND pi.is_over='" + isOver + "'"; 
 		
 //		if (!"ALL".equals(pdceistct_key) && pdceistct_key != null && !pdceistct_key.equals("")) {
@@ -142,8 +140,7 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		searchsql += "LEFT JOIN t_product AS p ON pi.product_id = p.id ";
 		searchsql += "LEFT JOIN t_sell_details AS sd ON pi.s_detail_id = sd.id ";
 		searchsql += "LEFT JOIN t_sell_bill AS sb ON sd.sell_bill_id = sb.id ";
-		resultsql += "LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += "LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		resultsql += "LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id= cp.id ";
 		searchsql += "where pi.id=" + pdceistct.getUuid() + " ";
 		
 		resultsql  = "SELECT *,pi.id AS sczldId,mater.id AS materialId,p.id AS productId FROM t_pdce_istct AS PI LEFT JOIN ";
@@ -151,8 +148,7 @@ public class PdceistctService extends BaseService<Pdceistct> {
 		resultsql += "LEFT JOIN t_product AS p ON pi.product_id = p.id ";
 		resultsql += "LEFT JOIN t_sell_details AS sd ON pi.s_detail_id = sd.id ";
 		resultsql += "LEFT JOIN t_sell_bill AS sb ON sd.sell_bill_id = sb.id ";
-		resultsql += "LEFT JOIN t_customer AS c ON sb.customer_id=c.id ";
-		resultsql += "LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id ";
+		resultsql += "LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id= cp.id ";
 		resultsql += "where pi.id=" + pdceistct.getUuid() + " ORDER BY pi.id DESC limit ?, ? ";
 		
 		return dao.getEcsideList(ec_rd, searchsql, resultsql, req);

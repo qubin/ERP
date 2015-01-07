@@ -11,6 +11,7 @@
             <result name="entering_add">/WEB-INF/finance/finance_entering_add.jsp</result>
             <result name="audit_home">/WEB-INF/finance/finance_audit.jsp</result>
             <result name="audit_add">/WEB-INF/finance/finance_audit_add.jsp</result>
+            <result name="search_home">/WEB-INF/finance/finance_search.jsp</result>
         </action>
 	</package>
       

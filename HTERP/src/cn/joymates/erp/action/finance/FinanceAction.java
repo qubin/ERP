@@ -21,9 +21,9 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList(sellBill,finance_key,finance_name,ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList01(sellBill,finance_key,finance_name,ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
-		req.setAttribute("STATUS", SellDetail.STATUS);
+		req.setAttribute("STATUS",FinancePay.STATUS);
 		return "entering_home";
 	}
 	
@@ -34,9 +34,9 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList(sellBill,finance_key,finance_name,ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList01(sellBill,finance_key,finance_name,ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
-		req.setAttribute("STATUS", SellDetail.STATUS);
+		req.setAttribute("STATUS", FinancePay.STATUS);
 		return "entering_home";
 	}
 	
@@ -47,7 +47,7 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList(sellBill,"id",sellBill.getSbId().toString(),ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList01(sellBill,"id",sellBill.getSbId().toString(),ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
 		return "entering_add";
 	}
@@ -67,9 +67,9 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList(sellBill,"finance","",ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList02(sellBill,"finance","",ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
-		req.setAttribute("STATUS", SellDetail.STATUS);
+		req.setAttribute("STATUS", FinancePay.STATUS);
 		return "audit_home";
 	}
 	
@@ -80,7 +80,7 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList(sellBill,"id",sellBill.getSbId().toString(),ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList02(sellBill,"id",sellBill.getSbId().toString(),ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
 		return "audit_add";
 	}
@@ -92,6 +92,34 @@ public class FinanceAction extends BaseAction {
 		financeService.update(financePay);
 		return audit();
 	}
+	
+	/*
+	 * 财务-查询home
+	 */
+	public String search(){
+		if (sellBill == null) {
+			sellBill = new SellBill();
+		}
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,finance_key,finance_name,ec_rd,req);
+		req.setAttribute("sellBillList", sellBillList);
+		req.setAttribute("STATUS", FinancePay.STATUS);
+		return "search_home";
+	}
+	
+	/*
+	 * 财务-查询find
+	 */
+	public String findSearch(){
+		if (sellBill == null) {
+			sellBill = new SellBill();
+		}
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,finance_key,finance_name,ec_rd,req);
+		req.setAttribute("sellBillList", sellBillList);
+		req.setAttribute("STATUS", FinancePay.STATUS);
+		return "search_home";
+	}
+	
+	
 	
 
 	private FinanceService financeService = ServiceProxyFactory.getInstanceNoMybatis(new FinanceService());

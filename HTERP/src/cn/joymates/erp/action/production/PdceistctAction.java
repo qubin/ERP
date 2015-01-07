@@ -89,7 +89,6 @@ public class PdceistctAction extends BaseAction {
 	 * 审核打印-显示
 	 */
 	public String showAudit(){
-		
 		List<Map<String, Object>> sczldList = service.findAuditPdceistct(pdceistct, ec_rd, req);
 		req.setAttribute("sczldList", sczldList);
 		req.setAttribute("logoutMap", Pdceistct.auditMap);
@@ -301,14 +300,11 @@ public class PdceistctAction extends BaseAction {
 
 	public void getSellBillInfoByPdceistctId() {
 		try {
-			Integer productionUuid = (Integer) session
-					.getAttribute("productionUuid");
+			Integer productionUuid = (Integer) session.getAttribute("productionUuid");
 
 			String sql = "SELECT * FROM t_sell_bill AS sb ";
 			sql += "LEFT JOIN t_sell_details AS sd ON sb.id=sd.sell_bill_id ";
-			sql += "LEFT JOIN (";
-			sql += "SELECT c.*,cp.product_id,cp.cus_pn FROM t_customer AS c LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id";
-			sql += ") AS cus ON sb.customer_id=cus.id ";
+			sql += "LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id = cp.id ";
 			sql += "WHERE sb.id='" + productionUuid + "' ";
 
 			List list = getMaterialInfoById(sql);

@@ -123,7 +123,8 @@
 		action="${pageContext.request.contextPath}/admin/production/production_audit.html"
 		method="post">
 
-		<input type="hidden" name="txtVerifyStatus" id="txtVerifyStatus">
+		<input type="hidden" name="pdceistct.verifyStatus" id="txtVerifyStatus">
+		<input type="hidden" name="pdceistct.uuid" value="${sczldList[0].SCZLDID}">
 
 		<table align="right">
 			<tr>
@@ -157,17 +158,17 @@
 						<td width="9%" height="20" align="right" class="tr"><span
 							class="m-table-form">材料名称：</span></td>
 						<td width="19%" height="20"><span class="m-table-form">
-								<input name="txt1" type="text" class="input" id="txt1" value="${sczldList[0].MAT_SUPPLIER_NAME}" readonly>
+								<input type="text" class="input" value="${sczldList[0].MAT_SUPPLIER_NAME}" readonly>
 						</span></td>
 						<td width="11%" height="20" align="right" class="tr">
 							<span class="m-table-form">华天零件号：</span></td>
 						<td width="17%" height="20"><span class="m-table-form">
-								<input name="txt2" type="text" class="input" id="txt2" value="${sczldList[0].HT_PN}" readonly>
+								<input type="text" class="input" value="${sczldList[0].HT_PN}" readonly>
 						</span></td>
 						<td width="12%" height="20" align="right" class="tr"><span
 							class="m-table-form">订单数量：</span></td>
 						<td width="18%" height="20"><span class="m-table-form">
-								<input name="txt3" type="text" class="input" id="txt3" readonly value="${sczldList[0].ORDER_COUNT}pcs">
+								<input type="text" class="input" readonly value="${sczldList[0].ORDER_COUNT}pcs">
 						</span></td>
 						<td width="7%" height="20" align="right"><span
 							class="m-table-form">O E件：</span></td>
@@ -180,19 +181,18 @@
 					<tr>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">使用重量：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt4" type="text" class="input" id="txt4" readonly value="${sczldList[0].USED_MAT_WEIGHT}KG">
-								
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].USED_MAT_WEIGHT}KG">
 						</span></td>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">客户零件号：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt4" type="text" class="input" value="LJH-1001" readonly value="${sczldList[0].CUS_PN}">
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].CUS_PN}">
 						</span></td>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">下单日期：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt5" type="text" class="input" id="txt5" readonly value="${sczldList[0].ORDER_DATE}">
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].ORDER_DATE}">
 						</span></td>
 						<td height="20" align="right">&nbsp;</td>
 						<td height="20">&nbsp;</td>
@@ -200,22 +200,22 @@
 					<tr>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">材料规格：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt6" type="text" class="input" id="txt6" readonly value="${sczldList[0].STANDARD}">
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].STANDARD}">
 						</span></td>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">订单号：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt7" type="text" class="input" id="txt7" readonly value="${sczldList[0].CODE}">
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].CODE}">
 						</span></td>
 						<td height="20" align="right" class="tr"><span
 							class="m-table-form">完成日期：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								name="txt8" type="text" class="input" id="txt8" readonly value="${sczldList[0].END_DATE}">
+						<td height="20"><span class="m-table-form"> 
+							<input type="text" class="input" readonly value="${sczldList[0].END_DATE}">
 						</span></td>
 						<td height="20" align="right"><span class="m-table-form">售后件：</span></td>
-						<td height="20"><span class="m-table-form"> <input
-								type="radio" name="radio" id="radio2" value="radio">
+						<td height="20"><span class="m-table-form"> 
+							<input type="radio" name="radio" value="radio">
 						</span></td>
 					</tr>
 				</tbody>
