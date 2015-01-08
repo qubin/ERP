@@ -42,7 +42,7 @@ j(document).ready(function(){
 					<tr>
 						<th height="40" class="tr" width="42%">经办人：</th>
 						<td height="40"><input type="text" class="u-ipt required"
-							name="rowFlow.outPerson" maxlength="13" value="${rowFlow.outPerson}" disabled/></td>
+							name="rowFlow.outPerson" maxlength="30" value="${rowFlow.outPerson}" disabled/></td>
 					</tr>
 					<tr>
 						<th height="40" class="tr">入库/出库：</th>

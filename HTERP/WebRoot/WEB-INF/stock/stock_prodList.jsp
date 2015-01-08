@@ -89,7 +89,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="secStr" id="secStr" class="u-slt validate-selection">
+	                  <select name="secStr" id="secStr" class="u-slt">
 	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="ht_pn">华天产品编号</option>
@@ -100,24 +100,24 @@
 	                  	<option value="pro_step">冲压步骤数</option>
 	                  	<option value="is_logout">状态</option>
 	                  </select>
-	                  <select name="" id="pSelect" class="u-slt validate-selection">
+	                  <select name="" id="pSelect" class="u-slt">
 	                  <option value="">请选择</option>
 	                 	<option value="1">FLAT</option>
 	                 	<option value="2">TAB</option>
 	                 	<option value="3">DRIFTLOCK</option>
 	                  </select>
-	                  <select name="" id="mSelect" class="u-slt validate-selection">
+	                  <select name="" id="mSelect" class="u-slt">
 	                  <option value="">请选择</option>
 	                  	<option value="1">OE</option>
 	                  	<option value="2">AF</option>
 	                  </select>
-	                  <select name="" id="ptSelect" class="u-slt validate-selection">
+	                  <select name="" id="ptSelect" class="u-slt">
 	                  <option value="">请选择</option>
 	                 	<option value="1">PROG</option>
 	                 	<option value="2">SINGLEDIE</option>
 	                 	<option value="3">PROGSINGLE</option>
 	                  </select>
-	                  <select name="" id="sSelect" class="u-slt validate-selection">
+	                  <select name="" id="sSelect" class="u-slt">
 	                 	<option value="">请选择</option>
 	                 	<option value="1">注销</option>
 	                 	<option value="0">未注销</option>

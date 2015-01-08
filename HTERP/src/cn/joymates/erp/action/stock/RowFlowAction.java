@@ -28,15 +28,17 @@ public class RowFlowAction extends BaseAction {
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(queryStr != null && !"".equals(queryStr)){
+		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return showHome();
 			}else{
-				List<Map<String, Object>> rowFlowList = service.findQuery(ec_rd,queryStr,serachType,req);
-				req.setAttribute("rfList", rowFlowList);
-				req.setAttribute("logoutMap", RowFlow.logoutMap);
-				req.setAttribute("inOrOut", RowFlow.inOuOut);
-				return "home";
+				if(queryStr != null && !"".equals(queryStr)){
+					List<Map<String, Object>> rowFlowList = service.findQuery(ec_rd,queryStr,serachType,req);
+					req.setAttribute("rfList", rowFlowList);
+					req.setAttribute("logoutMap", RowFlow.logoutMap);
+					req.setAttribute("inOrOut", RowFlow.inOuOut);
+					return "home";
+				}
 			}
 		}
 		return showHome();

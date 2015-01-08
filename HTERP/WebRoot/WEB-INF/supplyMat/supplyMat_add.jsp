@@ -31,7 +31,7 @@
 					<tr>
 						<th class="tr" width="42%">材料名称：</th>
 						<td><input type="text" class="u-ipt required"
-							name="supplyMat.matSupplierName" maxlength="13" /></td>
+							name="supplyMat.matSupplierName" maxlength="30" /></td>
 					</tr>
 					<tr>
 						<th class="tr">华天材料号：</th>

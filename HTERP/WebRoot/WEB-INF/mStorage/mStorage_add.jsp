@@ -18,7 +18,6 @@
 			j("#den").val("");
 			j("#thick").val("");
 			j("#desc").val("");
-			j("#stan").val("");
 			j("#remark").val("");
 			j("#htNo").val("");
 			var value = j("#supply").val();
@@ -50,7 +49,6 @@
 						j("#den").html(data[0].density);
 						j("#thick").html(data[0].thickness);
 						j("#desc").html(data[0].desc);
-						j("#stan").html(data[0].standard);
 						j("#remark").html(data[0].remark);
 						j("#scValue").val(data[0].mmatId);
 						if(data[0].mmatId != ""){
@@ -210,10 +208,6 @@
 							</td>
 					</tr>
 					<tr>
-						<th height="40" class="tr" width="42%">规格：</th>
-						<td height="40" ><label id="stan"></label>
-							</td>
-					</tr>
 					<tr>
 						<th height="40" class="tr" width="42%">备注：</th>
 						<td height="40"><input type="text" class="u-ipt"

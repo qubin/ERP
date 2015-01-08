@@ -31,16 +31,18 @@ public class WarehouseAction extends BaseAction{
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(queryStr != null && serachType != null){
+		if(queryStr != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return showHome();
 			}else{
-				List<Map<String, Object>> whList = service.findQuery(ec_rd,queryStr,serachType,req);
-				req.setAttribute("whList", whList);
-				return "home";
+				if(queryStr != null && !"".equals(queryStr)){
+					List<Map<String, Object>> whList = service.findQuery(ec_rd,queryStr,serachType,req);
+					req.setAttribute("whList", whList);
+					return "home";
+				}
 			}
 		}
-		return "home";
+		return showHome();
 	}
 	
 	public String showAddUI(){

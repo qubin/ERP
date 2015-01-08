@@ -31,7 +31,7 @@
 					<tr>
 						<th class="tr">名称：</th>
 						<td><input type="text" class="u-ipt required"
-							name="cust.custName" maxlength="13" value="${cust.custName}"/></td>
+							name="cust.custName" maxlength="30" value="${cust.custName}"/></td>
 							<th class="tr">电话：</th>
 						<td><input type="text" class="u-ipt" name="cust.telephone"
 							maxlength="60" value="${cust.telephone}"></td>
@@ -51,20 +51,20 @@
 							maxlength="60" value="${cust.fax}"></td>
 						<th class="tr">税号：</th>
 						<td><input type="text" class="u-ipt" name="cust.tariff"
-							maxlength="60"></td>
+							maxlength="60" value="${cust.tariff }"></td>
 					</tr>
 					<tr>
 						<th class="tr">开户银行：</th>
 						<td><input type="text" class="u-ipt" name="cust.bank"
-							maxlength="60"></td>
+							maxlength="60" value="${cust.bank }"></td>
 						<th class="tr">银行账号：</th>
 						<td><input type="text" class="u-ipt" name="cust.account"
-							maxlength="60"></td>
+							maxlength="60" value="${cust.account }"></td>
 					</tr>
 					<tr>
 						<th class="tr">单位地址：</th>
 						<td><input type="text" class="u-ipt" name="cust.address"
-							maxlength="60"></td>
+							maxlength="60" value="${cust.address }"></td>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="cust.remark"
 							maxlength="60" value="${cust.remark}"></td>

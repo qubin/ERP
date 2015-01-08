@@ -76,11 +76,11 @@ public class StockAction extends BaseAction {
 	public String rowFind(){
 		String queryType = req.getParameter("queryType");
 		String queryStr = req.getParameter("queryStr");
-		if(queryType != null && queryStr != null){
+		if(queryType != null && !"".equals(queryType)){
 			if("all".equals(queryType)){
 				rowList();
 			}else{
-				if(!"".equals(queryType) && !"".equals(queryStr)){
+				if(!"".equals(queryStr) && !"".equals(queryStr)){
 					List<Map<String, Object>> l = sService.findMateEcside(ec_rd,queryType,queryStr,req);
 					req.setAttribute("rowList", l);
 					req.setAttribute("STATUS", Material.logoutMap);
@@ -109,7 +109,7 @@ public class StockAction extends BaseAction {
 				}
 			}
 		}
-		return "prodList";
+		return prodList();
 	}
 	
 	public String prodDetail(){

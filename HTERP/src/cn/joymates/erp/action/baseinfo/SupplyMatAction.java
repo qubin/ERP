@@ -61,13 +61,15 @@ public class SupplyMatAction extends BaseAction {
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(queryStr != null && serachType != null){
+		if(!"".equals(serachType) && serachType != null){
 			if("all".equals(serachType)){
 				return showHome();
 			}else{
-				List<Map<String, Object>> smList = service.findQuery(ec_rd,queryStr,serachType,req);
-				req.setAttribute("smList", smList);
-				return "home";
+				if(queryStr != null && !"".equals(queryStr)){
+					List<Map<String, Object>> smList = service.findQuery(ec_rd,queryStr,serachType,req);
+					req.setAttribute("smList", smList);
+					return "home";
+				}
 			}
 		}
 		return showHome();

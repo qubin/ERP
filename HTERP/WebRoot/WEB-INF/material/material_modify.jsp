@@ -16,11 +16,12 @@
 		<div class="hr10"></div>
 		<form id="form1" action="${pageContext.request.contextPath }/admin/material/material_modify.html" method="post">
 			<input type="hidden" name="material.uuid" value="${material.uuid }"/>
+				<input type="hidden" name="supplyMat.supplyMatId" value="${sm.supplyMatId}"/>
 			<table class="m-table-form">
 				<tbody>
 					<tr>
 						<th class="tr" width="42%">供应商：</th>
-						<td><s:select name="supplier.uuid"
+						<td><s:select name="supplyMat.supplyId"
 							  cssClass="u-ipt required"
 							  cssStyle="width:178px"
 						      list="#request.supplierList"
@@ -47,11 +48,6 @@
 						<td><input type="text" class="u-ipt validate-number" name="material.weight" value="${material.weight }"
 							maxlength="60"></td>
 					</tr>
-					<tr>
-						<th class="tr">规格：</th>
-						<td><input type="text" class="u-ipt required" name="material.standard" value="${material.standard }"
-							maxlength="60"></td>
-					</tr>
  					<tr>
 						<th class="tr">卷号：</th>
 						<td><input type="text" class="u-ipt required" name="material.scrollId" value="${material.scrollId}" maxlength="60"></td>
@@ -59,6 +55,17 @@
 					<tr>
 						<th class="tr">材料型号：</th>
 						<td><input type="text" class="u-ipt required" name="material.materialModel" value="${material.materialModel}" maxlength="60"></td>
+					</tr>
+					<tr>
+						<th class="tr" width="42%">材料名称：</th>
+						<td><input type="text" class="u-ipt required"
+							name="supplyMat.matSupplierName" maxlength="30" value="${sm.matSupplierName }"/></td>
+					</tr>
+					<tr>
+						<th class="tr">华天材料号：</th>
+						<td><input type="text" class="u-ipt required" name="supplyMat.htMatNo"
+							maxlength="60" value="${sm.htMatNo}"></td>
+						
 					</tr>
 					<tr>
 						<th class="tr">备注：</th>

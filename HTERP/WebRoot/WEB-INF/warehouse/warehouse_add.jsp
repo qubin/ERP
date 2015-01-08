@@ -28,12 +28,12 @@
 					<tr>
 						<th class="tr" width="42%">代码：</th>
 						<td><input type="text" class="u-ipt required"
-							name="wh.sign1" maxlength="13" /></td>
+							name="wh.sign1" maxlength="30" /></td>
 					</tr>
 					<tr>
 						<th class="tr" width="42%">地区：</th>
 						<td><input type="text" class="u-ipt required"
-							name="wh.area" maxlength="13" /></td>
+							name="wh.area" maxlength="30" /></td>
 					</tr>
 					<tr>
 						<th class="tr">描述：</th>

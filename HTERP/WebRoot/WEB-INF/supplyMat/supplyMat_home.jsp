@@ -47,7 +47,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  <select name="serachType" id="serachStr" class="u-slt">
 	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="code">供应商编号</option>
@@ -57,7 +57,7 @@
 	                  	<option value="MATERIAL_MODEL">材料型号</option>
 	                  </select>
                   </td>  
-                  <td><input type="text" class="u-ipt validate-selection" name="queryStr"></td>       
+                  <td><input type="text" class="u-ipt" name="queryStr"></td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   
                      <button type="button" class="u-btn" onclick="javascript:window.location='${pageContext.request.contextPath}/admin/supplyMat/supplyMat_showAddUI.html'">新增</button>&emsp;           

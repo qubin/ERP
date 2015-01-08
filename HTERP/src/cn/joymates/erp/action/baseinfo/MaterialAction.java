@@ -50,35 +50,58 @@ public class MaterialAction extends BaseAction {
 	}
 	
 	public String add() {
-		if(supplyMat == null){
-			supplyMat = new SupplyMat();
+//		if(supplyMat == null){
+//			supplyMat = new SupplyMat();
+//		}
+//		supplyMat.setSupplyId(material.getSupplymatId());
+//		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
+//		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
+//		material.setSupplymatId(supplyMatId);
+//		service.save(material);	//保存材料信息
+//		return showHome();
+		try {
+			int supplyMatId = supplyMatService.save(supplyMat);
+			material.setSupplymatId(supplyMatId);
+			service.save(material);
+			return showHome();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		supplyMat.setSupplyId(material.getSupplymatId());
-		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
-		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
-		material.setSupplymatId(supplyMatId);
-		service.save(material);	//保存材料信息
 		return showHome();
 	}
 	
 	public String showModifyUI() {
-		material = service.selectOne(material);
-		
-		supplyMat = new SupplyMat();
-		supplyMat.setSupplyMatId(material.getSupplymatId());
-		List<SupplyMat> smlist = supplyMatService.selectList(supplyMat);
-		
-		supplyMat = smlist.get(0);
-		
-		supplier = new Supplier();
-		supplier.setIsLogout("0");
-		List<Supplier> supplierList = supplierService.selectList(supplier);
-		
-		Supplier s = new Supplier();
-		s.setUuid(supplyMat.getSupplyId());
-		supplier = supplierService.selectOne(s);
-		req.setAttribute("supplierList", supplierList);
-		
+//		material = service.selectOne(material);
+//		
+//		supplyMat = new SupplyMat();
+//		supplyMat.setSupplyMatId(material.getSupplymatId());
+//		List<SupplyMat> smlist = supplyMatService.selectList(supplyMat);
+//		
+//		supplyMat = smlist.get(0);
+//		
+//		supplier = new Supplier();
+//		supplier.setIsLogout("0");
+//		List<Supplier> supplierList = supplierService.selectList(supplier);
+//		
+//		Supplier s = new Supplier();
+//		s.setUuid(supplyMat.getSupplyId());
+//		supplier = supplierService.selectOne(s);
+//		req.setAttribute("supplierList", supplierList);
+		try {
+			Supplier s = new Supplier();
+			s.setIsLogout("0");
+			req.setAttribute("supplierList", supplierService.selectList(s));
+			
+			material = service.selectOne(material);
+			req.setAttribute("material", material);
+			SupplyMat sm = new SupplyMat();
+			sm.setSupplyMatId(material.getSupplymatId());
+			sm = supplyMatService.selectOne(sm);
+			req.setAttribute("sm", sm);
+			return "modifyUI";
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return "modifyUI";
 	}
 	
@@ -96,14 +119,21 @@ public class MaterialAction extends BaseAction {
 	}
 	
 	public String modify() {
-		if(supplyMat == null){
-			supplyMat = new SupplyMat();
+//		if(supplyMat == null){
+//			supplyMat = new SupplyMat();
+//		}
+//		supplyMat.setSupplyId(material.getSupplymatId());
+//		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
+//		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
+//		material.setSupplymatId(supplyMatId);
+//		service.update(material);
+//		return showHome();
+		try {
+			supplyMatService.update(supplyMat);
+			service.update(material);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		supplyMat.setSupplyId(material.getSupplymatId());
-		List<SupplyMat> supplyMatList = supplyMatService.selectList(supplyMat);	//根据供应商id获取供应商材料表id
-		Integer supplyMatId = supplyMatList.get(0).getSupplyMatId();	//获取供应商材料表id
-		material.setSupplymatId(supplyMatId);
-		service.update(material);
 		return showHome();
 	}
 	

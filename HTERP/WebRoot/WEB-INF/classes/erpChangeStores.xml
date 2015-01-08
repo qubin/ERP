@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+
+	<package name="changestoresManager" extends="struts-default" namespace="/admin/changestores" >
+		<action name="changestores_*" class="cn.joymates.erp.action.stock.ChangeStoresAction" method="{1}">
+            <result name="home">/WEB-INF/changestores/changestores_home.jsp</result>
+        </action>
+	</package>
+      
+</struts>

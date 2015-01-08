@@ -52,7 +52,6 @@
                   		<option value="THICKNESS">厚度</option>
                   		<option value="DESC1">描述</option>
                   		<option value="WEIGHT">重量</option>
-                  		<option value="STANDARD">规格</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="material_name"/></th>        
@@ -82,14 +81,10 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="SUPPLIERNAME" title="供应商" width="11%" />
-					<ec:column property="DENSITY" title="面密度" width="11%" style="text-align:right" />
-					<ec:column property="THICKNESS" title="厚度" width="11%" style="text-align:right"/>
-					<ec:column property="DESC1" title="描述" width="11%" />
-					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:right"/>
-					<ec:column property="STANDARD" title="规格" width="11%"  style="text-align:center"/>
+					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:center"/>
 					<ec:column property="SCROLL_ID" title="卷号" width="11%"  style="text-align:center"/>
 					<ec:column property="MATERIAL_MODEL" title="材料型号" width="11%"  style="text-align:center"/>
-					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap"/>
+					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap" style="text-align:center"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">

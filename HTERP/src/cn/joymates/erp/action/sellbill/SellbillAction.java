@@ -76,17 +76,16 @@ public class SellbillAction extends BaseAction {
 	public String queryfind(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(serachType != null){
+		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return queryhome();
 			}else{
-				if(queryStr != null){
+				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> s = sService.findQuery(ec_rd,queryStr,serachType,req,"foo");
 					req.setAttribute("list", s);
 					req.setAttribute("STATUS", SellBill.STATUS);
 					return "queryhome";
 				}
-				return queryhome();
 			}
 		}
 		return queryhome();
@@ -95,16 +94,15 @@ public class SellbillAction extends BaseAction {
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(serachType != null){
+		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return showHome();
 			}else{
-				if(queryStr != null){
+				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> s = sService.findQuery(ec_rd,queryStr,serachType,req,"showHome");
 					req.setAttribute("list", s);
 					return "home";
 				}
-				return showHome();
 			}
 		}
 		return showHome();
@@ -112,16 +110,15 @@ public class SellbillAction extends BaseAction {
 	public String findExam(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(serachType != null){
+		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return examine();
 			}else{
-				if(queryStr != null){
+				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> s = sService.findQuery(ec_rd,queryStr,serachType,req,"showHome");
 					req.setAttribute("list", s);
 					return "examine";
 				}
-				return examine();
 			}
 		}
 		return examine();
@@ -289,17 +286,16 @@ public class SellbillAction extends BaseAction {
 	public String finishFind(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(serachType != null){
+		if(serachType != null && !"".equals(serachType)){
 			if("all".equals(serachType)){
 				return examine();
 			}else{
-				if(queryStr != null){
+				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> s = sService.findFinish(ec_rd,queryStr,serachType,req);
 					req.setAttribute("list", s);
 					req.setAttribute("STATUS", SellBill.STATUS);
 					return "finish";
 				}
-				return finish();
 			}
 		}
 		return finish();

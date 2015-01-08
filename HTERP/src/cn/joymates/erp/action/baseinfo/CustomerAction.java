@@ -37,16 +37,18 @@ public class CustomerAction extends BaseAction{
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
-		if(queryStr != null && serachType != null){
-			if("all".equals(serachType)){
+		if(queryStr != null && !"".equals(queryStr)){
+			if("all".equals(queryStr)){
 				return showHome();
 			}else{
-				List<Map<String, Object>> custList = service.findQuery(ec_rd,queryStr,serachType,req);
-				req.setAttribute("custList", custList);
-				return "home";
+				if(serachType != null && !"".equals(serachType)){
+					List<Map<String, Object>> custList = service.findQuery(ec_rd,queryStr,serachType,req);
+					req.setAttribute("custList", custList);
+					return "home";
+				}
 			}
 		}
-		return "home";
+		return showHome();
 	}
 	public String add(){
 		try {

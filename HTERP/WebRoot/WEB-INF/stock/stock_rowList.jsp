@@ -84,7 +84,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="queryType" id="secStr" class="u-slt validate-selection">
+	                  <select name="queryType" id="secStr" class="u-slt">
 	                  	<option value=''>-请选择-</option>
 	                  	<option value='all'>全部</option>
 	                  	<option value='sign1'>所在仓库</option>
@@ -96,12 +96,13 @@
                   </td>  
                   <td>
                   	<input type="text" class="u-ipt" name="queryStr" id="queryStr">
-                  	<select name="statusSelect" id="statusSelect" class="u-slt validate-selection">
-                  		<option value="">请选择</option>
+                  	<select name="statusSelect" id="statusSelect" class="u-slt">
+                  		<option value="">-请选择-</option>
                   		<option value="0">未注销</option>
                   		<option value="1">注销</option>
                   	</select>
-                  	<select name="wh" id="whSelect" class="u-slt validate-selection">
+                  	<select name="wh" id="whSelect" class="u-slt">
+                  			<option value="">-请选择-</option>
                   	</select>
                   </td>       
                   <td>

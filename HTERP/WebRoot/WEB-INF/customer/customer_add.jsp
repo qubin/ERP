@@ -17,16 +17,16 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">名称：</th>
+						<th class="tr" width="200">名称：</th>
 						<td><input type="text" class="u-ipt required"
-							name="cust.custName" maxlength="13" /></td>
-						<th class="tr" width="42%">联系电话：</th>
-						<td><input type="text" class="u-ipt required"
-							name="cust.telephone" maxlength="13" /></td>
+							name="cust.custName" maxlength="30" /></td>
+						<th class="tr" width="200">联系电话：</th>
+						<td><input type="text" class="u-ipt"
+							name="cust.telephone" maxlength="30" /></td>
 					</tr>
 					<tr>
 						<th class="tr">联系人：</th>
-						<td><input type="text" class="u-ipt required " name="cust.custConPerson"
+						<td><input type="text" class="u-ipt" name="cust.custConPerson"
 							maxlength="60"></td>
 						<th class="tr">联系人电话：</th>
 						<td><input type="text" class="u-ipt validate-tel-phone" name="cust.custPhone"
@@ -35,7 +35,7 @@
 				
 					<tr>
 						<th class="tr">传真：</th>
-						<td><input type="text" class="u-ipt required" name="cust.fax"
+						<td><input type="text" class="u-ipt" name="cust.fax"
 							maxlength="60"></td>
 							<th class="tr">税号：</th>
 						<td><input type="text" class="u-ipt" name="cust.tariff"

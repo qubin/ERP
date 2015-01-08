@@ -58,7 +58,7 @@
                 <tr>
                   <th class="tr">查询类型：</th>
                   <td>
-	                  <select name="serachType" id="serachStr" class="u-slt validate-selection">
+	                  <select name="serachType" id="serachStr" class="u-slt">
 	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
 	                  	<option value="sign1">代码</option>
