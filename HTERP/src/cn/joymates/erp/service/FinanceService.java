@@ -100,7 +100,7 @@ public class FinanceService extends BaseService<FinancePay> {
 	/*
 	 * 财务-审核查询
 	 */
-	public List<Map<String, Object>> findSellBillList03(SellBill sellBill,String finance_key,String finance_name,String ec_rd, HttpServletRequest req){
+	public List<Map<String, Object>> findSellBillList03(SellBill sellBill,String type,String finance_key,String finance_name,String ec_rd, HttpServletRequest req){
 		String searchsql = "", resultsql = "";
 		
 		searchsql  = " SELECT ";
@@ -127,7 +127,10 @@ public class FinanceService extends BaseService<FinancePay> {
 		resultsql += " ON fp.sell_bill_id=sb.id ";
 		resultsql += " WHERE sb.verify_status = '1' AND fp.finance_verify_status='1' ";
 		
-		if(!"ALL".equals(finance_key) && finance_key != null && !"".equals(finance_key) && !"finance".equals(finance_key)){
+		if("3".equals(type) && finance_key != null && !"".equals(finance_key)){
+			searchsql += " AND order_date BETWEEN '" + finance_key + "' AND '" + finance_name + "' ";
+			resultsql += " AND order_date BETWEEN '" + finance_key + "' AND '" + finance_name + "' ";
+		}else if(!"ALL".equals(finance_key) && finance_key != null && !"".equals(finance_key) && !"3".equals(finance_key)){
 			searchsql += " AND sb." + finance_key + " LIKE '%" + finance_name + "%' ";
 			resultsql += " AND sb." + finance_key + " LIKE '%" + finance_name + "%' ";
 		}

@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.finance;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -100,7 +101,7 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,finance_key,finance_name,ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,"1",finance_key,finance_name,ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
 		req.setAttribute("STATUS", FinancePay.STATUS);
 		return "search_home";
@@ -113,12 +114,65 @@ public class FinanceAction extends BaseAction {
 		if (sellBill == null) {
 			sellBill = new SellBill();
 		}
-		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,finance_key,finance_name,ec_rd,req);
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,"1",finance_key,finance_name,ec_rd,req);
 		req.setAttribute("sellBillList", sellBillList);
 		req.setAttribute("STATUS", FinancePay.STATUS);
 		return "search_home";
 	}
 	
+	/*
+	 * 统计
+	 */
+	public String statistics(){
+		if (sellBill == null) {
+			sellBill = new SellBill();
+		}
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,"1",finance_key,finance_name,"6",req);
+		
+		BigDecimal sumAmount = new BigDecimal(0);
+		BigDecimal sumPrepaid = new BigDecimal(0);
+		
+		for(int i=0;i<sellBillList.size();i++){
+			BigDecimal amount = new BigDecimal(sellBillList.get(i).get("AMOUNT").toString());
+			BigDecimal prepaid = new BigDecimal(sellBillList.get(i).get("PREPAID").toString());
+			sumAmount = sumAmount.add(amount);
+			sumPrepaid = sumPrepaid.add(prepaid);
+		}
+		
+		req.setAttribute("sellBillList", sellBillList);
+		req.setAttribute("STATUS", FinancePay.STATUS);
+		req.setAttribute("sumAmount", sumAmount);
+		req.setAttribute("sumPrepaid", sumPrepaid);
+		req.setAttribute("sumNoPrepaid", sumAmount.subtract(sumPrepaid));
+		return "statistics_home";
+	}
+	
+	/*
+	 * 统计查询
+	 */
+	public String findStatistics(){
+		if (sellBill == null) {
+			sellBill = new SellBill();
+		}
+		List<Map<String, Object>> sellBillList = financeService.findSellBillList03(sellBill,"3",finance_key,finance_name,"6",req);
+		
+		BigDecimal sumAmount = new BigDecimal(0);
+		BigDecimal sumPrepaid = new BigDecimal(0);
+		
+		for(int i=0;i<sellBillList.size();i++){
+			BigDecimal amount = new BigDecimal(sellBillList.get(i).get("AMOUNT").toString());
+			BigDecimal prepaid = new BigDecimal(sellBillList.get(i).get("PREPAID").toString());
+			sumAmount = sumAmount.add(amount);
+			sumPrepaid = sumPrepaid.add(prepaid);
+		}
+		
+		req.setAttribute("sellBillList", sellBillList);
+		req.setAttribute("STATUS", FinancePay.STATUS);
+		req.setAttribute("sumAmount", sumAmount);
+		req.setAttribute("sumPrepaid", sumPrepaid);
+		req.setAttribute("sumNoPrepaid", sumAmount.subtract(sumPrepaid));
+		return "statistics_home";
+	}
 	
 	
 
