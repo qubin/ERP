@@ -51,13 +51,10 @@ public class ProductAction extends BaseAction {
 	}
 	
 	public String showModifyUI() {
-		List<Customer> customerList = customerService.selectList(new Customer());
-		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
-		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
-		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
 		product = service.selectOne(product);
+		
+		List<Customer> customerList = customerService.selectList(new Customer());
 		req.setAttribute("customerList", customerList);
-		req.setAttribute("warehouseList", warehouseList);
 		return "modifyUI";
 	}
 	

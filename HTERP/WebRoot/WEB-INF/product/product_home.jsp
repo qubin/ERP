@@ -48,7 +48,6 @@
                   	<select class="u-ipt" name="product_key">
                   		<option value="ALL">---查询所有---</option>
                   		<option value="HT_PN">华天产品编号</option>
-                  		<option value="CUS_PN">客户产品编号</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="product_name"/></th>
@@ -77,7 +76,6 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="HT_PN" title="华天产品编号" width="10%" style="text-align:center"/>
-					<ec:column property="CUS_PN" title="客户产品编号" width="10%" style="text-align:center"/>
 					<ec:column property="PROPERTIES" title="产品性质" width="10%" mappingItem="propertiesMap"/>
 					<ec:column property="MARKET" title="产品市场" width="10%" mappingItem="marketMap"/>
 					<ec:column property="PATTERN_TYPE" title="模具类型" width="10%" mappingItem="patternTypeMap"/>

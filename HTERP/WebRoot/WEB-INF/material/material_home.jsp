@@ -45,13 +45,13 @@
                   	查询条件：
                   </th>
                   <td width="10">
-                  	<select class="u-ipt validate-selection" name="material_key">
+                  	<select class="u-ipt" name="material_key">
                   		<option value="ALL">---查询所有---</option>
                   		<option value="NAME">供应商</option>
+                  		<option value="MAT_SUPPLIER_NAME">材料名称</option>
+                  		<option value="HT_MAT_NO">华天材料号</option>
                   		<option value="DENSITY">面密度</option>
                   		<option value="THICKNESS">厚度</option>
-                  		<option value="DESC1">描述</option>
-                  		<option value="WEIGHT">重量</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="material_name"/></th>        
@@ -81,9 +81,10 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="SUPPLIERNAME" title="供应商" width="11%" />
-					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:center"/>
-					<ec:column property="SCROLL_ID" title="卷号" width="11%"  style="text-align:center"/>
-					<ec:column property="MATERIAL_MODEL" title="材料型号" width="11%"  style="text-align:center"/>
+					<ec:column property="MAT_SUPPLIER_NAME" title="材料名称" width="11%" />
+					<ec:column property="HT_MAT_NO" title="华天材料号" width="11%" />
+					<ec:column property="DENSITY" title="面密度" width="11%" />
+					<ec:column property="THICKNESS" title="厚度" width="11%" />
 					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap" style="text-align:center"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />

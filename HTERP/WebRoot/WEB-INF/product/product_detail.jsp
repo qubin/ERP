@@ -76,19 +76,15 @@
 					<tr>
 						<th width="12%" align="right" class="tr">华天产品编号：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.htPn" maxlength="13" value="${productInfo.HT_PN }" /></td>
-						<th width="12%" align="right" class="tr">客户产品编号：</th>
-						<td><input type="text" class="text-box" readonly="readonly" name="product.cusPn"
-							maxlength="60" value="${productInfo.CUS_PN }"></td>
 						<th align="right" class="tr">车型/钢背应用：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.appFor"
 							maxlength="60" value="${productInfo.APP_FOR }"></td>
-					</tr>
-					<tr>
-						
 						<th align="right" class="tr">产品性质：</th>
 						<td><input type="text" class="text-box" readonly="readonly" id="pdu_proper"
 							name="product.properties" maxlength="60">
 						</td>
+					</tr>
+					<tr>
 						<th align="right" class="tr">产品市场：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.market"  id="pdu_market"
 							maxlength="60"></td>
@@ -96,23 +92,22 @@
 						<td><input type="text" class="text-box" readonly="readonly"  id="pdu_patterntype"
 							name="product.patternType" maxlength="60"
 							value="${productInfo.PATTERN_TYPE }"></td>
-					</tr>
-					<tr>
-						
 						<th align="right" class="tr">冲压步骤数：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.proStep"
 							maxlength="60" value="${productInfo.PRO_STEP }"></td>
-						<th align="right" class="tr">步距：</th>
+					</tr>
+					<tr>
+						<th align="right" class="tr">步距：</th>	
 						<td><input type="text" class="text-box" readonly="readonly" name="product.stepPitch"
 							maxlength="60" value="${productInfo.STEP_PITCH }"></td>
 						<th align="right" class="tr">料宽：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.matWidth"
 							maxlength="60" value="${productInfo.MAT_WIDTH }"></td>
-					</tr>
-					<tr>
 						<th align="right" class="tr">面积：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.areca"
-							maxlength="60" value="${productInfo.ARECA }"></td>
+							maxlength="60" value="${productInfo.ARECA }"></td>	
+					</tr>
+					<tr>
 						<th align="right" class="tr">单片重量：</th>
 						<td><input type="text" class="text-box" readonly="readonly"
 							name="product.singleWeight" maxlength="60"
@@ -120,13 +115,13 @@
 						<th align="right" class="tr">包装盒尺寸：</th>
 						<td><input type="text" class="text-box" readonly="readonly" name="product.packSize"
 							maxlength="60" value="${productInfo.PACK_SIZE }"></td>
-					</tr>
-					<tr>
 						<th align="right" class="tr">PPAP状态：</th>
 						<td><input type="text" class="text-box" readonly="readonly" id="pdu_ppap"
-							name="product.ppapStatus" maxlength="60"></td>
+							name="product.ppapStatus" maxlength="60"></td>	
+					</tr>
+					<tr>
 						<th align="right" class="tr">备注：</th>
-						<td colspan="3"><input type="text" class="text-box" readonly="readonly"
+						<td colspan="6"><input type="text" class="text-box" style="width:93.5%;" readonly="readonly"
 							name="product.remark" maxlength="60" value="${productInfo.REMARK }"></td>
 					</tr>
 				</tbody>
