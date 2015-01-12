@@ -118,7 +118,7 @@
 			<br/>
 			<div>
 				<div align="center">
-					<button class="u-btn" onClick="javascript:window.location.href='生产指令单.html';alert('提交成功！')">提&nbsp;&nbsp;交</button>
+					<button class="u-btn" type="submit">提&nbsp;&nbsp;交</button>
 					<button class="u-btn" onClick="javascript:history.back()">返&nbsp;&nbsp;回</button>
 				</div>
 			</div>

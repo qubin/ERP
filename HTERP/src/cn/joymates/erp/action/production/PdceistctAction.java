@@ -1,5 +1,6 @@
 package cn.joymates.erp.action.production;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -238,7 +239,7 @@ public class PdceistctAction extends BaseAction {
 			String strWcrq = req.getParameter("txtWcrq"); // 完成日期
 			BigDecimal syzl = new BigDecimal(req.getParameter("txtSyzl")); // 使用重量
 
-			String sql = "SELECT sb.*,sd.id AS detailId,sd.sell_bill_id,sd.sell_detail_code,sd.cus_pdct_no,sd.order_count,sd.remark,sd.price,sd.amount FROM t_sell_bill AS sb ";
+			String sql = "SELECT sb.*,sd.id AS detailId,sd.sell_bill_id,sd.cust_pdct_id,sd.price,sd.amount,sd.order_count,sd.remark FROM t_sell_bill AS sb ";
 			sql += "LEFT JOIN t_sell_details AS sd ON sb.id=sd.sell_bill_id ";
 			sql += "LEFT JOIN (";
 			sql += "SELECT c.*,cp.product_id,cp.cus_pn FROM t_customer AS c LEFT JOIN t_cust_pdct AS cp ON c.id=cp.customer_id";
@@ -375,6 +376,91 @@ public class PdceistctAction extends BaseAction {
 			DbUtils.closeStatement(prst);
 		}
 	}
+	
+	
+	
+	
+	
+	public List getObjectList(String sql) {
+		Connection conn = null;
+		PreparedStatement prst = null;
+		ResultSet rs = null;
+
+		try {
+			conn = DbUtils.getConnection();
+			prst = conn.prepareStatement(sql);
+
+			rs = prst.executeQuery();
+
+			ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+			List list = new ArrayList();
+			int columnCount = md.getColumnCount(); // Map rowData;
+			while (rs.next()) {
+				Map rowData = new HashMap();
+				for (int i = 1; i <= columnCount; i++) {
+					rowData.put(md.getColumnName(i), rs.getObject(i));
+				}
+				list.add(rowData);
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new DaoException(e);
+		} finally {
+			DbUtils.closeStatement(prst);
+		}
+	}
+	
+	
+	
+
+	public void getWareHouseMaterialList() {
+		try {
+			String resultsql = "SELECT m.id,sm.mat_supplier_name,m.weight FROM t_material AS m ";
+			resultsql += "LEFT JOIN t_warehouse AS w ON m.warehouse_id = w.id ";
+			resultsql += "LEFT JOIN t_supply_mat AS sm ON m.supplymat_id = sm.id ";
+			resultsql += "WHERE m.is_alarm='1' AND IFNULL(weight,0.00)<=IFNULL(alarm_weight,0.00)";
+			
+			List list = getObjectList(resultsql);
+
+			JSONArray jo = JSONArray.fromObject(list);
+
+			System.out.println(jo.toString());
+
+			resp.setCharacterEncoding("UTF-8");
+			resp.getWriter().write(jo.toString());
+			resp.getWriter().flush();
+			resp.getWriter().close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void getWareHouseProductList() {
+		try {
+			String proSQL = "SELECT p.id,p.ht_pn,cp.cus_pn,cp.pic_count FROM t_product AS p ";
+			proSQL += "LEFT JOIN t_cust_pdct AS cp ON p.id = cp.product_id ";
+			proSQL += "LEFT JOIN t_warehouse AS w ON cp.area = w.id ";
+			proSQL += "WHERE p.is_alarm='1' AND cp.id IS NOT NULL AND IFNULL(p.alarm_weight,0)>=IFNULL(cp.pic_count,0)";
+
+			List list = getObjectList(proSQL);
+
+			JSONArray jo = JSONArray.fromObject(list);
+
+			System.out.println(jo.toString());
+			
+			resp.setCharacterEncoding("UTF-8");
+			resp.getWriter().write(jo.toString());
+			resp.getWriter().flush();
+			resp.getWriter().close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 
 	private PdceistctService service = ServiceProxyFactory.getInstanceNoMybatis(new PdceistctService());
 	private ProductService productService = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());

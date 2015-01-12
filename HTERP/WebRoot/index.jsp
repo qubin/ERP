@@ -1,5 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
+
 <!DOCTYPE html>
 <!--[if IE 6]><html class="ie6 lte9 lte8 lte7" lang="zh-CN"><![endif]-->
 <!--[if IE 8]><html class="ie8 lte9 lte8" lang="zh-CN"><![endif]-->
@@ -13,9 +14,16 @@
 	<meta http-equiv="refresh" content="0;url=ie6.html" />
 	<![endif]-->
 	<title>进销存系统管理信息系统</title>
-	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/easyui.css"/>
-	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/base.css"/>
-	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/style.css"/>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/ecside/js/ecside_msg_utf8_cn.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/ecside/js/ecside.js"></script>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/ecside/css/ecside_style.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/easyui.css"/>
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/base.css"/>
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style.css"/>
+	
+
+	
 </head>
 <body id="home" class="easyui-layout bg">
 		<!--<div id="preloader">
@@ -102,22 +110,53 @@
 				</div><!-- /.mainnav -->
 
 			</div>
-<%--			<div class="sidebar-quickmenu">--%>
-<%--				<h2>快捷方式</h2>--%>
-<%--				<ul class="hide">--%>
-<%--					<li class="sqm1"><a href="#">11</a></li>--%>
-<%--					<li class="sqm2"><a href="#">22</a></li>--%>
-<%--					<li class="sqm3"><a href="#">33</a></li>--%>
-<%--					<li class="sqm4"><a href="#">44</a></li>--%>
-<%--					<li class="sqm5"><a href="#">55</a></li>--%>
-<%--					<li class="sqm6"><a href="#">66</a></li>--%>
-<%--				</ul>--%>
-<%--			</div>--%>
+<!-- 			<div class="sidebar-quickmenu"> -->
+<!-- 				<h2>快捷方式</h2> -->
+<!-- 				<ul class="hide"> -->
+<!-- 					<li class="sqm1"><a href="#">11</a></li> -->
+<!-- 					<li class="sqm2"><a href="#">22</a></li> -->
+<!-- 					<li class="sqm3"><a href="#">33</a></li> -->
+<!-- 					<li class="sqm4"><a href="#">44</a></li> -->
+<!-- 					<li class="sqm5"><a href="#">55</a></li> -->
+<!-- 					<li class="sqm6"><a href="#">66</a></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
 		</div><!-- /#sidebar -->
 		<div id="content" data-options="region:'center',border:false">
 			<div id="tabs" class="easyui-tabs" data-options="fit:true,border:false">
 				<div data-options="title:'我的工作台'">
-<%--					<div id="iframe-wraper"><iframe name="mainFrame" id="mainFrame" src="${pageContext.request.contextPath}/main.html" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe></div>--%>
+<!-- 					<div id="iframe-wraper"><iframe name="mainFrame" id="mainFrame" src="${pageContext.request.contextPath}/main.html" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe></div> -->
+						<div id="iframe-wraper">
+							<br>
+							<table border="1" width="300px">
+								<tr >
+									<td colspan="2" style="font-size: 14px;color: red;"><strong>材料库存警示（请及时补充以下材料）：</strong></td>
+								</tr>
+								<tbody id="strTr">
+									<tr>
+										<th style="font-size: 14px;text-align: center;" width="100px">材料名称</th>
+										<th style="font-size: 14px;text-align: center;" align="center">现存重量</th>
+									</tr>
+									
+								</tbody>
+							</table>
+							
+							<br/>
+							
+							<table border="1" width="300px">
+								<tr >
+									<td colspan="3" style="font-size: 14px;color: red;"><strong>成品库存警示（请及时补充以下产品）：</strong></td>
+								</tr>
+								<tbody id="strProTr">
+									<tr>
+										<th style="font-size: 14px;text-align: center;" width="100px">华天产品编号</th>
+										<th style="font-size: 14px;text-align: center;" align="center">客户产品编号</th>
+										<th style="font-size: 14px;text-align: center;" align="center">现存数量</th>
+									</tr>
+								</tbody>
+							</table>
+						
+						</div>
 				</div>
 			</div>
 		</div><!-- /#content -->
@@ -153,7 +192,56 @@
 					modal: true
 				});
 			}
+
 			
+			window.onload = function(){
+				var uri = "${pageContext.request.contextPath}/admin/production/production_getWareHouseMaterialList.html";
+				$.get(uri,function(data){
+					if(data){
+						var jsonData = eval("(" + data + ")");
+						var strHTML = "";
+						if(jsonData.length > 0){
+							for(var i=0;i<jsonData.length;i++){
+								strHTML += "<tr>";
+								strHTML += "<td style='font-size:14px;text-align:center;' width='120px'>"+jsonData[i].mat_supplier_name+"</td>";
+								strHTML += "<td style='font-size:14px;text-align:center;' width='120px'>"+jsonData[i].weight+"</td>";
+							    strHTML += "</tr>";
+							}
+							$("#strTr").append(strHTML);
+						}else{
+							strHTML += "<tr>";
+							strHTML += "<td colspan='2' style='font-size:10px;text-align:left;color:red;' width='120px'>&nbsp;&nbsp;无警示内容......</td>";
+						    strHTML += "</tr>";
+						    $("#strTr").html(strHTML);
+						}
+						
+					}
+				});	
+				
+				var uri = "${pageContext.request.contextPath}/admin/production/production_getWareHouseProductList.html";
+				$.get(uri,function(data){
+					if(data){
+						var jsonData = eval("(" + data + ")");
+						var strHTML = "";
+						if(jsonData.length > 0){
+							for(var i=0;i<jsonData.length;i++){
+								strHTML += "<tr>";
+								strHTML += "<td style='font-size:14px;text-align:center;' width='100px'>"+jsonData[i].ht_pn+"</td>";
+								strHTML += "<td style='font-size:14px;text-align:center;' width='100px'>"+jsonData[i].cus_pn+"</td>";
+								strHTML += "<td style='font-size:14px;text-align:center;'>"+jsonData[i].pic_count+"</td>";
+							    strHTML += "</tr>";
+							}
+							$("#strProTr").append(strHTML);
+						}else{
+							strHTML += "<tr>";
+							strHTML += "<td colspan='3' style='font-size:10px;text-align:left;color:red;' width='100px'>&nbsp;&nbsp;无警示内容......</td>";
+						    strHTML += "</tr>";
+						    $("#strProTr").html(strHTML);
+						}
+					}
+				});
+			}
+
 		</script>
 		<!--javascript end-->
 
