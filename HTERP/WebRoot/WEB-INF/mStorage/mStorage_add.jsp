@@ -36,6 +36,7 @@
 		});
 		
 		j("#materialName").bind("change",function(){
+			j("#inScrollId").val("");
 			var id = j("#materialName").val();
 			for(var i = 0; i < temp.length; i ++){
 				if(temp[i].supplyMatId == id){
@@ -51,6 +52,15 @@
 						j("#desc").html(data[0].desc);
 						j("#remark").html(data[0].remark);
 						j("#scValue").val(data[0].mmatId);
+						if(data[0].scrollId != ""){
+							j("#LaScrollId").show();
+							j("#LaScrollId").html(data[0].scrollId);
+							j("#scrollId").val(data[0].scrollId);
+							j("#inScrollId").hide();
+						}else{
+							j("#LaScrollId").hide();
+							j("#inScrollId").show();
+						}
 						if(data[0].mmatId != ""){
 							j("#scInput").hide();
 							j("#scId").html(data[0].mmatId);
@@ -142,6 +152,8 @@
 				j("#scId").show();
 				j("#scId").val(j("#scValue").val());
 				j("#scInput").val("");
+				j("#LaScrollId").show(j("#scrollId").val());
+				j("#inScrollId").hide();
 			}
 		});
 		
@@ -158,6 +170,7 @@
 			<input type="hidden" name="material.uuid" value="" id="materialId"/>
 			<input type="hidden" name="rawFlow.outPerson" value="${sessionScope.loggedUser.userLoginId}" />
 			<input type="hidden" name="" value="" id="scValue"/>
+			<input type="hidden" name="" value="" id="scrollId"/>
 			<table class="m-table-form">
 				<tbody>
 					<tr>
@@ -219,6 +232,13 @@
 						<td height="40" ><input type="text" class="u-ipt required"
 							name="rawFlow.outTime" maxlength="13" id="d12" readonly="readonly"/>
 							<img onclick="WdatePicker({el:'d12'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
+							</td>
+					</tr>
+					<tr>
+						<th height="40" class="tr" width="42%">卷号：</th>
+						<td height="40"><input type="text" class="u-ipt"
+							name="rawFlow.scrollId" maxlength="13" id="inScrollId"/>
+							<label for="" id="LaScrollId"></label>
 							</td>
 					</tr>
 					<tr>

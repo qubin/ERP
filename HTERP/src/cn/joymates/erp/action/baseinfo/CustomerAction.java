@@ -1,10 +1,20 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.sf.json.JSONArray;
+
+import org.apache.commons.collections.map.HashedMap;
+
+import com.opensymphony.xwork2.ActionContext;
 
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.CustPdct;
@@ -15,6 +25,7 @@ import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.service.UserService;
+import cn.joymates.erp.utils.JxlUtil;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class CustomerAction extends BaseAction{
@@ -32,8 +43,33 @@ public class CustomerAction extends BaseAction{
 		List<Map<String, Object>> custList = service.findAll(cust, ec_rd, req);
 		req.setAttribute("LOGOUT", Customer.logoutMap);
 		req.setAttribute("custList", custList);
+		req.getSession().setAttribute("cexcel", custList);
 		return "home";
 	}
+	
+	public void getExcel(){
+		try {
+			Map<String, String> map = new LinkedHashMap<String,String>();
+			map.put("NAME", "名称");
+			map.put("CON_PHONE", "联系电话");
+			map.put("FAX", "传真");
+			map.put("CON_PERSON", "联系人");
+			map.put("TARIFF", "税号");
+			map.put("BANK", "开户银行");
+			map.put("ACCOUNT", "银行账号");
+			map.put("ADDRESS", "单位地址");
+			map.put("IS_LOGOUT", "是否注销");
+			map.put("LOGOUT_REASON", "注销原因");
+			map.put("REMARK", "备注");
+			String str = URLDecoder.decode(req.getParameter("excelName"), "utf-8");
+			List<Map<String, Object>> data = (List<Map<String, Object>>) req.getSession().getAttribute("cexcel");
+			boolean flag = JxlUtil.getExcel(map,data, req,resp,str);
+			resp.getWriter().write(flag + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public String find(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
@@ -44,6 +80,7 @@ public class CustomerAction extends BaseAction{
 				if(serachType != null && !"".equals(serachType)){
 					List<Map<String, Object>> custList = service.findQuery(ec_rd,queryStr,serachType,req);
 					req.setAttribute("custList", custList);
+					req.getSession().setAttribute("cexcel", custList);
 					return "home";
 				}
 			}
@@ -100,7 +137,9 @@ public class CustomerAction extends BaseAction{
 	}
 	
 	public String showAddUI(){
-		List pList = pservice.selectList(new Product());
+		Product p = new Product();
+		p.setIsLogout("0");
+		List pList = pservice.selectList(p);
 		req.setAttribute("pList", pList);
 		return "addUI";
 	}
@@ -131,6 +170,26 @@ public class CustomerAction extends BaseAction{
 		try {
 			cust = service.selectOne(cust);
 			List<Map<String, Object>> list = service.findModify(cust.getCustId());
+			Product p = new Product();
+			p.setIsLogout("0");
+			List<Product> pList = pservice.selectList(p);
+			for(int i = 0;i < list.size(); i ++){
+				for(int j = 0; j < pList.size(); j ++){
+					Map<String,Object> m2 = list.get(i);
+					String pid = m2.get("pid").toString();
+					String num = pList.get(j).getUuid() + "";
+					if(pid.equals(num)){
+						pList.remove(j);
+					}
+				}
+			}
+			for(int k = 0; k < pList.size(); k ++){
+				CustPdct cp = new CustPdct();
+				cp.setProdId(pList.get(k).getUuid());
+				cp.setCustId(cust.getCustId());
+				cpservice.save(cp);
+			}
+			list = service.findModify(cust.getCustId());
 			req.setAttribute("dataList", list);
 			return "modifyUI";
 		} catch (Exception e) {

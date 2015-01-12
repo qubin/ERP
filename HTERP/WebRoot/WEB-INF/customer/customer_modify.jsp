@@ -69,6 +69,11 @@
 						<td><input type="text" class="u-ipt" name="cust.remark"
 							maxlength="60" value="${cust.remark}"></td>
 					</tr>
+					<tr>
+						<th class="tr">登陆名：</th>
+						<td><input type="text" class="u-ipt required" name="loginName"
+							maxlength="60"></td>
+					</tr>
 					<s:iterator value="#request.dataList" id="data">
 						<tr>
 							<th class="tr">华天产品编号：</th>

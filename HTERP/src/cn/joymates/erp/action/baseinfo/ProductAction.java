@@ -1,5 +1,7 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.net.URLDecoder;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +10,7 @@ import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
+import cn.joymates.erp.utils.JxlUtil;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class ProductAction extends BaseAction {
@@ -19,6 +22,7 @@ public class ProductAction extends BaseAction {
 		req.setAttribute("propertiesMap", Product.propertiesMap);
 		req.setAttribute("marketMap", Product.marketMap);
 		req.setAttribute("patternTypeMap", Product.patternTypeMap);
+		req.getSession().setAttribute("pexcel", productList);
 		return "home";
 	}
 	
@@ -32,9 +36,27 @@ public class ProductAction extends BaseAction {
 		req.setAttribute("propertiesMap", Product.propertiesMap);
 		req.setAttribute("marketMap", Product.marketMap);
 		req.setAttribute("patternTypeMap", Product.patternTypeMap);
+		req.getSession().setAttribute("pexcel", productList);
 		return "home";
 	}
-	
+	public void getExcel(){
+		try {
+			Map<String, String> map = new LinkedHashMap<String,String>();
+			map.put("HT_PN", "华天产品编号");
+			map.put("CUS_PN", "客户产品编号");
+			map.put("PROPERTIES", "产品性质");
+			map.put("MARKET", "产品市场");
+			map.put("PATTERN_TYPE", "模具类型");
+			map.put("IS_LOGOUT", "是否注销");
+			map.put("LOGOUT_REASON", "注销原因");
+			String str = URLDecoder.decode(req.getParameter("excelName"), "utf-8");
+			List<Map<String, Object>> data = (List<Map<String, Object>>) req.getSession().getAttribute("pexcel");
+			boolean flag = JxlUtil.getExcel(map,data, req,resp,str);
+			resp.getWriter().write(flag + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public String showAddUI() {
 		List<Customer> customerList = customerService.selectList(new Customer());
 		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
@@ -51,13 +73,10 @@ public class ProductAction extends BaseAction {
 	}
 	
 	public String showModifyUI() {
-		List<Customer> customerList = customerService.selectList(new Customer());
-		String searchsql = "SELECT COUNT(*) FROM t_warehouse ";		
-		String resultsql = "SELECT * FROM t_warehouse limit ?, ? ";
-		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
 		product = service.selectOne(product);
+		
+		List<Customer> customerList = customerService.selectList(new Customer());
 		req.setAttribute("customerList", customerList);
-		req.setAttribute("warehouseList", warehouseList);
 		return "modifyUI";
 	}
 	

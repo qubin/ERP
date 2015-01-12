@@ -30,6 +30,22 @@
 			}
 		}
 	}
+  	var j = jQuery;
+	j(document).ready(function(){
+		j("#getExcel").bind("click",function(){
+			var str = "供应商资料";
+			str = encodeURI(str);
+			str = encodeURI(str);
+			var uri  = "${pageContext.request.contextPath}/admin/supplier/supplier_getExcel.html?excelName=" + str;
+			j.get(uri,function(data){
+				if(data != ""){
+						window.location.href="${pageContext.request.contextPath}/admin/download/download.html?excelName=" + str;
+				}else{
+					alert("失败");
+				}
+			});
+		});
+	});
   </script>
 </head>
 <body>
@@ -68,7 +84,7 @@
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
 			      
-                   
+           <button class="u-ipt" id="getExcel" style="float:right;">导出excel</button>
           <h2>供应商信息列表</h2>
           <div align="center">
           <ec:table items="supplierList" var="sr"

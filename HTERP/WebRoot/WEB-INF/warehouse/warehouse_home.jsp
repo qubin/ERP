@@ -45,6 +45,22 @@
   	  		onFailure: function(){ alert('仓库中存在原材料，成品，无法注销！') }
   	  	});
   	}
+  	var j = jQuery;
+	j(document).ready(function(){
+		j("#getExcel").bind("click",function(){
+			var str = "仓库资料"; 
+			str = encodeURI(str);
+			str = encodeURI(str);
+			var uri  = "${pageContext.request.contextPath}/admin/warehouse/warehouse_getExcel.html?excelName=" + str;
+			j.get(uri,function(data){
+				if(data != ""){
+						window.location.href="${pageContext.request.contextPath}/admin/download/download.html?excelName=" + str;
+				}else{
+					alert("导出失败");
+				}
+			});
+		});
+	});
   </script>
 </head>
 <body>
@@ -77,7 +93,7 @@
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
 			      
-                   
+          <button class="u-ipt" id="getExcel" style="float:right;">导出excel</button>         
           <h2>仓库信息列表</h2>
           <div align="center">
           <ec:table items="whList" var="sr"
@@ -91,8 +107,8 @@
 				style="align:center"
 				autoIncludeParameters="true">
 				<ec:row>
-					<ec:column property="SIGN1" title="代码" width="25%" style="text-align:center"/>
-					<ec:column property="AREA" title="地区" width="25%" style="text-align:center"/>
+					<ec:column property="SIGN1" title="名称" width="25%" style="text-align:center"/>
+					<ec:column property="AREA" title="地址" width="25%" style="text-align:center"/>
 					<ec:column property="DESC1" title="描述" width="25%" style="text-align:center"/>
 					<ec:column property="IS_LOGOUT" title="是否注销" width="25%" style="text-align:center" mappingItem="LOGOUT"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="25%" style="text-align:center"/>

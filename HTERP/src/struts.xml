@@ -33,4 +33,5 @@
      <include file="erpStock.xml"/>
      <include file="erpCustPdct.xml"/>
      <include file="erpSellBill.xml"/>
+     <include file="erpDownload.xml"/>
 </struts>

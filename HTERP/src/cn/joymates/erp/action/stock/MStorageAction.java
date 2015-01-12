@@ -51,16 +51,18 @@ public class MStorageAction extends BaseAction {
 			BigDecimal inNum = rawFlow.getWeight();
 			if(inOrOut != null){
 				if("1".equals(inOrOut)){
-					Material sc = material;
 					Material original = service.selectOne(material);
 					original.setWeight(original.getWeight().subtract(inNum));
+					service.update(original);
+				}else if("2".equals(inOrOut)){
+					Material sc = material;
+					Material original = service.selectOne(material);
 					if(sc.getMmatId() != null){
 						original.setMmatId(sc.getMmatId());
 					}
-					service.update(original);
-					
-				}else if("2".equals(inOrOut)){
-					Material original = service.selectOne(material);
+					if(sc.getScrollId() != null){
+						original.setScrollId(sc.getScrollId());
+					}
 					original.setWeight(original.getWeight().add(inNum));
 					service.update(original);
 				}

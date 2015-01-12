@@ -12,7 +12,6 @@ public class BaseMaterial extends BaseVO {
 		fieldMap.put("supplymatId", "supplymat_id");
 		fieldMap.put("density", "density");
 		fieldMap.put("thickness", "thickness");
-		fieldMap.put("desc", "desc1");
 		fieldMap.put("weight", "weight");
 		fieldMap.put("standard", "standard");
 		fieldMap.put("scrollCount", "scroll_count");
@@ -33,7 +32,6 @@ public class BaseMaterial extends BaseVO {
 	private Integer supplymatId;
 	private BigDecimal density;
 	private BigDecimal thickness;
-	private String desc;
 	private BigDecimal weight;
 	private String standard;
 	private Integer scrollCount;
@@ -70,12 +68,6 @@ public class BaseMaterial extends BaseVO {
 	}
 	public void setThickness(BigDecimal thickness) {
 		this.thickness = thickness;
-	}
-	public String getDesc() {
-		return desc;
-	}
-	public void setDesc(String desc) {
-		this.desc = desc;
 	}
 	public BigDecimal getWeight() {
 		return weight;

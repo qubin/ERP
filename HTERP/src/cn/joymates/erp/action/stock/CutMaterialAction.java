@@ -51,7 +51,7 @@ public class CutMaterialAction extends BaseAction {
 			Integer materialId = Integer.parseInt(req.getParameter("mmatId"));
 			material.setUuid(materialId);
 			Material materialInfo = materialService.selectOne(material);
-			String materialDesc = materialInfo.getDesc();
+			String materialDesc = materialInfo.getRemark();
 			resp.setCharacterEncoding("UTF-8");
 			resp.getWriter().write(materialDesc);
 			resp.getWriter().flush();
@@ -107,8 +107,7 @@ public class CutMaterialAction extends BaseAction {
 			int cjjs = Integer.parseInt(req.getParameter("txtCjjs"+i));//裁剪卷数
 			String strCjcc = req.getParameter("txtCjcc"+i);		//裁剪尺寸及公差
 			
-			BigDecimal sdsd = new BigDecimal(js);
-			BigDecimal mjz = minfo.getWeight().divide(new BigDecimal(js)).multiply(new BigDecimal(cjjs));		//获取小卷的重量
+			BigDecimal mjz = minfo.getWeight().divide(new BigDecimal(js));		//获取小卷的重量
 			
 			//根据材料id查询卷号
 			Material ma = new Material();

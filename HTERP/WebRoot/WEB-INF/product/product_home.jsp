@@ -30,6 +30,22 @@
 			}
 		}
 	}
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#getExcel").bind("click",function(){
+			var str = "产品信息资料"; 
+			str = encodeURI(str);
+			str = encodeURI(str);
+			var uri  = "${pageContext.request.contextPath}/admin/product/product_getExcel.html?excelName=" + str;
+			j.get(uri,function(data){
+				if(data != ""){
+						window.location.href="${pageContext.request.contextPath}/admin/download/download.html?excelName=" + str;
+				}else{
+					alert("导出失败");
+				}
+			});
+		});
+	});
   </script>
 </head>
 <body>
@@ -48,7 +64,6 @@
                   	<select class="u-ipt" name="product_key">
                   		<option value="ALL">---查询所有---</option>
                   		<option value="HT_PN">华天产品编号</option>
-                  		<option value="CUS_PN">客户产品编号</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="product_name"/></th>
@@ -62,7 +77,7 @@
           </form>   
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
-                   
+          <button class="u-ipt" id="getExcel" style="float:right;">导出excel</button>                  
           <h2>产品信息列表</h2>
           <div align="center">
           <ec:table items="productList" var="sr"
@@ -77,7 +92,6 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="HT_PN" title="华天产品编号" width="10%" style="text-align:center"/>
-					<ec:column property="CUS_PN" title="客户产品编号" width="10%" style="text-align:center"/>
 					<ec:column property="PROPERTIES" title="产品性质" width="10%" mappingItem="propertiesMap"/>
 					<ec:column property="MARKET" title="产品市场" width="10%" mappingItem="marketMap"/>
 					<ec:column property="PATTERN_TYPE" title="模具类型" width="10%" mappingItem="patternTypeMap"/>

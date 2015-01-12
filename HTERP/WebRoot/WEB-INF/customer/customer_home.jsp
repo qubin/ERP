@@ -8,6 +8,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <script language="javascript"
+	src="${pageContext.request.contextPath}/assets/js/LodopFuncs.js"></script>
   <title></title>
   <script type="text/javascript">
 	function recoverMsg() {
@@ -27,10 +29,42 @@
 			}
 		}	
 	}
-	
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#getExcel").bind("click",function(){
+			var str = "客户资料";
+			str = encodeURI(str);
+			str = encodeURI(str);
+			var uri  = "${pageContext.request.contextPath}/admin/customer/customer_getExcel.html?excelName=" + str;
+			j.get(uri,function(data){
+				if(data != ""){
+						window.location.href="${pageContext.request.contextPath}/admin/download/download.html?excelName=" + str;
+				}else{
+					alert("失败");
+				}
+			});
+		});
+	});
+	function SaveAsFile(){ 
+		var LODOP = getLodop(document.getElementById('LODOP_OB'), document.getElementById('LODOP_EM'));
+		LODOP.PRINT_INIT(""); 
+		LODOP.ADD_PRINT_TABLE(100,20,500,80,document.getElementById("ee").innerHTML); 
+		LODOP.SET_SAVE_MODE("Orientation",2); //Excel文件的页面设置：横向打印   1-纵向,2-横向;
+		LODOP.SET_SAVE_MODE("PaperSize",9);  //Excel文件的页面设置：纸张大小   9-对应A4
+		LODOP.SET_SAVE_MODE("Zoom",90);       //Excel文件的页面设置：缩放比例
+		LODOP.SET_SAVE_MODE("CenterHorizontally",true);//Excel文件的页面设置：页面水平居中
+		LODOP.SET_SAVE_MODE("CenterVertically",true); //Excel文件的页面设置：页面垂直居中
+//		LODOP.SET_SAVE_MODE("QUICK_SAVE",true);//快速生成（无表格样式,数据量较大时或许用到） 
+		LODOP.SAVE_TO_FILE("新文件名.xls"); 
+	};	
   </script>
 </head>
 <body>
+
+	<object id="LODOP_OB"
+		classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
+	</object>
     <div id="container" class="container">
       <div class="hr10"></div>
           <div class="hr10"></div>
@@ -62,10 +96,10 @@
           </form>   
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
-			      
-                   
+		  <button class="u-ipt" id="getExcel" style="float:right;">导出excel</button>
           <h2>客户信息列表</h2>
           <div align="center">
+          <a href="${pageContext.request.contextPath}/admin/customer/customer_getExcel.html" id="excel"></a>
           <ec:table items="custList" var="sr"
 				retrieveRowsCallback="limit"
 				action="${pageContext.request.contextPath}/admin/customer/customer_showHome.html"
@@ -76,13 +110,12 @@
 				useAjax="false" 
 				style="align:center"
 				autoIncludeParameters="true"
-				xlsFileName="test.xls">
+				>
 				<ec:row>
 					<ec:column property="NAME" title="名称" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PHONE" title="联系电话" width="11%" style="text-align:center"/>
 					<ec:column property="FAX" title="传真" width="11%" style="text-align:center"/>
 					<ec:column property="CON_PERSON" title="联系人" width="11%" style="text-align:center"/>
-					<ec:column property="CON_PHONE" title="联系人电话" width="11%" style="text-align:center"/>
 					<ec:column property="TARIFF" title="税号" width="11%" style="text-align:center"/>
 					<ec:column property="BANK" title="开户银行" width="11%" style="text-align:center"/>
 					<ec:column property="ACCOUNT" title="银行账号" width="11%" style="text-align:center"/>

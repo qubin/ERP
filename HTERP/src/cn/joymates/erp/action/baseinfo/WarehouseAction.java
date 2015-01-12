@@ -2,6 +2,7 @@ package cn.joymates.erp.action.baseinfo;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Warehouse;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.WarehousService;
+import cn.joymates.erp.utils.JxlUtil;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 public class WarehouseAction extends BaseAction{
@@ -25,6 +27,7 @@ public class WarehouseAction extends BaseAction{
 		List<Map<String, Object>> whList = service.findAll(wh,ec_rd,req);
 		req.setAttribute("LOGOUT", Warehouse.logoutMap);
 		req.setAttribute("whList", whList);
+		req.getSession().setAttribute("wexcel", whList);
 		return "home";
 	}
 	
@@ -38,13 +41,29 @@ public class WarehouseAction extends BaseAction{
 				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> whList = service.findQuery(ec_rd,queryStr,serachType,req);
 					req.setAttribute("whList", whList);
+					req.getSession().setAttribute("wexcel", whList);
 					return "home";
 				}
 			}
 		}
 		return showHome();
 	}
-	
+	public void getExcel(){
+		try {
+			Map<String, String> map = new LinkedHashMap<String,String>();
+			map.put("SIGN1", "名称");
+			map.put("AREA", "地址");
+			map.put("DESC1", "描述");
+			map.put("IS_LOGOUT", "是否注销");
+			map.put("LOGOUT_REASON", "注销原因");
+			String str = URLDecoder.decode(req.getParameter("excelName"), "utf-8");
+			List<Map<String, Object>> data = (List<Map<String, Object>>) req.getSession().getAttribute("wexcel");
+			boolean flag = JxlUtil.getExcel(map,data, req,resp,str);
+			resp.getWriter().write(flag + "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public String showAddUI(){
 		return "addUI";
 	}

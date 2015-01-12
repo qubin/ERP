@@ -30,6 +30,22 @@
 			}
 		}
 	}
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#getExcel").bind("click",function(){
+			var str = "原材料资料";
+			str = encodeURI(str);
+			str = encodeURI(str);
+			var uri  = "${pageContext.request.contextPath}/admin/material/material_getExcel.html?excelName=" + str;
+			j.get(uri,function(data){
+				if(data != ""){
+						window.location.href="${pageContext.request.contextPath}/admin/download/download.html?excelName=" + str;
+				}else{
+					alert("导出失败");
+				}
+			});
+		});
+	});
   </script>
 </head>
 <body>
@@ -45,13 +61,13 @@
                   	查询条件：
                   </th>
                   <td width="10">
-                  	<select class="u-ipt validate-selection" name="material_key">
+                  	<select class="u-ipt" name="material_key">
                   		<option value="ALL">---查询所有---</option>
                   		<option value="NAME">供应商</option>
+                  		<option value="MAT_SUPPLIER_NAME">材料名称</option>
+                  		<option value="HT_MAT_NO">华天材料号</option>
                   		<option value="DENSITY">面密度</option>
                   		<option value="THICKNESS">厚度</option>
-                  		<option value="DESC1">描述</option>
-                  		<option value="WEIGHT">重量</option>
                   	</select>
                   </td>
                   <th width="50"><input type="text" class="u-ipt" name="material_name"/></th>        
@@ -66,7 +82,7 @@
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
 			      
-                   
+          <button class="u-ipt" id="getExcel" style="float:right;">导出excel</button>         
           <h2>材料信息列表</h2>
           <div align="center">
           <ec:table items="materialList" var="sr"
@@ -81,9 +97,10 @@
 				autoIncludeParameters="true">
 				<ec:row>
 					<ec:column property="SUPPLIERNAME" title="供应商" width="11%" />
-					<ec:column property="WEIGHT" title="重量" width="11%"  style="text-align:center"/>
-					<ec:column property="SCROLL_ID" title="卷号" width="11%"  style="text-align:center"/>
-					<ec:column property="MATERIAL_MODEL" title="材料型号" width="11%"  style="text-align:center"/>
+					<ec:column property="MAT_SUPPLIER_NAME" title="材料名称" width="11%" />
+					<ec:column property="HT_MAT_NO" title="华天材料号" width="11%" />
+					<ec:column property="DENSITY" title="面密度" width="11%" />
+					<ec:column property="THICKNESS" title="厚度" width="11%" />
 					<ec:column property="IS_LOGOUT" title="是否注销" width="11%" mappingItem="logoutMap" style="text-align:center"/>
 					<ec:column property="LOGOUT_REASON" title="注销原因" width="11%" />
 					<ec:column property="REMARK" title="备注" width="11%" />

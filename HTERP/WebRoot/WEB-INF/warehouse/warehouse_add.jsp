@@ -26,12 +26,12 @@
 			<table class="m-table-form">
 				<tbody>
 					<tr>
-						<th class="tr" width="42%">代码：</th>
+						<th class="tr" width="42%">名称：</th>
 						<td><input type="text" class="u-ipt required"
 							name="wh.sign1" maxlength="30" /></td>
 					</tr>
 					<tr>
-						<th class="tr" width="42%">地区：</th>
+						<th class="tr" width="42%">地址：</th>
 						<td><input type="text" class="u-ipt required"
 							name="wh.area" maxlength="30" /></td>
 					</tr>
