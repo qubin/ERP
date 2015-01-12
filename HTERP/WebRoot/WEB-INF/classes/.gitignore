@@ -1,4 +1,5 @@
 /cn
+<<<<<<< HEAD
 /erpChangeStores.xml
 /erpCustPdct.xml
 /erpCustomer.xml
@@ -23,3 +24,5 @@
 /struts.xml
 /download
 /erpDownload.xml
+=======
+>>>>>>> refs/remotes/origin/master
