@@ -43,6 +43,11 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
         		
   	</select>
   	
+  	<select id="findUserByName" parameterType="Map" resultType="User">
+  	
+  	SELECT  * FROM tb_user WHERE user_login_id=#{userLogin}	
+  	</select>
+  	
   	<delete id="deleteByRoleId" parameterType="String">
   		DELETE FROM 
   			tb_role_privilege
@@ -52,7 +57,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
   	
   	<insert id="insertRolePrivilege" parameterType="Map">
   		INSERT INTO 
-  			tb_role_privilege
+  			tb_role_resource
   			(
   			role_id,
   			resource_id
@@ -61,14 +66,14 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
   			(
 			#{role_id},
 			#{resource_id}
-  			)
+  			);
   	</insert>
   	
   	<select id="findResouceByRoleId" resultType="Resource" parameterType="string">
   		select 
   			resource_id resourceId
 		from
-		    tb_role_privilege
+		    tb_role_resource
 		where 
 			role_id = #{role_id}
   	</select>
@@ -82,6 +87,9 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
   			#{role_id}, 
   			#{user_id})
   	</insert> 
+  	<delete id="deleteRolePrivilege" parameterType="String" >
+  		DELETE FROM tb_role_resource WHERE  role_id = #{roleId}
+  	</delete>
   	
   	<select id="selectRoleByUserId" parameterType="String" resultType="String">
   		SELECT role_id FROM tb_user_role
@@ -97,6 +105,21 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 			and role_uuid != #{roleUuid}
 		</if>
   	</select>
+  	
+  	<select id="findRoleByName" parameterType="Role" resultType="Map">
+		SELECT role_id roleId,
+			   role_name roleName,
+			   role_qutoa roleQuota,
+			   is_logout isLogout ,
+			   logout_reason logoutReason,
+			   create_person createPerson,
+			   create_time createTime,
+			   remark 
+		FROM tb_role WHERE role_name=#{roleName}
+  	</select>
+  	
+  	
+  	
   	<!--判断仓库是否有原材料，成品 -->
   	<select id="checkDeleteWarehouse" parameterType="integer" resultType="integer">
 		SELECT 

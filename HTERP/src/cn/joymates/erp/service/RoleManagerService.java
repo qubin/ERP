@@ -77,21 +77,22 @@ public class RoleManagerService {
 	 * @param roleId
 	 * @param resList
 	 */
-	public void saveAuth(String roleId, List<String> resList) {
+	public void saveAuth(String roleId, String resList) {
 		resourceDao =  new ResourceDaoImpl1();
 		resourceDao.deleteRolePrivilege(roleId);
 		
 		//get parentId
-		Set<String> parentIdSet = new HashSet<String>();
-		for (String res : resList) {
-			String parentId = res.substring(0, (res.length() - 3));
-			parentIdSet.add(parentId);
-		}
-		
-		resList.addAll(parentIdSet);
-		
-		for (String res : resList) {
-			resourceDao.insertRolePrivilege(roleId, res);
+//		Set<String> parentIdSet = new HashSet<String>();
+//		for (String res : resList) {
+//			String parentId = res.substring(0, (res.length() - 3));
+//			parentIdSet.add(parentId);
+//		}
+//		
+//		resList.addAll(parentIdSet);
+		String []strValue=resList.split(",");
+	//	for (String res : resList) {
+		for (int i=0;i<strValue.length;i++) {
+			resourceDao.insertRolePrivilege(roleId, strValue[i]);
 		}
 	}
 	

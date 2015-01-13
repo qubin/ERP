@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
 import cn.joymates.erp.dao.BaseDao;
+import cn.joymates.erp.dao.IResourceDao;
 import cn.joymates.erp.dao.IRoleDao;
 import cn.joymates.erp.dao.impl.BaseDaoImpl;
+import cn.joymates.erp.dao.impl.ResourceDaoImpl1;
 import cn.joymates.erp.dao.impl.RoleDaoImpl;
 import cn.joymates.erp.domain.Resource;
 import cn.joymates.erp.domain.Role;
@@ -77,5 +79,43 @@ public class RoleService extends BaseService<Role> {
 			dao1.saveResPrivilege(map);
 		}
 	
+	}
+	
+	public Role findById(String id) {
+		Role r = new Role();
+		r.setRoleId(id);
+		return dao.selectOne(r);
+	}
+	
+	public Boolean findRoleByName(String name){
+		Boolean result=false;
+		IRoleDao dao1 =  new RoleDaoImpl();
+		Map <String,Object> map=new HashMap<String,Object>();
+		map.put("roleName", name);
+		List list=dao1.findRoleByName(map);
+		if(list!=null && list.size()>0){
+			result=true;
+		}
+		return result;
+	}
+	
+	public void modifyRole(Role role) {
+		String logout = role.getIsLogout(); 
+		if ("false".equals(logout)) {
+			role.setIsLogout(Role.NOT_LOGOUT);
+			role.setLogoutReason("");
+		} else {
+			role.setIsLogout(Role.LOGOUT);
+		}
+		dao.update(role);
+	}
+	
+	public Map<String, List<Resource>> getAuthData(String roleid) {
+		Map<String, List<Resource>> resultMap = new HashMap<String, List<Resource>>();
+		ResourceDaoImpl1 resourceDao =  new ResourceDaoImpl1();
+		resultMap.put("all", resourceDao.selectAll());
+		resultMap.put("mine", resourceDao.selectResourceByRoleId(roleid));
+		
+		return resultMap;
 	}
 }

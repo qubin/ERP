@@ -28,8 +28,8 @@ public class ResourceDaoImpl1 implements IResourceDao {
 	
 	public void insertRolePrivilege(String roleId, String resourceId) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("roleId", roleId);
-		map.put("resourceId", resourceId);
+		map.put("role_id", roleId);
+		map.put("resource_id", resourceId);
 		sess.insert("insertRolePrivilege", map);
 	}
 	

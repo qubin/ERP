@@ -12,6 +12,7 @@ import cn.joymates.erp.domain.Role;
 import cn.joymates.erp.domain.User;
 import cn.joymates.erp.service.RoleManagerService;
 import cn.joymates.erp.service.RoleService;
+import cn.joymates.erp.utils.ResponseWriteUtil;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 import cn.joymates.erp.utils.UUIDGenerator;
 /**
@@ -60,37 +61,53 @@ public class RoleManagerAction extends BaseAction {
 		return "find";
 	}
 	
+	public void findRole(){
+		String roleName=req.getParameter("role_name");
+		Boolean	 result =roleService.findRoleByName(roleName);
+		try {
+			ResponseWriteUtil.responseWrite(resp, result.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	//根据编号查找
 	public String showModifyPage() {
-		role = roleManagerService.findById(role.getRoleId());
+		role = roleService.findById(role.getRoleId());
 		String logout = role.getIsLogout();
 		
 		role.setIsLogout("true");
 		if (logout.equals(Role.NOT_LOGOUT)) {
 			role.setIsLogout("false");
 		}
+		req.setAttribute("quotaList", Role.quotas);
 		return "modifyUI";
 	}
 	
 	public String modify() {
-		roleManagerService.modifyRole(role);
+		roleService.modifyRole(role);
 		return "find";
 	}
 	
 	/**
-	 * 授权�?
+	 * 授权ui
 	 * @return
 	 */
 	public String authUI() {
-		Map<String, List<Resource>> rmap = roleManagerService.getAuthData(role.getRoleId());
-		req.setAttribute("resourceList", rmap.get("all"));
+//		Map<String, List<Resource>> rmap = roleManagerService.getAuthData(role.getRoleId());
+//		req.setAttribute("resourceList", rmap.get("all"));
+//		
+//		List<Resource> mineResList = rmap.get("mine");
+//		resourceIds = new ArrayList<String>();
+//		for (Resource r : mineResList) {
+//			resourceIds.add(r.getResourceId());
+//		}
+//		return "resourceList";
+		RoleService service = ServiceProxyFactory.getInstance(new RoleService());
+		service.showResources(role, resource, "20", req);
 		
-		List<Resource> mineResList = rmap.get("mine");
-		resourceIds = new ArrayList<String>();
-		for (Resource r : mineResList) {
-			resourceIds.add(r.getResourceId());
-		}
-		return "resourceList";
+//		req.setAttribute("resourceTypeMap", Resource.resourceTypeMap);
+		return "authUI";
 	}
 	
 	/**
@@ -98,7 +115,8 @@ public class RoleManagerAction extends BaseAction {
 	 * @return
 	 */
 	public String auth() {
-		roleManagerService.saveAuth(role.getRoleId(), resourceIds);
+		String resource_ids=req.getParameter("resource_Ids");
+		roleManagerService.saveAuth(role.getRoleId(), resource_ids);
 		return "find";
 	}
 	
@@ -110,6 +128,8 @@ public class RoleManagerAction extends BaseAction {
 	private List roleList;
 	
 	private List<String> resourceIds; 
+	
+	private Resource resource;
 
 	public List<String> getResourceIds() {
 		return resourceIds;
@@ -134,4 +154,14 @@ public class RoleManagerAction extends BaseAction {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+
+	public Resource getResource() {
+		return resource;
+	}
+
+	public void setResource(Resource resource) {
+		this.resource = resource;
+	}
+	
+	
 }

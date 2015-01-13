@@ -17,4 +17,6 @@ public interface IRoleDao extends BaseDao<Role> {
 	void deleteById(Role r);
 	
 	void saveResPrivilege(Map<String, String> map);
+	
+	List findRoleByName(Map<String, Object> map);
 }

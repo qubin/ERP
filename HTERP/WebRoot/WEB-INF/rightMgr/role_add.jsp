@@ -11,7 +11,7 @@
   <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/engine.js'></script>  
   <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/util.js'></script>
   <script type="text/javascript">
-	function isSingleRole(roleName) {
+	/* function isSingleRole(roleName) {
 		if (roleName == null || roleName == "") {
 			return;
 		}
@@ -25,20 +25,42 @@
 				document.getElementById("submitBtn").disabled = "";
 			}
 		});
+	} */
+	
+	function repeat(){
+		var role_name=jQuery("#roleName").val();
+		if(role_name==''){
+			jQuery("#notSingle").html("不能为空");
+			return false;
+		}
+		 var data = jQuery.ajax({
+			  url: "${pageContext.request.contextPath }/admin/basic/role_findRole.html",
+			  data: {role_name:role_name},
+			  type:"post",
+			  async: false
+			 }).responseText;
+		if(data=="true"){
+			jQuery("#notSingle").html("角色名称已经存在");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	function clears(){
+	jQuery("#notSingle").html("");
 	}
   </script>
 </head>
 <body>
     <div id="container" class="container">
     <div class="hr10"></div> 
-    <form id="form1" action="${pageContext.request.contextPath }/admin/basic/role_add.html" method="post">    
+    <form id="form1" action="${pageContext.request.contextPath }/admin/basic/role_add.html" method="post" onsubmit="return repeat();">    
       <table class="m-table-form">
          <tbody>
             <tr>  
               <th class="tr">角色名称：</th>
-              <td><input type="text" class="u-ipt required" id="2" name="role.roleName" maxlength="13"
-               onblur="isSingleRole(this.value)">
-              <span id="notSingle" style="display : none">角色名称已经存在</span><font color="red">*</font></td>
+              <td><input type="text" class="u-ipt required" id="roleName" name="role.roleName" maxlength="13" onfocus="clears();">
+           		 <font color="red"><span id="notSingle" ></span></font></td>
             </tr>
             <tr>  
               <th class="tr">角色权：</th>

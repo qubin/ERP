@@ -18,8 +18,8 @@
           <table class="m-table-form">
              <tbody>
                 <tr>
-                  <th class="tr">角色ID：</th>
-                  <td><input type="text" class="u-ipt" name="role.roleId" value="${role.roleId}"></td>
+                  <%-- <th class="tr">角色ID：</th>
+                  <td><input type="text" class="u-ipt" name="role.roleId" value="${role.roleId}"></td> --%>
                   <th class="tr">角色名称：</th>
                   <td><input type="text" class="u-ipt" name="role.roleName" value="${role.roleName}"></td>    
                   <td>
@@ -36,13 +36,12 @@
                    
           <h2>角色信息列表</h2> 
           <div align="center">
-		   <ec:table items="roleList" var="role1"
-				retrieveRowsCallback="limit"
+		   <ec:table items="roleList" var="role1" retrieveRowsCallback="limit"
 				action="${pageContext.request.contextPath}/admin/basic/role_find.html"
 				rowsDisplayed='12' pageSizeList="2,5,12,20,50,100"
 				resizeColWidth="true" width="99%" listWidth="100%" height="600px"
-				sortable="false" useAjax="false" style="align:center"
-				autoIncludeParameters="true">
+				sortable="false" useAjax="false" style="align:center" doPreload="false"
+				autoIncludeParameters="true" xlsFileName="abc.xls" >
 				<ec:row>
 					<ec:column property="ROLE_ID" title="角色ID" width="10%" />
 					<ec:column property="ROLE_NAME" title="角色名称" width="10%" />
@@ -50,7 +49,7 @@
 					<ec:column property="CREATE_TIME" title="创建时间" width="10%" />
 					<ec:column property="REMARK" title="备注" width="10%" />
 					<ec:column property="_0" title="动作" width="10%" >
-						<a href="${pageContext.request.contextPath}/admin/basic/role_showModifyPage.html?role.roleUuid=${role1.ROLE_UUID}">修 改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/basic/role_authUI.html?role.roleUuid=${role1.ROLE_UUID}">授 权</a>
+						<a href="${pageContext.request.contextPath}/admin/basic/role_showModifyPage.html?role.roleId=${role1.ROLE_ID}">修 改</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/admin/basic/role_authUI.html?role.roleId=${role1.ROLE_ID}">授 权</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

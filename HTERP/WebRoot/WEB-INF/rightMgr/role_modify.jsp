@@ -14,31 +14,32 @@
 <body>
     <div id="container" class="container">
     <div class="hr10"></div> 
-    <form action="${pageContext.request.contextPath}/admin/basic/role_modify.html"	id="form1" method="post">    
+    <form action="${pageContext.request.contextPath}/admin/basic/role_modify.html"	id="form1" method="post" onsubmit="return repeat();">    
       <table class="m-table-form">
          <tbody>
-         	<tr>
-              <th class="tr">角色编号：</th>
-              <td><input type="text" class="u-ipt required validate-number" value="${role.roleId}" name="role.roleId" maxlength="10"><font color="red">*</font>
-				  <input type="hidden" name="role.roleUuid" value="${role.roleUuid}"/>              
-              </td>
-            </tr>
             <tr>  
               <th class="tr">角色名称：</th>
-              <td><input type="text" class="u-ipt required " value="${role.roleName}" name="role.roleName" maxlength="13"
-              onblur="isSingleRole(this.value, '${role.roleUuid}')">
-              <span id="notSingle" style="display : none">角色名称已经存在</span><font color="red">*</font></td>
-            </tr>  
-              <th class="tr">最大优惠金额：</th>
-              <td><input type="text" class="u-ipt required validate-currency-dollar" value="${role.maxMinsMoney}" name="role.maxMinsMoney" maxlength="6">元</td>                                   
-            </tr>                       
-            </tr>  
+              <td><input type="text" class="u-ipt required " value="${role.roleName}" id="roleName" name="role.roleName" maxlength="13" onfocus="clears();">
+              <font color="red"><span id="notSingle" ></span></font>
+               <input type="hidden" name="role.roleId" value="${role.roleId}"/>
+               <input type="hidden"  id="oldName" value="${role.roleName}"/>
+                </td>
+            </tr>
+            <tr>  
+              <th class="tr">角色权：</th>
+              <td>
+				<s:select list="#request.quotaList" name="role.roleQuota" cssClass="u-slt"/>              
+              </td>                                   
+            </tr>       
+            <tr>  
               <th class="tr">备注：</th>
               <td><input type="text" class="u-ipt" value="${role.remark}" name="role.remark" maxlength="60"></td>                                   
             </tr>
              </tr>  
               <th class="tr">是否注销：</th>
-              <td><s:checkbox name="role.isLogout" onclick="cascadeReason()" id="isLogout"/></td>                                   
+              <td>
+              	<s:checkbox name="role.isLogout" onclick="cascadeReason()" id="isLogout"/>
+              </td>                                   
             </tr>                       
             </tr>  
               <th class="tr">注销原因：</th>
@@ -74,7 +75,7 @@
   			}
   		}
   		
-  		function isSingleRole(roleName, roleUuid) {
+  	/* 	function isSingleRole(roleName, roleUuid) {
 			findUserRole.getExistRoleCount(roleName, roleUuid, function(data) {
 			if (data > 0) {
 				document.getElementById("notSingle").style.display = "";
@@ -84,6 +85,36 @@
 				document.getElementById("submitBtn").disabled = "";
 			}
 		});
+	} */
+	
+	function repeat(){
+		var role_name=jQuery("#roleName").val();
+		var old_role_name=jQuery("#oldName").val();
+		if(role_name==''){
+			jQuery("#notSingle").html("不能为空");
+			return false;
+		}
+		if(role_name == old_role_name){
+			return true;
+		}else{
+		
+		 var data = jQuery.ajax({
+			  url: "${pageContext.request.contextPath }/admin/basic/role_findRole.html",
+			  data: {role_name:role_name},
+			  type:"post",
+			  async: false
+			 }).responseText;
+		if(data=="true"){
+			jQuery("#notSingle").html("角色名称已经存在");
+			return false;
+		}else{
+			return true;
+		}
+	 }
+	}
+	
+	function clears(){
+	jQuery("#notSingle").html("");
 	}
   	</script>
 </body>

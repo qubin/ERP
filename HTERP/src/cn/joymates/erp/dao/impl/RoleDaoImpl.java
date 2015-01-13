@@ -31,6 +31,17 @@ public class RoleDaoImpl extends BaseDaoImpl<Role> implements IRoleDao {
 		sess.insert("insertRolePrivilege", map);
 	}
 	
+	public Role findById(String id) {
+		SqlSession sess = SessionFactoryUtil.getSession();
+		return sess.selectOne("basic.findRoleById", id);
+	}
+
+	@Override
+	public List findRoleByName(Map<String, Object> map) {
+		SqlSession sess = SessionFactoryUtil.getSession();
+		return sess.selectList("findRoleByName", map);
+	}
+	
 	
 	
 }

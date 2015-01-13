@@ -35,6 +35,12 @@ public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 		SqlSession sess = SessionFactoryUtil.getSession();
 		return sess.selectOne("selectRoleByUserId", userId);
 	}
+
+	@Override
+	public List findUserByName(Map<String, Object> uMap) {
+		SqlSession sess = SessionFactoryUtil.getSession();
+		return sess.selectList("findUserByName", uMap);
+	}
 	
 	
 }

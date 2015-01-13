@@ -15,4 +15,6 @@ public interface IUserDao extends BaseDao<User> {
 	void insertUserRole(Map<String, String> uMap);
 	
 	String findRoleIdByUser(String userId);
+	
+	List findUserByName(Map<String, Object> map);
 }

@@ -9,6 +9,7 @@ import cn.joymates.erp.domain.Role;
 import cn.joymates.erp.domain.User;
 import cn.joymates.erp.service.RoleService;
 import cn.joymates.erp.service.UserService;
+import cn.joymates.erp.utils.ResponseWriteUtil;
 import cn.joymates.erp.utils.ServiceProxyFactory;
 
 /**
@@ -76,6 +77,18 @@ public class UserAction extends BaseAction {
 		return "showHomeUI";
 	}
 	
+	public void findUserByName(){
+		String userName=req.getParameter("user_name");
+		Boolean result=userService.findUserByName(userName);
+		try {
+			ResponseWriteUtil.responseWrite(resp, result.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public String modifyUI() {
 		user = userService.getOneUser(user, req);
 		return "modifyUI";
@@ -86,11 +99,29 @@ public class UserAction extends BaseAction {
 		return "showHomeUI";
 	}
 	
+	public String pwdModify() {
+		User u = (User)session.getAttribute("loggedUser");
+		UserService srv = ServiceProxyFactory.getInstanceNoMybatis(new UserService());
+		String msg = srv.modifyPassword(u.getUserId(), password[0], password[1]);
+		req.setAttribute("msg", msg);
+		return "pwdOver";
+	}
+	
 	private UserService userService = ServiceProxyFactory.getInstance(new UserService());
 	
 	private User user;
 	
 	private String validateCode;
+	
+	private String[] password;
+
+	public String[] getPassword() {
+		return password;
+	}
+
+	public void setPassword(String[] password) {
+		this.password = password;
+	}
 	
 	public User getUser() {
 		return user;

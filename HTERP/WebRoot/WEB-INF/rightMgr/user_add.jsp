@@ -13,7 +13,7 @@
   <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/engine.js'></script>  
   <script type='text/javascript' src='${pageContext.request.contextPath}/dwr/util.js'></script>
   <script type="text/javascript">
-	function isSingleUser(userId) {
+	/* function isSingleUser(userId) {
 		findUserRole.getExistUserCount(userId, null, function(data) {
 			if (data > 0) {
 				document.getElementById("notSingle").style.display = "";
@@ -23,38 +23,47 @@
 				document.getElementById("submitBtn").disabled = "";
 			}
 		});
+	} */
+	
+	function repeat(){
+		var user_id=jQuery("#user_id").val();
+		if(user_id==''){
+			jQuery("#notSingle").html("不能为空");
+			return false;
+		}
+		 var data = jQuery.ajax({
+			  url: "${pageContext.request.contextPath }/admin/basic/user_findUserByName.html",
+			  data: {user_name:user_id},
+			  type:"post",
+			  async: false
+			 }).responseText;
+		if(data=="true"){
+			jQuery("#notSingle").html("用户账户称已经存在");
+			return false;
+		}else{
+			return true;
+		}
+	}
+	function clears(){
+	jQuery("#notSingle").html("");
 	}
   </script>
 </head>
 <body>
     <div id="container" class="container">
     <div class="hr10"></div>   
-    <form id="form1" action="${pageContext.request.contextPath }/admin/basic/user_add.html" method="post">  
+    <form id="form1" action="${pageContext.request.contextPath }/admin/basic/user_add.html" method="post" onsubmit="return repeat();">  
       <table class="m-table-form">
          <tbody>
             <tr>  
-              <th class="tr">用户名称：</th>
-              <td><input type="text" class="u-ipt required" name="user.userName" maxlength="20"><font color="red">*</font></td>
+              <th class="tr">用户登录账号:</th>
+              <td><input name="user.userLoginId"  class="u-ipt required"  id="user_id" maxlength="20" type="text" onfocus="clears();"/><font color="red"><span id="notSingle"></span></font></td>
             </tr>
             <tr>  
-              <th class="tr">用户登录名：</th>
-              <td><input type="text" class="u-ipt required" name="user.userId" maxlength="6"
-              onblur="isSingleUser(this.value)"><font color="red">*</font>
-              <span id="notSingle" style="display : none">用户ID已经存在</span></td>                                   
+              <th class="tr">角色:</th>
+              <td><s:select list="#request.roleList" name="user.role.roleId"  listKey="roleId" listValue="roleName" cssClass="u-slt"/>
+              </td>                                   
             </tr> 
-            <tr>
-              <th class="tr">联系电话：</th>
-              <td><input type="text" class="u-ipt validate-number" name="user.contactPhone" maxlength="15"></td>
-            </tr>
-            <tr>  
-              <th class="tr">角色名称：</th>
-              <td>
-                 <s:select name="roleUuids" list="#session.roleList" listKey="roleUuid" 
-             	 	listValue="roleName" cssClass="u-slt required validate-selection" cssStyle="width:21%" headerKey="-1"
-             	 	headerValue="--请选择--"/>
-             	 <font color="red">*</font>
-             </td>
-            </tr>                       
             <tr>  
               <th class="tr">备注：</th>
               <td><input type="text" class="u-ipt" name="user.remark" maxlength="60"></td>                                   

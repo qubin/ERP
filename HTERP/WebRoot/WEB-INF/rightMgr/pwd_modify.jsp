@@ -24,14 +24,14 @@
          <tbody>
          	<tr>
               <th class="tr">旧密码：</th>
-              <td><input type="password" class="u-ipt required" name="user.password1"><font color="red">*</font></td>
+              <td><input type="password" class="u-ipt required" name="password"><font color="red">*</font></td>
             </tr>
             <tr>  
               <th class="tr">新密码：</th>
-              <td><input type="password" class="u-ipt required" name="user.password1" id="pwd1"><font color="red">*</font></td>
+              <td><input type="password" class="u-ipt required" name="password" id="pwd1"><font color="red">*</font></td>
             </tr>  
               <th class="tr">确认新密码：</th>
-              <td><input type="password" class="u-ipt required validate-equals-pwd1" id="pwd2" name="user.password1"><font color="red">*</font></td>                                   
+              <td><input type="password" class="u-ipt required validate-equals-pwd1" id="pwd2" name="password"><font color="red">*</font></td>                                   
             </tr> 
             
          </tbody> 

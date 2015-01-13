@@ -21,6 +21,7 @@ import cn.joymates.erp.domain.Resource;
 import cn.joymates.erp.domain.Role;
 import cn.joymates.erp.domain.User;
 import cn.joymates.erp.domain.UserRole;
+import cn.joymates.erp.utils.MD5Utils;
 import cn.joymates.erp.utils.UUIDGenerator;
 
 public class UserService  extends BaseService<User> {
@@ -34,14 +35,14 @@ public class UserService  extends BaseService<User> {
 		user.setUserId(userId);
 		user = dao.selectOne(user);
 		
-		if (!oldPwd.equals(user.getPassword1())) {
+		if (!MD5Utils.GetMD5Code(oldPwd).equals(user.getPassword1())) {
 			msg = "原始密码输入错误";
 			
 		} else if (!oldPwd.equals(newPwd)) {
 			
 			User u1 = new User();
 			u1.setUserId(user.getUserId());
-			u1.setPassword1(newPwd);
+			u1.setPassword1(MD5Utils.GetMD5Code(newPwd));
 			dao.update(u1);
 			
 			msg = "密码修改成功！";
@@ -51,6 +52,13 @@ public class UserService  extends BaseService<User> {
 	}
 	
 	public void modify(User user) {
+		String flag = "";
+		if ("1".equals(user.getIsLogout())) {
+			flag = "1";
+		} else {
+			flag = "0";
+		}
+		user.setIsLogout(flag);
 		dao.update(user);
 		if (User.LOGOUT.equals(user.getIsLogout())) {
 			return;
@@ -68,7 +76,8 @@ public class UserService  extends BaseService<User> {
 	public void saveUser(User user) {
 		String uuid = UUIDGenerator.getUUID();
 		user.setUserId(uuid);
-		user.setPassword1("123456"); //default password
+		String md5Psw = MD5Utils.GetMD5Code("123456");//default password
+		user.setPassword1(md5Psw); 
 		
 		user.setCreateTime(new Date());
 		user.setIsLogout(User.NOT_LOGOUT);
@@ -79,6 +88,19 @@ public class UserService  extends BaseService<User> {
 		urMap.put("user_id", uuid);
 		IUserDao dao1 = (IUserDao)dao;
 		dao1.insertUserRole(urMap);
+		
+	}
+	
+	public Boolean findUserByName(String name){
+		Boolean retult=false;
+		Map <String ,Object> map=new HashMap<String,Object>();
+		map.put("userLogin", name);
+		IUserDao dao1 = (IUserDao)dao;
+		List list=dao1.findUserByName(map);
+		if(list!=null && list.size()>0){
+			retult=true;
+		}
+		return retult;
 		
 	}
 	
@@ -119,16 +141,16 @@ public class UserService  extends BaseService<User> {
 			cond += " and u.user_login_id like '%" + user.getUserLoginId() + "%' ";
 		}
 		
-		if (StringUtils.isNotEmpty(user.getRole().getRoleName())) {
-			cond += " and r.role_name like '%" + user.getRole().getRoleName() + "%' ";
-		}
+//		if (StringUtils.isNotEmpty(user.getUserId())) {
+//			cond += " and r.role_name like '%" + user.getRole().getRoleName() + "%' ";
+//		}
 		
 		String countSql = "select count(1) " + 
-						  "from tb_user1 u, tb_user_role ur, tb_role r " +
+						  "from tb_user u, tb_user_role ur, tb_role r " +
 						  " where u.user_id = ur.user_id and ur.role_id = r.role_id" + cond;
 		String resultSql = "select u.user_id, u.User_login_id, u.create_time, u.is_logout, " +
-					       " u.remark, u.is_student, r.role_id, r.role_name " +
-					       " from tb_user1 u, tb_user_role ur, tb_role r " +
+					       " u.remark,  r.role_id, r.role_name " +
+					       " from tb_user u, tb_user_role ur, tb_role r " +
 					       " where u.user_id = ur.user_id and ur.role_id = r.role_id " + 
 					       cond + " limit ?, ?";
 		
