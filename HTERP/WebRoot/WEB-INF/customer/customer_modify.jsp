@@ -71,8 +71,7 @@
 					</tr>
 					<tr>
 						<th class="tr">登陆名：</th>
-						<td><input type="text" class="u-ipt required" name="loginName"
-							maxlength="60"></td>
+						<td><label for="" id="">${loginName }</label></td>
 					</tr>
 					<s:iterator value="#request.dataList" id="data">
 						<tr>

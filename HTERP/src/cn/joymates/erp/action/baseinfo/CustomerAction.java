@@ -97,6 +97,9 @@ public class CustomerAction extends BaseAction{
 			u.setUserLoginId(loginName);
 			u.setPassword1("123");
 			u.setCreateTime(new Date());
+			User createPerson = (User) req.getSession().getAttribute("loggedUser");
+			u.setCreatePerson(createPerson.getUserLoginId());
+			u.setCustId(custId);
 			userService.save(u);
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] prodId = req.getParameterValues("prodId");
@@ -191,6 +194,10 @@ public class CustomerAction extends BaseAction{
 			}
 			list = service.findModify(cust.getCustId());
 			req.setAttribute("dataList", list);
+			UserService uService = ServiceProxyFactory.getInstanceNoMybatis(new UserService());
+			User user = new User();
+			user.setCustId(cust.getCustId());
+			req.setAttribute("loginName", uService.selectList(user).get(0).getUserLoginId());;
 			return "modifyUI";
 		} catch (Exception e) {
 			e.printStackTrace();

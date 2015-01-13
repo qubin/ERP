@@ -17,6 +17,7 @@ public abstract class BaseUser extends BaseVO {
 		
 		fieldMap.put("logoutReason", "logout_reason");
 		fieldMap.put("remark", "remark");
+		fieldMap.put("custId", "cust_id");
 		this.id = "user_id";
 	}
 
@@ -31,6 +32,17 @@ public abstract class BaseUser extends BaseVO {
 	private String logoutReason;
 	
 	private String remark;
+	
+	private Integer custId;
+	
+	
+	public Integer getCustId() {
+		return custId;
+	}
+
+	public void setCustId(Integer custId) {
+		this.custId = custId;
+	}
 
 	public String getUserId() {
 		return userId;
