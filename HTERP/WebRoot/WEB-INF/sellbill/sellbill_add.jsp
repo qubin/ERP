@@ -68,8 +68,6 @@
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
 				str += 	"<td class='tr'><select name='cpList' id='' class='u-ipt required validate-selection'><option value=''>-请选择-</option></select>";
 				str +=	"</td>";
-				str +=  "<td class='tr'><div align='center'><label for='' name='cpn'></label></div>";
-				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
 				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"'></td>";
@@ -121,18 +119,6 @@
 						jtemp.append("<option value=''>-请选择-</option>");
 						j.each(data,function(k2,v2){
 							jtemp.append("<option value='" + v2.cpId + "'>" + v2.cus_pn + "</option>");
-						});
-					});
-					var tempL =  j("select[name='cpList']");
-					var laL = j("label[name='cpn']");
-					tempL.each(function(k,v){
-						var jtemp2 = j(v);
-						jtemp2.bind("change",function(){
-							for(var i = 0; i < data.length;i ++){
-								if(j(this).val() == data[i].cpId){
-									laL[k].innerHTML = data[i].code;
-								}
-							}
 						});
 					});
 				}else{
@@ -206,8 +192,7 @@
 				<tbody>
 					<tr>
 						<th class="tr"><div align="center">NO</div></th>
-						<th class="tr"><div align="center">CODE</div></th>
-						<th class="tr"><div align="center">型号</div></th>
+						<th class="tr"><div align="center">编号</div></th>
 						<th class="tr"><div align="center">单位</div></th>
 						<th class="tr"><div align="center">订单数量</div></th>
 						<th class="tr"><div align="center">单价(含税)</div></th>
@@ -221,7 +206,7 @@
 			<table class="m-table" id="">
 				<tbody>
 					<tr height="40">
-						<td class="tr" colspan="4"><div align="center">TOTAL:</div></td>
+						<td class="tr" colspan="3"><div align="center">TOTAL:</div></td>
 						<td class="tr"><div align="center" id="total"></div></td>
 						<td class="tr"><div align="center"></div></td>
 						<td class="tr"><div align="center"></div></td>

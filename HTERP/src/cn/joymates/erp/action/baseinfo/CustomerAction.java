@@ -103,14 +103,12 @@ public class CustomerAction extends BaseAction{
 			userService.save(u);
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] prodId = req.getParameterValues("prodId");
-			String[] code = req.getParameterValues("code");
 			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){
 				for(int i = 0; i < cusPn.length; i ++){
 					CustPdct cp = new CustPdct();
 					cp.setCustId(custId);
 					cp.setProdId(Integer.valueOf(prodId[i]));
 					cp.setCus_pn(cusPn[i]);
-					cp.setCode(code[i]);
 					cpservice.save(cp);
 				}
 				return showHome();
@@ -152,13 +150,11 @@ public class CustomerAction extends BaseAction{
 			service.update(cust);
 			String[] cusPn = req.getParameterValues("cusPn");
 			String[] cpId = req.getParameterValues("cpId");
-			String[] code = req.getParameterValues("code");
 			for(int i = 0;i < cusPn.length; i ++){
 				CustPdct temp = new CustPdct();
 				temp.setCpId(Integer.valueOf(cpId[i]));
 				temp = cpservice.selectOne(temp);
 				temp.setCus_pn(cusPn[i]);
-				temp.setCode(code[i]);
 				cpservice.update(temp);
 			}
 			

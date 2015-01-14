@@ -34,7 +34,6 @@
 			}
 			str +=  "</select>";
 			str +=	"</td>";
-			str +=  "<td class='tr'><div align='center'><label for='' name='cpn'>"+l[temp].code+"</label></div>";
 			str +=	"</td>";
 			str +=  "<td class='tr'><div align='center'>pic</div></td>";
 			str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'";
@@ -50,25 +49,7 @@
 		}
 		document.getElementById("add").innerHTML=str;
 		
-		bindCode2();
 		document.getElementById("sdNum").value=no;
-	}
-	
-	function bindCode2(){
-		j(document).ready(function(){
-			var tempL = eval('${jsonList}');
-			var laL = j("label[name='cpn']")
-			j("select[name='cpList']").each(function(i){
-				j(this).bind("change",function(){
-					for(var j = 0; j < tempL.length; j ++){
-						if(this.value == tempL[j].cpId){
-							laL[i].innerHTML = tempL[j].code;
-						}
-					}
-				
-				});
-			});
-		});
 	}
 	
 	j(document).ready(function(){
@@ -139,8 +120,6 @@
 				}
 				str +=  "</select>";
 				str +=	"</td>";
-				str +=  "<td class='tr'><div align='center'><label for='' name='cpn'></label></div></label>";
-				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
 				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"'></td>";
@@ -165,7 +144,6 @@
 				});
 			});
 			bindCalc(no);
-			bindCode();
 		}
 	
 		
@@ -185,23 +163,7 @@
 					}
 				});
 			}
-			return false;
 		});
-		function bindCode(){
-			var tempL = eval('${jsonList}');
-			var laL = j("label[name='cpn']")
-			j("select[name='cpList']").each(function(i){
-				var temp = j(this);
-				temp.bind("change",function(){
-					for(var j = 0; j < tempL.length; j ++){
-						if(temp.val() == tempL[j].cpId){
-							laL[i].innerHTML = tempL[j].code;
-						}
-					}
-				
-				});
-			});
-		}
 	});
 </script>
 </head>
@@ -257,7 +219,6 @@
 					<tr>
 						<th class="tr"><div align="center">NO</div></th>
 						<th class="tr"><div align="center">编号</div></th>
-						<th class="tr"><div align="center">CODE</div></th>
 						<th class="tr"><div align="center">单位</div></th>
 						<th class="tr"><div align="center">订单数量</div></th>
 						<th class="tr"><div align="center">单价(含税)</div></th>
@@ -271,7 +232,7 @@
 			<table class="m-table" id="">
 				<tbody>
 					<tr height="40">
-						<td class="tr" colspan="4"><div align="center">TOTAL:</div></td>
+						<td class="tr" colspan="3"><div align="center">TOTAL:</div></td>
 						<td class="tr"><div align="center" id="total"></div></td>
 						<td class="tr"><div align="center"></div></td>
 						<td class="tr"><div align="center"></div></td>

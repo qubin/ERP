@@ -47,6 +47,7 @@ public class SellbillAction extends BaseAction {
 	
 	public String queryhome(){
 		req.setAttribute("list", sService.findAll(ec_rd, req,"foo"));
+		req.getSession().setAttribute("printAll", sService.findAll(ec_rd, req,"foo"));
 		req.setAttribute("STATUS", SellBill.STATUS);
 		return "queryhome";
 	}
@@ -83,6 +84,7 @@ public class SellbillAction extends BaseAction {
 				if(queryStr != null && !"".equals(queryStr)){
 					List<Map<String, Object>> s = sService.findQuery(ec_rd,queryStr,serachType,req,"foo");
 					req.setAttribute("list", s);
+					req.getSession().setAttribute("printAll", s);
 					req.setAttribute("STATUS", SellBill.STATUS);
 					return "queryhome";
 				}
@@ -366,6 +368,34 @@ public class SellbillAction extends BaseAction {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public String print(){
+		SellDetail sd = new SellDetail();
+		sd.setSbId(sb.getSbId());
+		List<SellDetail> sdList = sdService.selectList(sd);
+		List<Map<String, Object>> data = new ArrayList<>();
+		for(SellDetail s : sdList){
+			data.addAll(sdService.findPrint(s.getSellDetailId()));
+		}
+		req.setAttribute("data", data);
+		return "print";
+	}
+	
+	public String printAll(){
+		List<Map<String,Object>> data = (List<Map<String, Object>>) req.getSession().getAttribute("printAll");
+		List<Map<String,Object>> list = new ArrayList<>();
+		for(Map m : data){
+			BigDecimal sbId =  (BigDecimal) m.get("ID");
+			SellDetail sd = new SellDetail();
+			sd.setSbId(Integer.valueOf(sbId.intValue()));
+			List<SellDetail> sdList = sdService.selectList(sd);
+			for(SellDetail s : sdList){
+				list.addAll(sdService.findPrint(s.getSellDetailId()));
+			}
+		}
+		req.setAttribute("data", list);
+		return "print";
 	}
 	
 	public Customer getCust() {

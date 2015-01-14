@@ -104,8 +104,6 @@
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
 				str += 	"<td class='tr'><div align='center'>" + cpList[i].cus_pn + "</div></label>";
 				str +=	"</td>";
-				str +=  "<td class='tr'><div align='center'>" + cpList[i].code + "</div>";
-				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><div align='center'>"+ data[i].orderCount +"</div>";
 				str +=	"</td>";
@@ -128,8 +126,6 @@
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
 				str += 	"<td class='tr'><input type='text' class='u-ipt required ' name='sdCode'";
 				str +=	"maxlength='60' style='width:110px;' id='code" + no +"'></td>";
-				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='cpn'";
-				str +=	"maxlength='60' style='width:110px;' id='cpn" + no +"'></td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
 				str +=	"maxlength='60' style='width:110px;' id='oc" + no +"'></td>";
@@ -219,7 +215,6 @@
 					<tr>
 						<th class="tr"><div align="center">NO</div></th>
 						<th class="tr"><div align="center">编号</div></th>
-						<th class="tr"><div align="center">CODE</div></th>
 						<th class="tr"><div align="center">单位</div></th>
 						<th class="tr"><div align="center">订单数量</div></th>
 						<th class="tr"><div align="center">单价(含税)</div></th>
@@ -233,7 +228,7 @@
 			<table class="m-table" id="">
 				<tbody>
 					<tr height="40">
-						<td class="tr" colspan="4"><div align="center">TOTAL:</div></td>
+						<td class="tr" colspan="3"><div align="center">TOTAL:</div></td>
 						<td class="tr"><div align="center" id="total"></div></td>
 						<td class="tr"><div align="center"></div></td>
 						<td class="tr"><div align="center"></div></td>

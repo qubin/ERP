@@ -99,7 +99,7 @@
 			<div class="hr10">&nbsp;</div>
 			<div class="hr10"></div>
 			      
-                   
+          <a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_printAll.html"><button class="u-btn" style="float:right;">打印预览</button></a>
           <h2>订单信息列表</h2>
           <div align="center">
           <ec:table items="list" var="sr"
@@ -122,7 +122,7 @@
 					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="STATUS"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
 						<a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_examineUI.html?sb.sbId=${sr.ID}&detail=true">详情</a>
-						<a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_examineUI.html?sb.sbId=${sr.ID}&detail=true">打印预览</a>
+						<a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_print.html?sb.sbId=${sr.ID}">打印预览</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

@@ -16,6 +16,7 @@
             <result name="detail">/WEB-INF/sellbill/sellbill_detail.jsp</result>
             <result name="finish">/WEB-INF/sellbill/sellbill_finish.jsp</result>
             <result name="finishUI">/WEB-INF/sellbill/sellbill_finishUI.jsp</result>
+            <result name="print">/WEB-INF/sellbill/sellbill_auditprint_audit.jsp</result>
         </action>
 	</package>
       

@@ -8,7 +8,6 @@ public class BaseCustPdct extends BaseVO {
 		fieldMap.put("cpId", "id");
 		fieldMap.put("custId", "customer_id");
 		fieldMap.put("cus_pn", "cus_pn");
-		fieldMap.put("code", "code");
 		fieldMap.put("prodId", "product_id");
 		fieldMap.put("isLogOut", "is_logout");
 		fieldMap.put("logOutReason", "logout_reason");
@@ -23,7 +22,6 @@ public class BaseCustPdct extends BaseVO {
 	private Integer cpId;
 	private Integer custId;
 	private String cus_pn;
-	private String code;
 	private Integer prodId;
 	private String isLogOut;
 	private String logOutReason;
@@ -38,12 +36,6 @@ public class BaseCustPdct extends BaseVO {
 	}
 	public void setPicNum(Integer picNum) {
 		this.picNum = picNum;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
 	}
 	public Integer getPicCount() {
 		return picCount;
