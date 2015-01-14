@@ -135,7 +135,7 @@ ul {
 						var jsonData = eval("(" + data.responseText + ")");
 						document.getElementById("labSuppMd").innerHTML = jsonData[0].density;
 						document.getElementById("labSuppHd").innerHTML = jsonData[0].thickness;
-						document.getElementById("labSuppMs").innerHTML = jsonData[0].desc1;
+						document.getElementById("labSuppMs").innerHTML = jsonData[0].remark;
 						document.getElementById("labSuppCode").innerHTML = jsonData[0].name;
 						document.getElementById("labSuppCk").innerHTML = jsonData[0].sign1;
 						document.getElementById("labSuppRk").innerHTML = jsonData[0].out_time;

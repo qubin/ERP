@@ -112,6 +112,9 @@
 		});
 	}
 	
+	function onSubmitForm(){
+		document.getElementById("form1").submit();
+	}
 
 	window.onload = function() {
 	
@@ -181,7 +184,7 @@
 							   id="txtClxh1"
 							   cssClass="u-ipt required validate-selection"
 						       list="#request.materialModeList"
-						       listKey="mat_supplier_name" listValue="mat_supplier_name" headerKey="-1"
+						       listKey="id" listValue="mat_supplier_name" headerKey="-1"
 						       headerValue="--请选择--" />
 						</div>
 					</td>
@@ -199,7 +202,7 @@
 		<br>
 
 		<div align="center">
-			<input type="submit" class="u-btn" value="提交"> 
+			<input type="button" onclick="onSubmitForm()" class="u-btn" value="提交"> 
 			<input type="reset" class="u-btn" value="重置">
 		</div>
 		<p>

@@ -439,7 +439,7 @@ public class PdceistctAction extends BaseAction {
 	
 	public void getWareHouseProductList() {
 		try {
-			String proSQL = "SELECT p.id,p.ht_pn,cp.cus_pn,cp.pic_count FROM t_product AS p ";
+			String proSQL = "SELECT p.id,p.ht_pn,IFNULL(cp.cus_pn,'无') as cus_pn,cp.pic_count FROM t_product AS p ";
 			proSQL += "LEFT JOIN t_cust_pdct AS cp ON p.id = cp.product_id ";
 			proSQL += "LEFT JOIN t_warehouse AS w ON cp.area = w.id ";
 			proSQL += "WHERE p.is_alarm='1' AND cp.id IS NOT NULL AND IFNULL(p.alarm_weight,0)>=IFNULL(cp.pic_count,0)";

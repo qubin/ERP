@@ -102,6 +102,9 @@ public class CutMaterialAction extends BaseAction {
 		}
 	}
 	
+	/**
+	 * 分卷保存
+	 */
 	public String cutmaterial(){
 		Integer materUuid = material.getUuid();	//材料表ID
 		
@@ -123,32 +126,33 @@ public class CutMaterialAction extends BaseAction {
 		}
 		
 		for(int i=1;i <= intFjRow;i++){
-			String strClxh = req.getParameter("txtClxh"+i);
+			String strClxh = req.getParameter("txtClxh"+i); //材料型号对应的材料表uuid
 			int cjjs = Integer.parseInt(req.getParameter("txtCjjs"+i));//裁剪卷数
 			String strCjcc = req.getParameter("txtCjcc"+i);		//裁剪尺寸及公差
 			
-			BigDecimal mjz = minfo.getWeight().divide(new BigDecimal(js),3);		//获取小卷的重量
+			//根据材料型号获取原材料信息
+			Material ml = new Material();
+			ml.setUuid(Integer.parseInt(strClxh));
+			ml = materialService.selectOne(ml);
 			
-			//保存信息到材料表
-			minfo.setUuid(null);
-			minfo.setWeight(mjz);
-			minfo.setStandard(strCjcc);
-			minfo.setScrollCount(cjjs);
-			minfo.setMmatId(null);
-			minfo.setScrollId(minfo.getScrollId());
-			minfo.setMaterialModel(strClxh);
-			minfo.setRemark("分卷获得");
-			materialService.save(minfo);
+			// 算法：母卷重量    / 裁剪卷数之和  * 当前卷数 + 字卷现有重量
+			BigDecimal mjz = minfo.getWeight().divide(new BigDecimal(js).multiply(new BigDecimal(cjjs)),3).add(ml.getWeight());		//获取小卷的重量
+			int scrollCount;
+			if(ml.getScrollCount() != null){
+				scrollCount = cjjs + ml.getScrollCount();	//累加卷数
+			}else{
+				scrollCount = cjjs;
+			}
 			
-			//保存信息到供应材料表
-			supplyMat = new SupplyMat();
-			supplyMat.setSupplyId(sm.getSupplyId());
-			supplyMat.setMatSupplierName(strClxh);
-			supplyMat.setHtMatNo(sm.getHtMatNo());
-			supplyMatService.save(supplyMat);
+			if(ml != null){
+				ml.setUuid(ml.getUuid());
+				ml.setWeight(mjz);
+				ml.setScrollCount(scrollCount);
+				ml.setStandard(strCjcc);
+				materialService.update(ml);
+			}
 		}
-		
-		return "home";
+		return showHome();
 	}
 	
 	
