@@ -36,9 +36,28 @@
 				j("#d12").removeAttr("readonly");
 			}
 		});
+		
+		j("a[name='checkA']").each(function(i){
+			j(this).bind("click",function(){
+				var arr = j("input[name='checkId']");
+				var sbId = arr[i].value;
+				var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkFinishBill.html?sb.sbId=" + sbId;
+				j.get(uri,function(data){
+					if(data != ""){
+						if(data == "false"){
+							alert("该销售单已通过审核！");
+						}else{
+							window.location.href="${pageContext.request.contextPath}/admin/sellbill/sellbill_examineUI.html?sb.sbId=" + sbId + "&detail=finish";
+						}
+					}else{
+						alert("该销售单已通过审核！");
+					}
+				});
+			});
+		});
 	});
 	
-	function checkFinishBill(sbId){
+	/* function checkFinishBill(sbId){
 		j(document).ready(function(){
 			var uri = "${pageContext.request.contextPath}/admin/sellbill/sellbill_checkFinishBill.html?sb.sbId=" + sbId;
 			j.get(uri,function(data){
@@ -53,7 +72,7 @@
 				}
 			});
 		});
-	}
+	} */
   </script>
 </head>
 <body>
@@ -79,9 +98,6 @@
                   </td>  
                   <td>
                    <input type="text" class="u-ipt" name="queryStr" id="d12">
-                  <img onclick="WdatePicker({el:'d12'})"
-				  src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif"
-				  width="16" height="22" align="absmiddle" id="datePick">
                  </td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   
@@ -115,7 +131,8 @@
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="STATUS"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="" onclick="checkFinishBill(${sr.ID});">结  单</a>
+						<a href="" name="checkA">结  单</a>
+						<input type="hidden" name="checkId" value="${sr.ID}"/>
 					</ec:column>
 				</ec:row>
 			</ec:table>

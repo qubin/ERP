@@ -63,24 +63,6 @@
 						<td><input type="text" class="u-ipt required" name="loginName"
 							maxlength="60"></td>
 					</tr>
-					<s:iterator value="#request.pList" id="p">
-						<tr>
-							<th class="tr">华天产品编号：</th>
-							<td><label for=""><s:property value="#p.htPn"/></label></td>
-							<th class="tr">客户产品编号：</th>
-							<td><input type="text" class="u-ipt required" name="cusPn"
-								maxlength="60">
-								<input type="hidden" name="prodId" value="${p.uuid}"/>
-							</td>
-						</tr>
-						<tr>
-							<th class="tr">CODE：</th>
-							<td><input type="text" class="u-ipt required" name="code"
-								maxlength="60">
-							</td>
-						</tr>
-					</s:iterator>
-					
 				</tbody>
 				<tfoot>
 					<tr>

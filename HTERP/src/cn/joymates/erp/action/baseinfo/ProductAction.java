@@ -1,13 +1,17 @@
 package cn.joymates.erp.action.baseinfo;
 
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
+import cn.joymates.erp.domain.CustPdct;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Product;
+import cn.joymates.erp.service.CustPdctService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.utils.JxlUtil;
@@ -64,17 +68,28 @@ public class ProductAction extends BaseAction {
 		List<Map<String, Object>> warehouseList =  service.getEcsideList("100", searchsql, resultsql, req);
 		req.setAttribute("customerList", customerList);
 		req.setAttribute("warehouseList", warehouseList);
+		Customer c = new Customer();
+		c.setIsLogout("0");
+		req.setAttribute("clist", customerService.selectList(c));
 		return "addUI";
 	}
 	
 	public String add() {
-		service.save(product);
+		try {
+			int prodId = service.save(product);
+			cp.setProdId(prodId);
+			cpService.save(cp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return showHome();
 	}
 	
 	public String showModifyUI() {
 		product = service.selectOne(product);
-		
+		Customer c = new Customer();
+		c.setIsLogout("0");
+		req.setAttribute("clist", customerService.selectList(c));
 		List<Customer> customerList = customerService.selectList(new Customer());
 		req.setAttribute("customerList", customerList);
 		return "modifyUI";
@@ -94,7 +109,26 @@ public class ProductAction extends BaseAction {
 	}
 	
 	public String modify() {
-		service.update(product);
+		try {
+			String cpn = req.getParameter("cpn");
+			cp.setProdId(product.getUuid());
+			List<CustPdct> l = cpService.selectList(cp);
+			if(l.size() > 0){
+				for(int i = 0; i < l.size(); i ++){
+					l.get(i).setCus_pn(cpn);
+					cpService.update((CustPdct) l);
+				}
+			}else{
+				CustPdct newCp = new CustPdct();
+				newCp.setCus_pn(cpn);
+				newCp.setCustId(cp.getCustId());
+				newCp.setProdId(product.getUuid());
+				cpService.save(newCp);
+			}
+			service.update(product);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return showHome();
 	}
 	
@@ -110,7 +144,20 @@ public class ProductAction extends BaseAction {
 		return "detailUI";
 	}
 	
-	
+	public void getCpn(){
+		try {
+			cp.setProdId(product.getUuid());
+			List<CustPdct> l = cpService.selectList(cp);
+			if(l.size() == 0){
+				resp.getWriter().write("");
+			}else{
+				JSONObject obj = JSONObject.fromObject(l.get(0));
+				resp.getWriter().write(obj.toString());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
@@ -120,10 +167,20 @@ public class ProductAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 	private ProductService service = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
 	private CustomerService customerService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
+	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
+	private CustPdct cp;
 	private Product product;
 	private String product_key;
 	private String product_name;
 	
+	
+	public CustPdct getCp() {
+		return cp;
+	}
+
+	public void setCp(CustPdct cp) {
+		this.cp = cp;
+	}
 
 	public String getProduct_key() {
 		return product_key;

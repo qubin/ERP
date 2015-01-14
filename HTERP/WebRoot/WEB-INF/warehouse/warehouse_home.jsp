@@ -77,8 +77,8 @@
 	                  <select name="serachType" id="serachStr" class="u-slt">
 	                  	<option value="">-请选择-</option>
 	                  	<option value="all">全部</option>
-	                  	<option value="sign1">代码</option>
-	                  	<option value="area">地区</option>
+	                  	<option value="sign1">名称</option>
+	                  	<option value="area">地址</option>
 	                  </select>
                   </td>  
                   <td><input type="text" class="u-ipt" name="queryStr"></td>       

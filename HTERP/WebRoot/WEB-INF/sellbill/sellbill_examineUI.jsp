@@ -98,6 +98,7 @@
 		function initSellDetail(){
 			var data =${sdList};
 			var cpList = ${cp2List};
+			var total = 0;
 			for(var i = 0; i < data.length; i ++){
 				no += 1;
 				var str = "<tr height='40'>";
@@ -117,7 +118,9 @@
 				str +=	"</tr>";
 				j("#selltable").append(str);
 				j("#sdNum").val(no);
+				total += data[i].orderCount;
 			}
+			j("#total").html(total);
 		}
 		
 		function init(){

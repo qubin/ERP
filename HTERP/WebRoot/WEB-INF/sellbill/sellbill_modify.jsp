@@ -18,6 +18,7 @@
 		var l = eval('${jsonList}');
 		var temp = 0;
 		var data = eval('${sdList}');
+		var total = 0;
 		for(var i = 0; i < data.length; i ++){
 			no += 1;
 			var str = "<tr>";
@@ -46,10 +47,67 @@
 			str +=	"maxlength='60' style='width:110px;' value='"+ data[i].remark +"'></td>";		
 			str +=	"<input type='hidden' value='" + data[i].sellDetailId + "' name='sdId'/>";		
 			str +=	"</tr>";
+			total = data[i].orderCount;
 		}
 		document.getElementById("add").innerHTML=str;
 		
 		document.getElementById("sdNum").value=no;
+		
+		document.getElementById("total").innerHTML = total;
+		bindCalc2(no);
+	}
+	
+	function bindCalc2(no){
+		var oc = "oc" + no;
+		var p = "p" + no;
+		var a = "a" + no;
+		var ooc = document.getElementById(oc);
+		var op =  document.getElementById(p);
+		var oa =  document.getElementById(a);
+		var total = document.getElementById("total");
+		ooc.onchange = function calc(){
+			var bar,foo=0;
+			if(ooc.value != ""){
+				bar = parseFloat(ooc.value);
+			}
+			if(op.value != ""){
+				foo = parseFloat(op.value);
+			}
+			oa.value = bar * foo;
+			
+			total.innerHTML = ooc.value;
+		}
+		op.onchange = function calc2(){
+			var bar,foo = 0;
+			if(ooc.value != ""){
+				bar = parseFloat(ooc.value);
+			}
+			if(op.value != ""){
+				foo = parseFloat(op.value);
+			}
+			oa.value = bar * foo;
+			
+		}
+		/* j(oc).bind("change",function(){
+			var bar,foo = 0;
+			if(j(oc).val() != ""){
+				bar = parseFloat(j(oc).val());
+			}
+			if(j(p).val() != ""){
+				foo = parseFloat(j(p).val());
+			}
+			j(a).val(bar * foo);
+		}); */
+		/* j(p).bind("change",function(){
+			var bar,foo = 0;
+			if(j(oc).val() != ""){
+				bar = parseFloat(j(oc).val());
+			}
+			if(j(p).val() != ""){
+				foo = parseFloat(j(p).val());
+			}
+			j(a).val(bar * foo);
+		}); */
 	}
 	
 	j(document).ready(function(){

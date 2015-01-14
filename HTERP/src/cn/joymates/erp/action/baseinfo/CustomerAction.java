@@ -138,26 +138,12 @@ public class CustomerAction extends BaseAction{
 	}
 	
 	public String showAddUI(){
-		Product p = new Product();
-		p.setIsLogout("0");
-		List pList = pservice.selectList(p);
-		req.setAttribute("pList", pList);
 		return "addUI";
 	}
 	
 	public String modify(){
 		try {
 			service.update(cust);
-			String[] cusPn = req.getParameterValues("cusPn");
-			String[] cpId = req.getParameterValues("cpId");
-			for(int i = 0;i < cusPn.length; i ++){
-				CustPdct temp = new CustPdct();
-				temp.setCpId(Integer.valueOf(cpId[i]));
-				temp = cpservice.selectOne(temp);
-				temp.setCus_pn(cusPn[i]);
-				cpservice.update(temp);
-			}
-			
 			return showHome();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -168,32 +154,10 @@ public class CustomerAction extends BaseAction{
 	public String showModifyUI(){
 		try {
 			cust = service.selectOne(cust);
-			List<Map<String, Object>> list = service.findModify(cust.getCustId());
-			Product p = new Product();
-			p.setIsLogout("0");
-			List<Product> pList = pservice.selectList(p);
-			for(int i = 0;i < list.size(); i ++){
-				for(int j = 0; j < pList.size(); j ++){
-					Map<String,Object> m2 = list.get(i);
-					String pid = m2.get("pid").toString();
-					String num = pList.get(j).getUuid() + "";
-					if(pid.equals(num)){
-						pList.remove(j);
-					}
-				}
-			}
-			for(int k = 0; k < pList.size(); k ++){
-				CustPdct cp = new CustPdct();
-				cp.setProdId(pList.get(k).getUuid());
-				cp.setCustId(cust.getCustId());
-				cpservice.save(cp);
-			}
-			list = service.findModify(cust.getCustId());
-			req.setAttribute("dataList", list);
 			UserService uService = ServiceProxyFactory.getInstanceNoMybatis(new UserService());
 			User user = new User();
 			user.setCustId(cust.getCustId());
-			req.setAttribute("loginName", uService.selectList(user).get(0).getUserLoginId());;
+			req.setAttribute("loginName", uService.selectList(user).get(0).getUserLoginId());
 			return "modifyUI";
 		} catch (Exception e) {
 			e.printStackTrace();

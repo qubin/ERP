@@ -7,14 +7,21 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title></title>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/interface/findUserRole.js'></script>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/engine.js'></script>
-<script type='text/javascript'
-	src='${pageContext.request.contextPath}/dwr/util.js'></script>
 <script type="text/javascript">
-	
+	var j = jQuery;
+	j(document).ready(function(){
+		j("#cust").bind("change",function(){
+			var pid = j("#prod").val();
+			var uri = "${pageContext.request.contextPath }/admin/product/product_getCpn.html?product.uuid=" + pid + "&cp.custId=" + j(this).val();
+			j.getJSON(uri,function(data){
+				if(data != null){
+					j("#cpn").val(data.cus_pn);
+				}else{
+					j("#cpn").val("");
+				}
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -22,10 +29,25 @@
 		<div class="hr10"></div>
 		<form id="form1" action="${pageContext.request.contextPath }/admin/product/product_modify.html" method="post">
 			
-			<input type="hidden" name="product.uuid" value="${product.uuid }" />
+			<input type="hidden" name="product.uuid" value="${product.uuid }" id="prod"/>
 			
 			<table class="m-table-form">
 				<tbody>
+				 <tr>
+						<th width="45%" align="right" class="tr">客户：</th>
+					  	<td>
+					  	<s:select name="cp.custId"
+							cssClass="u-ipt required validate-selection"
+							cssStyle="width:178px"
+							list="#request.clist"
+							listKey="custId" listValue="custName" headerKey="-1"
+							headerValue="--请选择--" id="cust"/>
+					  	</td>
+				  </tr>
+				  <tr>
+						<th width="45%" align="right" class="tr">客户产品编号：</th>
+					  	<td><input type="text" class="u-ipt required" name="cpn" maxlength="30" id="cpn"/></td>
+				  </tr>
 					<tr>
 						<th width="45%" align="right" class="tr">华天产品编号：</th>
 					  	<td><input type="text" class="u-ipt required" name="product.htPn" value="${product.htPn }" maxlength="30" /></td>

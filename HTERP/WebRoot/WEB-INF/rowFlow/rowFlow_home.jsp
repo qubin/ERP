@@ -75,7 +75,6 @@
                   		<option value="2">入库</option>
                   	</select>
                   <input type="text" class="u-ipt" name="queryStr" id="queryStr">
-                  <img onclick="WdatePicker({el:'queryStr'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
                   </td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   

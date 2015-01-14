@@ -81,9 +81,6 @@
                   </td>  
                   <td>
                    <input type="text" class="u-ipt" name="queryStr" id="d12">
-                  <img onclick="WdatePicker({el:'d12'})"
-				  src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif"
-				  width="16" height="22" align="absmiddle" id="datePick">
                  </td>       
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   

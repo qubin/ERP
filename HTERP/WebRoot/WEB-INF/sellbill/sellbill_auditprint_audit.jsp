@@ -99,8 +99,8 @@ td{
 		classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
 		<embed id="LODOP_EM" type="application/x-print-lodop" width=0 height=0></embed>
 	</object>
-	<input class="u-btn" type="button" onclick="javascript:history.back()" value="返回" />
-	<input class="u-btn" type="button" value="预   览" onclick="javascript:printView()">
+	<input class="u-btn" type="button" style="float:right;margin-right:80px;" onclick="javascript:history.back()" value="返回" />
+	<input class="u-btn" type="button" style="float:right;margin-right:20px;" value="预   览" onclick="javascript:printView()">
 	<div id="container">
 		<img src="${pageContext.request.contextPath}/assets/images/log.png" alt="" style="margin-top:20px;margin-left:10px;"/>
 		<div style="margin-left:15px;margin-top:10px;">
@@ -124,7 +124,7 @@ td{
 			<s:iterator value="#request.data" id="d">
 				<tr>
 					<td style="width:75px;" name="No"></td>
-					<td style="width:75px;"><s:property value="#d.amount"/></td>
+					<td style="width:75px;"><s:property value="#d.name"/></td>
 					<td style="width:75px;"><s:property value="#d.code"/></td>
 					<td style="width:75px;"><s:property value="#d.cus_pn"/></td>
 					<td style="width:75px;"><s:property value="#d.ht_pn"/></td>

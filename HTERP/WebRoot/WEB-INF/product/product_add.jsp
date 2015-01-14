@@ -23,9 +23,24 @@
 		<form id="form1" action="${pageContext.request.contextPath }/admin/product/product_add.html" method="post">
 			<table class="m-table-form">
 				<tbody>
-					<tr>
+				  <tr>
+						<th width="45%" align="right" class="tr">客户：</th>
+					  	<td>
+					  	<s:select name="cp.custId"
+							cssClass="u-ipt required validate-selection"
+							cssStyle="width:178px"
+							list="#request.clist"
+							listKey="custId" listValue="custName" headerKey="-1"
+							headerValue="--请选择--" id=""/>
+					  	</td>
+				  </tr>
+				    <tr>
+						<th width="45%" align="right" class="tr">客户产品编号：</th>
+					  	<td><input type="text" class="u-ipt required" name="cp.cus_pn" maxlength="30" /></td>
+				  </tr>
+				  <tr>
 						<th width="45%" align="right" class="tr">华天产品编号：</th>
-					  	<td><input type="text" class="u-ipt required" name="product.htPn" maxlength="13" /></td>
+					  	<td><input type="text" class="u-ipt required" name="product.htPn" maxlength="30" /></td>
 				  </tr>
 				  <tr>
 						<th align="right" class="tr">车型/钢背应用：</th>
