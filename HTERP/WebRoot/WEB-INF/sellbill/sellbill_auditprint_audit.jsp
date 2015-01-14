@@ -107,7 +107,7 @@ td{
 			<span style="font-size:15px;"><b>Sales Order / 销售单</b></span>
 		</div>
 		<div style="margin-left:15px;">
-			<table border="1" cellspacing="0" cellpadding="0">
+			<table border="1" style="border-collapse:collapse;">
 			<tr >
 				<td style="width:75px;">序号<div>S/No.</div></td>
 				<td style="width:75px;">客户<div>Customers</div></td>
