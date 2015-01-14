@@ -26,6 +26,7 @@
        	<action name="role_*" class="cn.joymates.erp.action.right.RoleManagerAction" method="{1}">
        		<result name="find">/WEB-INF/rightMgr/role_mgr.jsp</result>
        		<result name="addUI">/WEB-INF/rightMgr/role_add.jsp</result>
+       		<result name="authUI">/WEB-INF/rightMgr/role_auth.jsp</result>
        		<result name="modifyUI">/WEB-INF/rightMgr/role_modify.jsp</result>
        		<result name="resourceList">/WEB-INF/rightMgr/role_auth.jsp</result>
        	</action> 
@@ -34,12 +35,13 @@
             <result>/WEB-INF/rightMgr/user_mgr.jsp</result>
         </action>
         
-         <action name="userAddUI" >
-            <result>/WEB-INF/rightMgr/user_add.jsp</result>
-        </action>
+<!--          <action name="userAddUI" > -->
+<!--             <result>/WEB-INF/rightMgr/user_add.jsp</result> -->
+<!--         </action> -->
         
        	<action name="user_*" class="cn.joymates.erp.action.right.UserAction" method="{1}">
-       		<result name="find">/WEB-INF/rightMgr/user_mgr.jsp</result>
+       		<result name="showHomeUI">/WEB-INF/rightMgr/user_mgr.jsp</result>
+       		<result name="showAddUI">/WEB-INF/rightMgr/user_add.jsp</result>
        		<result name="modifyUI">/WEB-INF/rightMgr/user_modify.jsp</result>
        		<result name="pwdOver" >/WEB-INF/rightMgr/pwd_modify.jsp</result>
        	</action>

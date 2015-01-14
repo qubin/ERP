@@ -104,8 +104,7 @@ ul {
 
 <script type="text/javascript">
 	function ajax(obj) {
-		var url = "${pageContext.request.contextPath}/admin/changestores/changestores_getSupplierInfoById.html?supid="
-				+ obj.value;
+		var url = "${pageContext.request.contextPath}/admin/changestores/changestores_getSupplierInfoById.html?supid=" + obj.value;
 		new Ajax.Request(url, {
 			method : 'get',
 			onSuccess : function(data) {
@@ -116,8 +115,7 @@ ul {
 
 				osel.options.add(new Option("--请选择--", "-1"));
 				for (var i = 0; i < strDate.length; i++) {
-					osel.options.add(new Option(strDate[i].substr(1,
-							strDate[i].length), strDate[i].substr(0, 1)));
+					osel.options.add(new Option(strDate[i].substr(1,strDate[i].length), strDate[i].substr(0, 1)));
 				}
 
 				//var jsonData = eval("(" + data.responseText + ")");

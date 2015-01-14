@@ -36,9 +36,9 @@
 						<td>
 							<select class="u-ipt required validate-selection" name="product.properties" style="width:178px">
 								<option value="-1">--请选择--</option>
-								<option value="1">flat</option>
-								<option value="2">tab</option>
-								<option value="3">drift lock</option>
+								<option value="1">FLAT</option>
+								<option value="2">TAB</option>
+								<option value="3">DRIFT LOCK</option>
 							</select>
 						</td>
 				  </tr>
@@ -57,9 +57,9 @@
 						<td>
 							<select class="u-ipt required validate-selection" name="product.patternType" style="width:178px">
 								<option value="-1">--请选择--</option>
-								<option value="1">prog</option>
-								<option value="2">single die</option>
-								<option value="3">prog + single die</option>
+								<option value="1">PROG</option>
+								<option value="2">SINGLE DIE</option>
+								<option value="3">PROG + SINGLE DIE</option>
 							</select>
 				  </tr>
 					<tr>

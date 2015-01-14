@@ -24,16 +24,10 @@
 	var fjnum = 1;
 	
 	function addTableTr(){
-		
 		var txtMjid = j("#txtMjid").val();
 		var txtGysjh = j("#txtGysjh" + fjnum).val();
 		var txtCjjs = j("#txtCjjs" + fjnum).val();
 		var txtCjcc = j("#txtCjcc" + fjnum).val();
-		
-// 		alert("txtMjid:"+txtMjid);
-// 		alert("txtGysjh:"+txtGysjh);
-// 		alert("txtCjjs:"+txtCjjs);
-// 		alert("txtCjcc:"+txtCjcc);
 		
 		if(txtMjid == "-1" || txtGysjh == "-1" || txtCjjs == "" || txtCjcc == ""){
 			alert("请先将以上信息填写完整！");
@@ -44,23 +38,22 @@
 		
 		j("#txtFjRow").val(fjnum);
 		
-		var jsonData = eval('${JsonSupplyMatList}');
+		var jsonData = eval('${materialModeList}');
 		
 		var t  = "<tr>";
 			t +=    "<td>";
 			t +=		"<div align='center'>";
-			t +=			"<select name='txtGysjh" + fjnum + "' id='txtGysjh" + fjnum + "' class='u-ipt'>";
-			t +=				"<option value='-1'>--请选择--</option>";
-							for(var i=0;i<jsonData.length;i++){
-			t +=			 	"<option value='"+jsonData[i].uuid+"'>"+jsonData[i].scrollId+"</option>";
-					 		}
-			t +=			"</select>";
+			t +=			materialScrollId;
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
 			t +=		"<div align='center'>";
-			t +=			"<label id='txtClxh"+fjnum+"'></label>";
-			t +=			"<input type='hidden' id='txtClxh"+fjnum+"' name='txtClxh" + fjnum + "' />";
+			t +=			"<select name='txtClxh" + fjnum + "' id='txtClxh" + fjnum + "' class='u-ipt'>";
+			t +=				"<option value='-1'>--请选择--</option>";
+								for(var i=0;i<jsonData.length;i++){
+			t +=			 	"<option value='"+jsonData[i].id+"'>"+jsonData[i].mat_supplier_name+"</option>";
+					 			}
+			t +=			"</select>";
 			t +=		"</div>";
 			t +=	"</td>";
 			t +=	"<td>";
@@ -78,10 +71,11 @@
 		j("#cutMaterialTable").append(t);
 		
 		j("#txtGysjh"+fjnum).change(function() {
-			var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html?materId=" + j("#txtGysjh"+fjnum).val();
+			var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMaterialModel.html";
 			new Ajax.Request(url, {
 				method : 'get',
 				onSuccess : function(data) {
+					var jsonData = eval("(" + data.responseText + ")");
 					j("#txtClxh"+fjnum).html(data.responseText);
 					j("#txtClxh"+fjnum).val(data.responseText);
 				}
@@ -89,13 +83,18 @@
 		});
 	}
 	
+	var materialScrollId = "";
+	
 	function getMmatDesc(obj){
 	    var url = "${pageContext.request.contextPath}/admin/cutmaterial/cutmaterial_getMmatDesc.html?mmatId="+obj.value;
   		new Ajax.Request(url,
   	  	{
   	  		method:'get',
   	  		onSuccess: function(data){
-  	  			j("#mmatDesc").html(data.responseText);
+  	  			var jsonData = eval("(" + data.responseText + ")");
+  	  			materialScrollId = jsonData.scrollId;
+  	  			j("#mmatDesc").html(jsonData.remark);
+  	  			j("#materialScrollId").html(jsonData.scrollId);
   	  		}
   	  	});
 	}
@@ -105,6 +104,8 @@
 		new Ajax.Request(url, {
 			method : 'get',
 			onSuccess : function(data) {
+				var jsonData = eval("(" + data.responseText + ")");
+				
 				j("#txtClxh1").html(data.responseText);
 				j("#txtClxh1").val(data.responseText);
 			}
@@ -114,6 +115,7 @@
 
 	window.onload = function() {
 	
+		
 		
 	}
 </script>
@@ -170,18 +172,17 @@
 					</td>
 					<td>
 						<div align="center">
-							<s:select name="txtGysjh1"
-							   onchange="getMaterialModel(this)"
-							   cssClass="u-ipt required validate-selection"
-						       list="#request.sonList"
-						       listKey="uuid" listValue="scrollId" headerKey="-1"
-						       headerValue="--请选择--" />
+							<label id="materialScrollId"></label>
 						</div>
 					</td>
 					<td>
 						<div align="center">
-							<label id="txtClxh1"></label>
-							<input type="hidden" id="txtClxh1" name="txtClxh1">
+							<s:select name="txtClxh1"
+							   id="txtClxh1"
+							   cssClass="u-ipt required validate-selection"
+						       list="#request.materialModeList"
+						       listKey="mat_supplier_name" listValue="mat_supplier_name" headerKey="-1"
+						       headerValue="--请选择--" />
 						</div>
 					</td>
 					<td><div align="center">
