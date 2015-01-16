@@ -37,7 +37,7 @@
 			}
 		});
 	
-		j("a[name='checkA']").each(function(i){
+		/* j("a[name='checkA']").each(function(i){
 			j(this).bind("click",function(){
 				var arr = j("input[name='checkId']");
 				var sbId = arr[i].value;
@@ -54,7 +54,7 @@
 					}
 				});
 			});
-		});
+		}); */
 	});
 	
 	/* function checkExam(sbId){
@@ -132,8 +132,7 @@
 					<ec:column property="REMARK" title="备注" width="11%" style="text-align:center"/>
 					<ec:column property="VERIFY_STATUS" title="状态" width="11%" style="text-align:center" mappingItem="STATUS"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a href="" name="checkA">审核</a>
-						<input type="hidden" name="checkId" value="${sr.ID }"/>
+						<a href="${pageContext.request.contextPath}/admin/sellbill/sellbill_examineUI.html?sb.sbId=${sr.ID}" >审核</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

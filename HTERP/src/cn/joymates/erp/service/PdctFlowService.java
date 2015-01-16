@@ -1,12 +1,21 @@
 package cn.joymates.erp.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mysql.jdbc.ResultSetMetaData;
+
 import cn.joymates.erp.dao.impl.PdctFlowDaoImpl;
 import cn.joymates.erp.domain.PdctFlow;
+import cn.joymates.erp.utils.db.DbUtils;
 
 public class PdctFlowService extends BaseService<PdctFlow> {
 	public PdctFlowService(){
@@ -31,5 +40,39 @@ public class PdctFlowService extends BaseService<PdctFlow> {
 			searchsql.append(" AND ").append(queryType).append(" LIKE '%").append(queryStr).append("%'");
 		}
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
+	}
+
+	public List<Map<String, Object>> findBoxNum(String num){
+		try {
+			Connection conn = null;
+			PreparedStatement prst = null;
+			ResultSet rs = null;
+			String sql = "SELECT CAST(cpn.`box_num` - cpn.`box_no` AS SIGNED) AS prefix ,"
+					+ "CAST(cpn.`box_num` AS SIGNED) AS suffix "
+					+ "FROM `t_cust_pdct` AS cp "
+					+ "LEFT JOIN `t_cus_pno` AS cpn "
+					+ "ON cp.`id` = cpn.`cust_pdct_id` "
+					+ "LEFT JOIN `t_warehouse` AS w "
+					+ "ON cp.`area` = w.`id` "
+					+ "WHERE CONCAT(w.`sign1`,cpn.`batch_code`) LIKE '%" + num + "%'";
+			conn = DbUtils.getConnection();
+			prst = conn.prepareStatement(sql);
+			rs = prst.executeQuery();
+			ResultSetMetaData md = (ResultSetMetaData) rs.getMetaData();
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			int columnCount = md.getColumnCount();
+			while (rs.next()) {
+				Map<String, Object> rowData = new HashMap<String, Object>();
+				for (int i = 1; i <= columnCount; i++) {
+					rowData.put(md.getColumnName(i), rs.getObject(i));
+				}
+				list.add(rowData);
+			}
+			return list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

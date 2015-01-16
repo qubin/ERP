@@ -59,25 +59,62 @@ public class PdctFlowAction extends BaseAction {
 		List<Map<String, Object>> l = pdctService.findFlow(ec_rd, null, null, req);
 		req.setAttribute("pfList", l);
 		req.setAttribute("inOrOut", PdctFlow.inOuOut);
+		Warehouse w = new Warehouse();
+		w.setIsLogout("0");
+		List<Warehouse> wList = wService.selectList(w);
+		req.setAttribute("wList", wList);
 		return "flow";
 	}
 	
 	public String flowFind(){
-		String serachType = req.getParameter("serachType");
-		String queryStr = req.getParameter("queryStr");
-		if(serachType != null && !"".equals(serachType)){
-			if("all".equals(serachType)){
-				flowHome();
-			}else if("BOX_NO".equals(serachType)){
-				//盒号搜索
-			}else{
-				if(queryStr != null && !"".equals(queryStr)){
-					List<Map<String, Object>> l = pdctService.findFlow(ec_rd, serachType, queryStr, req);
-					req.setAttribute("pfList", l);
-					req.setAttribute("inOrOut", PdctFlow.inOuOut);
-					return "flow";
+		try {
+			String serachType = req.getParameter("serachType");
+			String queryStr = req.getParameter("queryStr");
+			if(serachType != null && !"".equals(serachType)){
+				if("all".equals(serachType)){
+					flowHome();
+				}else if("boxNo".equals(serachType)){
+					//盒号搜索
+					String sign = req.getParameter("sign1");
+					String batchCode = req.getParameter("batchCode");
+					String no = queryStr;
+					if(sign != null && !"".equals(sign) && batchCode != null && !"".equals(batchCode) && no != null && !"".equals(no)){
+						//当前盒号范围
+						List<Map<String, Object>> data = pdctService.findBoxNum(sign + batchCode);
+						Map boundary = data.get(0);	
+						Integer No = Integer.valueOf(no);
+						Long prefix = (Long) boundary.get("prefix");
+						Long suffix = (Long) boundary.get("suffix");
+						if(No > prefix && No < suffix){
+							req.setAttribute("flag", "未出库");
+							//在范围，未出库
+						}else{
+							//不在范围，已经出库
+							req.setAttribute("flag", "已出库");
+						}
+						req.setAttribute("sign", sign);
+						req.setAttribute("batchCode", batchCode);
+						req.setAttribute("no", no);
+						req.setAttribute("boxNo", sign + batchCode + no);
+						req.setAttribute("data", data);
+						return "boxDetail";
+					}
+				}else{
+					if(queryStr != null && !"".equals(queryStr)){
+						List<Map<String, Object>> l = pdctService.findFlow(ec_rd, serachType, queryStr, req);
+						req.setAttribute("pfList", l);
+						req.setAttribute("inOrOut", PdctFlow.inOuOut);
+						
+						Warehouse w = new Warehouse();
+						w.setIsLogout("0");
+						List<Warehouse> wList = wService.selectList(w);
+						req.setAttribute("wList", wList);
+						return "flow";
+					}
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return flowHome();
 	}

@@ -29,6 +29,9 @@
 	}
 	var j = jQuery;
 	j(document).ready(function(){
+		j("#wh").hide();
+		j("#text").hide();
+		
 		j("#inouts").hide();
 		
 		j("#serachStr").bind("change",function(){
@@ -36,9 +39,18 @@
 			if(val == "IN_OR_OUT"){
 				j("#inouts").show();
 				j("#queryStr").hide();
+				j("#wh").hide();
+				j("#text").hide();
+			}else if(val == "boxNo"){
+				j("#wh").show();
+				j("#text").show();
+				j("#inouts").hide();
+				j("#queryStr").show();
 			}else{
 				j("#inouts").hide();
 				j("#queryStr").show();
+				j("#text").hide();
+				j("#wh").hide();
 			}
 		});
 		
@@ -68,8 +80,8 @@
 	                  	<option value="ISTCT_ID">生产指令单ID</option>
 	                  	<option value="BATCH_CODE">批次</option>
 						<option value="SIGN1">所在仓库</option>
-						<option value="BOX_NO">所在仓库</option>
 						<option value="IN_OR_OUT">出/入库</option>
+						<option value="boxNo">盒号</option>
 	                  </select>
                   </td>  
                   <td>
@@ -78,7 +90,18 @@
                   		<option value="1">出库</option>
                   		<option value="2">入库</option>
                   	</select>
-                  	<input type="text" class="u-ipt" name="queryStr" id="queryStr">     
+                    <div id="wh" >仓库
+                    		<s:select name="sign1"
+							cssClass="u-ipt required"
+							cssStyle="width:178px"
+							list="#request.wList"
+							listKey="sign1" listValue="sign1" headerKey="-1"
+							headerValue="--请选择--" id=""/>
+					批次
+					<input type="text" name="batchCode" class="u-ipt"/>	
+                    </div>	
+					
+                  		<span id="text">盒号</span>&nbsp;&nbsp;<input type="text" class="u-ipt" name="queryStr" id="queryStr">     
 	              </td>	
                   <td>
 					 <button type="submit" class="u-btn">查询</button>&emsp;                   

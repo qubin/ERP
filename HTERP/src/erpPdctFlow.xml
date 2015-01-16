@@ -11,6 +11,7 @@
             <result name="addUI">/WEB-INF/pdctFlow/pdctFlow_add.jsp</result>
             <result name="modifyUI">/WEB-INF/pdctFlow/pdctFlow_modify.jsp</result>
             <result name="flow">/WEB-INF/pdctFlow/pdctFlow_home.jsp</result>
+            <result name="boxDetail">/WEB-INF/pdctFlow/pdctFlow_boxDetail.jsp</result>
         </action>
 	</package>
       
