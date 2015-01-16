@@ -73,7 +73,7 @@ public class FinanceService extends BaseService<FinancePay> {
 		searchsql += " LEFT JOIN t_finance_pay AS fp ON sb.id=fp.sell_bill_id ";
 		searchsql += " WHERE sb.verify_status='1' AND sd.amount<>IFNULL(fp.prepaid,0) ";
 		
-		resultsql  = " SELECT sb.*,sd.*,cp.*,sb.id AS billId,sd.id AS detailsId,IFNULL(ffpp.ffppPrepaid,0.000) AS prepaid,fp.sell_bill_id AS fpSbId,IFNULL(fp.finance_verify_status,0) AS finance_verify_status,fp.finance_verify_remark,fp.id AS fpid FROM t_sell_bill AS sb ";
+		resultsql  = " SELECT sb.*,sd.*,cp.*,sb.id AS billId,sd.id AS detailsId,fp.prepaid AS prepaidNow,IFNULL(ffpp.ffppPrepaid,0.000) AS prepaid,fp.sell_bill_id AS fpSbId,IFNULL(fp.finance_verify_status,0) AS finance_verify_status,fp.finance_verify_remark,fp.id AS fpid FROM t_sell_bill AS sb ";
 		resultsql += " LEFT JOIN t_sell_details AS sd ON sb.id = sd.sell_bill_id ";
 		resultsql += " LEFT JOIN t_cust_pdct AS cp ON sd.cust_pdct_id = cp.id ";
 		resultsql += " LEFT JOIN t_finance_pay AS fp ON sb.id=fp.sell_bill_id ";
@@ -87,6 +87,9 @@ public class FinanceService extends BaseService<FinancePay> {
 		}else if("CUS_PN".equals(finance_key)){
 			searchsql += " AND cp." + finance_key + " LIKE '%" + finance_name + "%'";
 			resultsql += " AND cp." + finance_key + " LIKE '%" + finance_name + "%'";
+		}else if("id".equals(finance_key)){
+			searchsql += " AND fp." + finance_key + " LIKE '%" + finance_name + "%'";
+			resultsql += " AND fp." + finance_key + " LIKE '%" + finance_name + "%'";
 		}else if(!"ALL".equals(finance_key) && finance_key != null && !"".equals(finance_key) && !"finance".equals(finance_key)){
 			searchsql += " AND sb." + finance_key + " LIKE '%" + finance_name + "%'";
 			resultsql += " AND sb." + finance_key + " LIKE '%" + finance_name + "%'";

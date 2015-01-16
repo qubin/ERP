@@ -59,7 +59,7 @@
 				  <tr>
 				  		<th align="right" class="tr">产品性质：</th>
 						<td>
-							<s:select cssClass="u-ipt required validate-selection" cssStyle="width:178px" name="product.properties" list="#{-1:'--请选择--',1:'flat',2:'tab',3:'drift lock'}"></s:select>
+							<s:select cssClass="u-ipt required validate-selection" cssStyle="width:178px" name="product.properties" list="#{-1:'--请选择--',1:'FLAT',2:'TAB',3:'DRIFT'}"></s:select>
 						</td>
 				  </tr>
 				  <tr>
@@ -71,7 +71,7 @@
 				  <tr>
 				  		<th align="right" class="tr">模具类型：</th>
 						<td>
-							<s:select cssClass="u-ipt required validate-selection" cssStyle="width:178px" name="product.patternType" list="#{-1:'--请选择--',1:'prog',2:'single die',3:'prog + single die'}"></s:select>
+							<s:select cssClass="u-ipt required validate-selection" cssStyle="width:178px" name="product.patternType" list="#{-1:'--请选择--',1:'PROG',2:'SINGLE',3:'BENDER'}"></s:select>
 						</td>
 				  </tr>
 				  <tr>

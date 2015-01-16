@@ -1,5 +1,7 @@
 package cn.joymates.erp.domain.base;
 
+import java.math.BigDecimal;
+
 
 public class BasetFinancePay extends BaseVO {
 	public BasetFinancePay(){
@@ -14,7 +16,7 @@ public class BasetFinancePay extends BaseVO {
 	
 	private Integer uuid;
 	private Integer sellBillId;
-	private String prepaid;
+	private BigDecimal prepaid;
 	private String financeVerifyStatus;
 	private String financeVerifyRemark;
 	public Integer getUuid() {
@@ -29,10 +31,10 @@ public class BasetFinancePay extends BaseVO {
 	public void setSellBillId(Integer sellBillId) {
 		this.sellBillId = sellBillId;
 	}
-	public String getPrepaid() {
+	public BigDecimal getPrepaid() {
 		return prepaid;
 	}
-	public void setPrepaid(String prepaid) {
+	public void setPrepaid(BigDecimal prepaid) {
 		this.prepaid = prepaid;
 	}
 	public String getFinanceVerifyStatus() {

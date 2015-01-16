@@ -87,16 +87,9 @@
 					</tr>
 					<tr>
 						<th class="tr">本次支付金额：</th>
-						<td>${sellBillList[0].PREPAID}</td>
+						<td>${sellBillList[0].PREPAIDNOW}</td>
 					</tr>
 				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2" class="tc"><input class="u-btn" type="submit"
-							value="提交" id="submitBtn" /> &emsp; <input class="u-btn"
-							type="button" onclick="javascript:history.back()" value="返回" /></td>
-					</tr>
-				</tfoot>
 			</table>
 		</form>
 	</div>

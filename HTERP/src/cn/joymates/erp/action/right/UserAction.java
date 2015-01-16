@@ -107,6 +107,14 @@ public class UserAction extends BaseAction {
 		return "pwdOver";
 	}
 	
+	/**
+	 * 打开帮助文档
+	 */
+	public String openHelpDoc(){
+		return "helpdoc";
+	}
+	
+	
 	private UserService userService = ServiceProxyFactory.getInstance(new UserService());
 	
 	private User user;

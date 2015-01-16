@@ -86,8 +86,9 @@
 					<ec:column property="ORDER_COUNT" title="订单数量" width="11%"/>
 					<ec:column property="AMOUNT" title="单据总金额" width="11%"/>
 					<ec:column property="PREPAID" title="已付金额" width="11%"/>
+					<ec:column property="PREPAIDNOW" title="本次付款金额" width="11%"/>
 					<ec:column property="_0" title="动作" width="11%" style="text-align:center">
-						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/finance/finance_showAudit.html?sellBill.sbId=${sr.BILLID}">审&nbsp;核</a>
+						<a style="color:blue;text-decoration:underline;" href="${pageContext.request.contextPath}/admin/finance/finance_showAudit.html?sellBill.sbId=${sr.FPID}">审&nbsp;核</a>
 					</ec:column>
 				</ec:row>
 			</ec:table>

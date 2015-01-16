@@ -8,7 +8,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title></title>
 <script type="text/javascript">
-	
+	function checkPrepaid(obj){
+		var strNotPayMoney = document.getElementById("txtNotPayMoney").value;
+		if(parseFloat(obj.value) > parseFloat(strNotPayMoney)){
+			alert("“本次支付金额”不能大于“单据未付金额”！");
+			obj.focus();
+			obj.select();
+			return false;
+		}
+	}
 </script>
 </head>
 <body>
@@ -17,6 +25,7 @@
 		<form id="form1" action="${pageContext.request.contextPath}/admin/finance/finance_saveAddFinance.html" method="post">
 			
 			<input type="hidden" name="financePay.sellBillId" value="${sellBillList[0].BILLID}"/>
+			<input type="hidden" id="txtNotPayMoney" value="${sellBillList[0].AMOUNT-sellBillList[0].PREPAID}" />
 			
 			<table class="m-table-form">
 				<tbody>
@@ -54,7 +63,7 @@
 					</tr>
 					<tr>
 						<th class="tr">本次支付金额：</th>
-						<td><input type="text" class="u-ipt required" name="financePay.prepaid" maxlength="30"></td>
+						<td><input type="text" onchange="checkPrepaid(this)" class="u-ipt required" name="financePay.prepaid" maxlength="30"></td>
 					</tr>
 				</tbody>
 				<tfoot>

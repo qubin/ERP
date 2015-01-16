@@ -33,7 +33,7 @@
 			<div id="header-inner">
 				<h1 class="logo">进销存系统管理信息系统</span></h1>		
 				<ul class="top-nav group">
-					<li><a href="javascript:;" title="帮助"><i class="icon icon-question-sign"></i><span>帮助</span></a></li>
+<!-- 					<li><a href="" title="帮助"><i class="icon icon-question-sign"></i><span>帮助</span></a></li> -->
 					<li><a href="javascript:;" title="退出" onclick="quitLogin()"><i class="icon icon-signout"></i><span>退出</span></a></li>
 				</ul>
 			</div><!-- /#header-inner -->
@@ -57,12 +57,12 @@
 						<div class="user-info-cnt">
 							欢迎您，${loggedUser.userLoginId}! 
 						</div>
-						<!--<ul class="mini-user-nav">
-							<li><a title="系统设置" href="javascript:;"><i class="icon icon-cog"></i></a></li>
-							<li><a title="查看用户" href="javascript:;"><i class="icon icon-user"></i></a></li>
-							<li><a title="查看首页" href="javascript:;"><i class="icon icon-home"></i></a></li>
-							<li><a title="退出系统" href="javascript:;" onclick="quitLogin()"><i class="icon icon-signout"></i></a></li>
-						</ul>-->
+<!--  						<ul class="mini-user-nav"> -->
+<!-- 							<li><a title="系统设置" href="javascript:;"><i class="icon icon-cog"></i></a></li> -->
+<!-- 							<li><a title="查看用户" href="javascript:;"><i class="icon icon-user"></i></a></li> -->
+<!-- 							<li><a title="查看首页" href="javascript:;"><i class="icon icon-home"></i></a></li> -->
+<!-- 							<li><a title="退出系统" href="javascript:;" onclick="quitLogin()"><i class="icon icon-signout"></i></a></li> -->
+<!-- 						</ul> -->
 					</div>
 				</div>
 				<div id="mainnav">
@@ -127,36 +127,70 @@
 				<div data-options="title:'我的工作台'">
 <!-- 					<div id="iframe-wraper"><iframe name="mainFrame" id="mainFrame" src="${pageContext.request.contextPath}/main.html" frameborder="0" scrolling="auto" width="100%" height="100%"></iframe></div> -->
 						<div id="iframe-wraper">
+														
 							<br>
-							<table border="1" width="300px">
-								<tr >
-									<td colspan="2" style="font-size: 14px;color: red;"><strong>材料库存警示（请及时补充以下材料）：</strong></td>
+
+							<table border="0" cellspacing="0" cellpadding="0">
+								<tr>
+									<td style="vertical-align: top;">
+										<table border="1" width="300px">
+											<tr>
+												<td colspan="2" style="font-size: 14px;color: red;"><strong>材料库存警示（请及时补充以下材料）：</strong></td>
+											</tr>
+											<tbody id="strTr">
+												<tr>
+													<th style="font-size: 14px;text-align: center;" width="100px">材料名称</th>
+													<th style="font-size: 14px;text-align: center;"
+														align="center">现存重量</th>
+												</tr>
+												<tr>
+													<th style="font-size: 14px;text-align: center;" width="100px">sdfsdfsdf</th>
+													<th style="font-size: 14px;text-align: center;"
+														align="center">123123123</th>
+												</tr>
+												<tr>
+													<th style="font-size: 14px;text-align: center;" width="100px">sdfsdfsdf</th>
+													<th style="font-size: 14px;text-align: center;"
+														align="center">123123123</th>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+									<td width="20px">
+										
+									</td>
+									<td style="vertical-align: top;">
+										<table border="1" width="300px">
+											<tr>
+												<td colspan="3" style="font-size: 14px;color: red;"><strong>成品库存警示（请及时补充以下产品）：</strong></td>
+											</tr>
+											<tbody id="strProTr">
+												<tr>
+													<th style="font-size: 14px;text-align: center;" width="100px">华天产品编号</th>
+													<th style="font-size: 14px;text-align: center;"
+														align="center">客户产品编号</th>
+													<th style="font-size: 14px;text-align: center;"
+														align="center">现存数量</th>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+									<td width="20px">
+										
+									</td>
+									<td style="vertical-align: top;">
+										<strong>打印插件下载：</strong><br><br>
+										<a href="<%=request.getContextPath()%>/lodop6/install_lodop32.exe" title="32位" style="color: blue;size: 14px;">点击下载32位</a>&nbsp;&nbsp;&nbsp;&nbsp;
+										<a href="<%=request.getContextPath()%>/lodop6/install_lodop64.exe" title="64位" style="color: blue;size: 14px;">点击下载64位</a>
+										<br><br>
+										<strong>系统帮助文档：</strong><br><br>
+										<a href="#" onclick="openHelp()" title="华天ERP系统操作说明" style="color: blue;size: 14px;">点击打开帮助文档</a>
+									</td>
 								</tr>
-								<tbody id="strTr">
-									<tr>
-										<th style="font-size: 14px;text-align: center;" width="100px">材料名称</th>
-										<th style="font-size: 14px;text-align: center;" align="center">现存重量</th>
-									</tr>
-									
-								</tbody>
 							</table>
 							
-							<br/>
 							
-							<table border="1" width="300px">
-								<tr >
-									<td colspan="3" style="font-size: 14px;color: red;"><strong>成品库存警示（请及时补充以下产品）：</strong></td>
-								</tr>
-								<tbody id="strProTr">
-									<tr>
-										<th style="font-size: 14px;text-align: center;" width="100px">华天产品编号</th>
-										<th style="font-size: 14px;text-align: center;" align="center">客户产品编号</th>
-										<th style="font-size: 14px;text-align: center;" align="center">现存数量</th>
-									</tr>
-								</tbody>
-							</table>
-						
-						</div>
+				</div>
 				</div>
 			</div>
 		</div><!-- /#content -->
@@ -193,6 +227,10 @@
 				});
 			}
 
+			//打开帮助文档
+			function openHelp(){
+				window.open("${pageContext.request.contextPath }/admin/basic/user_openHelpDoc.html");
+			}
 			
 			window.onload = function(){
 				var uri = "${pageContext.request.contextPath}/admin/production/production_getWareHouseMaterialList.html";

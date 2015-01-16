@@ -44,6 +44,7 @@
        		<result name="showAddUI">/WEB-INF/rightMgr/user_add.jsp</result>
        		<result name="modifyUI">/WEB-INF/rightMgr/user_modify.jsp</result>
        		<result name="pwdOver" >/WEB-INF/rightMgr/pwd_modify.jsp</result>
+       		<result name="helpdoc">/help/HTERP_helpDoc.jsp</result>
        	</action>
        	
        	<!-- 密码修改 -->

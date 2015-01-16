@@ -53,7 +53,7 @@
 								<option value="-1">--请选择--</option>
 								<option value="1">FLAT</option>
 								<option value="2">TAB</option>
-								<option value="3">DRIFT LOCK</option>
+								<option value="3">DRIFT</option>
 							</select>
 						</td>
 				  </tr>
@@ -73,8 +73,8 @@
 							<select class="u-ipt required validate-selection" name="product.patternType" style="width:178px">
 								<option value="-1">--请选择--</option>
 								<option value="1">PROG</option>
-								<option value="2">SINGLE DIE</option>
-								<option value="3">PROG + SINGLE DIE</option>
+								<option value="2">SINGLE</option>
+								<option value="3">BENDER</option>
 							</select>
 				  </tr>
 					<tr>

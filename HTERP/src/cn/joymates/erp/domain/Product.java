@@ -14,15 +14,15 @@ public class Product extends BaseProduct {
 	
 	public static final String FLAT = "1";
 	public static final String TAB = "2";
-	public static final String DRIFTLOCK = "3";
-	public static Map<String, String> propertiesMap = ImmutableMap.of(FLAT, "FLAT",TAB, "TAB",DRIFTLOCK,"DRIFT LOCK");
+	public static final String DRIFT = "3";
+	public static Map<String, String> propertiesMap = ImmutableMap.of(FLAT, "FLAT",TAB, "TAB",DRIFT,"DRIFT");
 	
 	public static final String OE = "1";
 	public static final String AF = "2";
 	public static Map<String, String> marketMap = ImmutableMap.of(OE, "OE",AF, "AF");
 	
 	public static final String PROG = "1";
-	public static final String SINGLEDIE = "2";
-	public static final String PROGSINGLE = "3";
-	public static Map<String, String> patternTypeMap = ImmutableMap.of(PROG, "PROG",SINGLEDIE, "SINGLE DIE",PROGSINGLE,"PROG + SINGLE");
+	public static final String SINGLE = "2";
+	public static final String BENDER = "3";
+	public static Map<String, String> patternTypeMap = ImmutableMap.of(PROG, "PROG",SINGLE, "SINGLE DIE",BENDER,"BENDER");
 }
