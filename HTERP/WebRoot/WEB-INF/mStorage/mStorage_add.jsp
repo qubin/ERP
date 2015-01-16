@@ -85,6 +85,8 @@
 						}else{
 							j("#wh").attr("disabled",false);
 							j("#wh").addClass("validate-selection");
+							j("#wh").html("");
+							j("#wh").append("<option value=''>-请选择-</option>");
 							for(var i = 0 ; i < whList.length; i ++){
 								j("#wh").append("<option value='" + whList[i].warehouseId + "'>"+ whList[i].sign1 +"</option>");
 							}
@@ -122,9 +124,11 @@
 		j("#cRadio").bind("click",function(){
 			j("#scInput").hide();
 			j("#scInput").val("");
+			j("#scInput").attr("disabled",true);
 		});
 		j("#mRadio").bind("click",function(){
 			j("#scInput").show();
+			j("#scInput").attr("disabled",false);
 		});
 		
 		j("#inRadio").bind("click",function(){

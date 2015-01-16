@@ -39,7 +39,7 @@ public class BaseMaterial extends BaseVO {
 	private BigDecimal alarmWeight;
 	private String isLogout;
 	private String logoutReason;
-	private Integer mmatId;
+	private String mmatId;
 	private String remark;
 	private String remark1;
 	private String scrollId;
@@ -111,10 +111,11 @@ public class BaseMaterial extends BaseVO {
 	public void setLogoutReason(String logoutReason) {
 		this.logoutReason = logoutReason;
 	}
-	public Integer getMmatId() {
+	
+	public String getMmatId() {
 		return mmatId;
 	}
-	public void setMmatId(Integer mmatId) {
+	public void setMmatId(String mmatId) {
 		this.mmatId = mmatId;
 	}
 	public String getRemark() {
