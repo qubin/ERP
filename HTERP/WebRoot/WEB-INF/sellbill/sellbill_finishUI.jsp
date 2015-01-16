@@ -24,7 +24,8 @@
 							alert("该销售单未通过审核！");
 						}else{
 							j.get(uri,function(data){
-								if(data == ""){
+								alert(data);
+								if(data != ""){
 									if(data == "false"){
 										alert("生产指令单未结单，销售单不能结单！");
 									}else if(data == "true"){

@@ -200,6 +200,7 @@
 						<th height="40" class="tr" width="42%">所在仓库：</th>
 						<td height="40" >
 						<select class="u-ipt required validate-selection" name="material.warehouseId" id="wh">
+							<option value="-1">---请选择---</option>
 						</select>
 						
 						</td>
