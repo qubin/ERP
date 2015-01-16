@@ -45,6 +45,12 @@ public class SellbillAction extends BaseAction {
 		return "home";
 	}
 	
+	public String examine(){
+		req.setAttribute("STATUS", SellBill.STATUS);
+		req.setAttribute("list", sService.findAll(ec_rd, req,"examine"));
+		return "examine";
+	}
+	
 	public String queryhome(){
 		req.setAttribute("list", sService.findAll(ec_rd, req,"foo"));
 		req.getSession().setAttribute("printAll", sService.findAll(ec_rd, req,"foo"));
@@ -66,7 +72,7 @@ public class SellbillAction extends BaseAction {
 	public String pass(){
 		sb = sService.selectOne(sb);
 		if(sb.getSbId() != null){
-			sb.setVerifyStatus("1");
+			sb.setIsOrderOver("1");
 			User u = (User) req.getSession().getAttribute("loggedUser");
 			sb.setVerifyPerson(u.getUserLoginId());
 			sService.update(sb);
@@ -197,11 +203,7 @@ public class SellbillAction extends BaseAction {
 		}
 	}
 	
-	public String examine(){
-		req.setAttribute("STATUS", SellBill.STATUS);
-		req.setAttribute("list", sService.findAll(ec_rd, req,"showHome"));
-		return "examine";
-	}
+	
 	
 	public String modify(){
 		try {

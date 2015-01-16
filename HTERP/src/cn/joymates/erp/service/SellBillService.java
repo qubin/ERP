@@ -24,6 +24,7 @@ public class SellBillService extends BaseService<SellBill> {
 		}else if("examine".equals(str)){
 			resultsql.append(" AND sb.verify_status = '1' ");
 		}
+		resultsql.append(" AND sb.is_order_over = '0'");
 		resultsql.append(" ORDER BY sb.`order_date` DESC limit ?, ? ");
 		searchsql.append("SELECT count(*) FROM `t_sell_bill` AS sb LEFT JOIN `t_customer` AS c ON sb.`customer_id` = c.`id` where 1 = 1 ");
 		if("showHome".equals(str)){
@@ -31,6 +32,7 @@ public class SellBillService extends BaseService<SellBill> {
 		}else if("examine".equals(str)){
 			searchsql.append(" AND sb.verify_status = '1' ");
 		}
+		searchsql.append(" AND sb.is_order_over = '0'");
 		return dao.getEcsideList(ec_rd, searchsql.toString(), resultsql.toString(),req);
 	}
 
@@ -63,13 +65,13 @@ public class SellBillService extends BaseService<SellBill> {
 		StringBuffer searchsql = new StringBuffer();
 		resultsql.append("SELECT  sb.`verify_remark`,sb.`verify_status`,sb.`id`,sb.`code`,sb.`order_date`,c.`name`,c.`con_person`,c.`con_phone`,sb.`remark` ");
 		resultsql.append("FROM `t_sell_bill` AS sb LEFT JOIN `t_customer` AS c ON sb.`customer_id` = c.`id` where 1 =1 AND ");
-		resultsql.append("sb.verify_status = '1' ");
+		resultsql.append("sb.verify_status = '1' AND sb.is_order_over = '0' ");
 		if(queryStr != null && serachType != null){
 			resultsql.append(" AND ").append(serachType).append(" like ").append("'%").append(queryStr).append("%'");
 		}
 		resultsql.append(" ORDER BY sb.`order_date` DESC limit ?, ? ");
 		searchsql.append("SELECT count(*) FROM `t_sell_bill` AS sb LEFT JOIN `t_customer` AS c ON sb.`customer_id` = c.`id` where 1 = 1 AND ");
-		searchsql.append("sb.verify_status = '1' ");
+		searchsql.append("sb.verify_status = '1' AND sb.is_order_over = '0' ");
 		if(queryStr != null && serachType != null){
 			searchsql.append(" AND ").append(serachType).append(" like ").append("'%").append(queryStr).append("%'");
 		}
