@@ -95,7 +95,7 @@ public class CustomerAction extends BaseAction{
 			User u = new User();
 			u.setUserId("300");
 			u.setUserLoginId(loginName);
-			u.setPassword1("123");
+			u.setPassword1("123456");
 			u.setCreateTime(new Date());
 			User createPerson = (User) req.getSession().getAttribute("loggedUser");
 			u.setCreatePerson(createPerson.getUserLoginId());

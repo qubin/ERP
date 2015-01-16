@@ -106,18 +106,6 @@
 					<ec:column property="WEIGHT" title="重量" width="15%" style="text-align:center"/>
 					<ec:column property="HT_MAT_NO" title="华天材料号" width="15%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="15%" style="text-align:center"/>
-					<ec:column property="IS_LOGOUT" title="是否注销" width="15%" style="text-align:center" mappingItem="logoutMap"/>
-					<ec:column property="LOGOUT_REASON" title="注销原因" width="15%" style="text-align:center"/>
-					<ec:column property="_0" title="动作" width="15%" style="text-align:center">
-						<c:if test="${sr.IS_LOGOUT == 0}">
-							<a href="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_showModifyUI.html?rowFlow.rfId=${sr.ID}">修 改</a>
-							&nbsp;&nbsp;&nbsp;&nbsp;
-							<a onclick="return delMsg(${sr.ID})" href="javascript:void(0)">注 销</a>
-						</c:if>
-						<c:if test="${sr.IS_LOGOUT == 1}">
-							<a onclick="return recoverMsg()" href="${pageContext.request.contextPath}/admin/rowFlow/rowFlow_delete.html?rowFlow.rfId=${sr.ID}&rowFlow.isLogout=0">恢 复</a>
-						</c:if>
-						</ec:column>
 				</ec:row>
 			</ec:table>
 		</div>

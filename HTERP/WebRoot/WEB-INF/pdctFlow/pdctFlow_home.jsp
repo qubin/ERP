@@ -139,8 +139,6 @@
 					</ec:column>
 					<ec:column property="BATCH_CODE" title="批次" width="15%" style="text-align:center"/>
 					<ec:column property="REMARK" title="备注" width="15%" style="text-align:center"/>
-					<ec:column property="_0" title="动作" width="15%" style="text-align:center">
-					</ec:column>
 				</ec:row>
 			</ec:table>
 		</div>
