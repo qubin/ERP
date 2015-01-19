@@ -66,7 +66,7 @@
 			no += 1;
 			var str = "<tr>";
 				str += 	"<td class='tr'><div align='center'>" + no + "</div></td>";
-				str += 	"<td class='tr'><select name='cpList' id='' class='u-ipt required validate-selection'><option value=''>-请选择-</option></select>";
+				str += 	"<td class='tr'><select name='cpList' id='' class='u-ipt required validate-selection'></select>";
 				str +=	"</td>";
 				str +=  "<td class='tr'><div align='center'>pic</div></td>";
 				str +=  "<td class='tr'><input type='text' class='u-ipt required ' name='orderCount'"; //
@@ -114,12 +114,15 @@
 			j.getJSON(uri,function(data){
 				if(data != ""){
 					j.each(j("select[name='cpList']"),function(k,v){
-						v.innerHTML = "";
 						var jtemp = j(v);
-						jtemp.append("<option value=''>-请选择-</option>");
-						j.each(data,function(k2,v2){
-							jtemp.append("<option value='" + v2.cpId + "'>" + v2.cus_pn + "</option>");
-						});
+						if(jtemp.html() == ""){
+							jtemp.html("");
+							jtemp.append("<option value='-1'>-请选择-</option>");
+							j.each(data,function(k2,v2){
+								jtemp.append("<option value='" + v2.cpId + "'>" + v2.cus_pn + "</option>");
+							});
+						}
+					
 					});
 				}else{
 					alert("该客户没有对应成品");

@@ -52,6 +52,11 @@
 							maxlength="60"></td>
 					</tr>
 					<tr>
+						<th class="tr">描述：</th>
+						<td><input type="text" class="u-ipt" name="material.desc1"
+							maxlength="60" value="${material.desc1}"></td>
+					</tr>
+					<tr>
 						<th class="tr">备注：</th>
 						<td><input type="text" class="u-ipt" name="material.remark" value="${material.remark }"
 							maxlength="60"></td>

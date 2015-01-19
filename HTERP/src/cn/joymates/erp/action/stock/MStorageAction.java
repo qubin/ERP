@@ -37,38 +37,68 @@ public class MStorageAction extends BaseAction {
 		List<Supplier> sList = supplierService.selectList(s);
 		Warehouse wh = new Warehouse();
 		wh.setIsLogout("0");
-		JSONArray obj = JSONArray.fromObject(wService.selectList(wh));
-		req.setAttribute("wList", obj.toString());
+		req.setAttribute("wList", wService.selectList(wh));
 		req.setAttribute("sList", sList);
 		return "home";
 	}
 	
-	public String materialInOrOut(){
+	public String materialOut(){
 		try {
-			rawFlow.setMaterialId(material.getUuid());
-			rowFlowService.save(rawFlow);
-			String inOrOut = rawFlow.getInOrOut();
 			BigDecimal inNum = rawFlow.getWeight();
-			if(inOrOut != null){
-				if("1".equals(inOrOut)){
-					Material original = service.selectOne(material);
-					original.setWeight(original.getWeight().subtract(inNum));
-					service.update(original);
-				}else if("2".equals(inOrOut)){
-					Material sc = material;
-					Material original = service.selectOne(material);
-					if(sc.getMmatId() != null){
-						original.setMmatId(sc.getMmatId());
-					}
-					if(sc.getScrollId() != null){
-						original.setScrollId(sc.getScrollId());
-					}
-					original.setWeight(original.getWeight().add(inNum));
-					service.update(original);
-				}
+			Material original = service.selectOne(material);
+			if(original.getWeight() != null){
+				
 			}
-			req.setAttribute("msg", "success");
-			return showHome();
+			original.setWeight(original.getWeight().subtract(inNum));
+			rawFlow.setMaterialId(original.getUuid());
+			rawFlow.setInOrOut("1");
+			rowFlowService.save(rawFlow);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return showHome();
+	}
+	
+	public String materialIn(){
+		try {
+			BigDecimal inNum = rawFlow.getWeight();
+			Material sc = material;
+			Material original = service.selectOne(material);
+			int newId = 0;
+			Material wM = new Material();
+			wM.setWarehouseId(sc.getWarehouseId());
+			wM.setSupplymatId(original.getSupplymatId());
+			List<Material> wL = service.selectList(wM);
+			if(wL.size() > 0){
+				//原入库
+				if(sc.getMmatId() != null && !"".equals(sc.getMmatId())){
+					original.setMmatId(sc.getMmatId());
+				}
+				if(sc.getScrollId() != null && !"".equals(sc.getScrollId())){
+					original.setScrollId(sc.getScrollId());
+				}
+				original.setWeight(original.getWeight().add(inNum));
+				newId = original.getUuid();
+				service.update(original);
+			}else{
+				//新入库
+				if(sc.getMmatId() != null && !"".equals(sc.getMmatId())){
+					original.setMmatId(sc.getMmatId());
+				}
+				if(sc.getScrollId() != null && !"".equals(sc.getScrollId())){
+					original.setScrollId(sc.getScrollId());
+				}
+				service.update(original);
+				original.setUuid(null);
+				original.setWeight(new BigDecimal(0));
+				original.setWeight(inNum);
+				original.setWarehouseId(sc.getWarehouseId());
+				newId = service.save(original);
+			}
+			rawFlow.setMaterialId(newId);
+			rawFlow.setInOrOut("2");
+			rowFlowService.save(rawFlow);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,14 +140,14 @@ public class MStorageAction extends BaseAction {
 			m.setSupplymatId(Integer.valueOf(id));
 			List<Material> ms = service.selectList(m);
 			if(ms.size() >= 0){
-				
-				JSONArray obj = JSONArray.fromObject(ms);
+   				JSONObject obj = JSONObject.fromObject(ms.get(0));
 				resp.getWriter().write(obj.toString());
 			}
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	
 	public String add(){
 		service.save(material);

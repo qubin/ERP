@@ -42,6 +42,7 @@ public class PdctFlowAction extends BaseAction {
 	private Product product;
 	private CustPdct cp;
 	private CustPno cpn;
+	private PdctFlow pf;
 	
 	public String showHome(){
 		Warehouse w = new Warehouse();
@@ -254,41 +255,26 @@ public class PdctFlowAction extends BaseAction {
 	
 	public void findProd(){
 		try {
-			String cpId = req.getParameter("cpId");
-			CustPdct cp = new CustPdct();
-			if(cpId != null && !"null".equals(cpId)){
-				cp.setCpId(Integer.valueOf(cpId));
-				cp = cpService.selectOne(cp);
-				Product p = new Product();
-				p.setUuid(cp.getProdId());
-				p = pService.selectOne(p);
-				CustPno cpn = new CustPno();
-				cpn.setcPdctId(cp.getCpId());
+			cp = cpService.selectOne(cp);
+			Product p = new Product();
+			p.setUuid(cp.getProdId());
+			p = pService.selectOne(p);
+			CustPno cpn = new CustPno();
+			cpn.setcPdctId(cp.getCpId());
+			if(cpnService.selectList(cpn).size() != 0){
 				cpn = cpnService.selectList(cpn).get(0);
 				List list = new ArrayList();
 				list.add(p);
 				list.add(cp);
-				if(cp.getArea() != null){
-					list.add(true);
-				}else{
-					list.add(false);
-				}
 				list.add(cpn);
-				Warehouse wh = new Warehouse();
-				wh.setWarehouseId(cp.getArea());
-				wh = wService.selectOne(wh);
-				list.add(wh);
 				JSONArray obj = JSONArray.fromObject(list);
 				resp.getWriter().write(obj.toString());
-			}else{
-				resp.getWriter().write("");
 			}
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	
 	public void findCusPn(){
 		try {
@@ -305,6 +291,29 @@ public class PdctFlowAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
+	public void findCusPn3(){
+		try {
+			String custId = req.getParameter("custId");
+			if(custId != null){
+				CustPdct cp = new CustPdct();
+				cp.setCustId(Integer.valueOf(custId));
+				List<CustPdct> cpList = cpService.selectList(cp);
+				List<CustPdct> l = new ArrayList<>();
+				for(int i = 0 ;i < cpList.size(); i ++){
+					if(null != cpList.get(i).getArea()){
+						l.add(cpList.get(i));
+					}
+				}
+				JSONArray list = JSONArray.fromObject(l);
+				resp.getWriter().write(list.toString());
+			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void checkPic(){
 		try {
 			String cpId = req.getParameter("cpId");
@@ -361,7 +370,205 @@ public class PdctFlowAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
+	
+	public void findWh(){
+		try {
+			String custId = req.getParameter("custId");
+			cp = cpService.selectOne(cp);
+			CustPdct whCp = new CustPdct();
+			whCp.setCus_pn(cp.getCus_pn());
+			whCp.setCustId(Integer.valueOf(custId));
+			List<CustPdct> cpList = cpService.selectList(whCp);
+			Warehouse wh = new Warehouse();
+			wh.setIsLogout("0");
+			List<Warehouse> wList = wService.selectList(wh);
+			if(cpList.size() != 0){
+				for(int i = 0; i < wList.size(); i ++){
+					for(int j = 0; j < cpList.size();j ++){
+						int one = wList.get(i).getWarehouseId();
+						int two = cpList.get(j).getArea();
+						if(one == two){
+							wList.remove(i);
+						}
+					}
+				}
+				JSONArray arr = JSONArray.fromObject(wList);
+				resp.getWriter().write(arr.toString());
+			}else{
+				resp.getWriter().write("false");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
+	
+	public void findProd3(){
+		try {
+			cp = cpService.selectOne(cp);
+			Product p = new Product();
+			p.setUuid(cp.getProdId());
+			p = pService.selectOne(p);
+			CustPno cpn = new CustPno();
+			cpn.setcPdctId(cp.getCpId());
+			if(cpnService.selectList(cpn).size() != 0){
+				cpn = cpnService.selectList(cpn).get(0);
+				List l = new ArrayList<>();
+				l.add(p);
+				l.add(cpn);
+				l.add(cp);
+				JSONArray arr = JSONArray.fromObject(l);
+				resp.getWriter().write(arr.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//相同产品  批号 不同仓库
+	public String newIn(){
+		CustPdct newCp = cp;
+		cp = cpService.selectOne(cp);
+		CustPno oldCpn = new CustPno();
+		oldCpn.setcPdctId(newCp.getCpId());
+		if(cpnService.selectList(oldCpn).size() != 0){
+			//客户产品添加
+			oldCpn = cpnService.selectList(oldCpn).get(0);
+			cpn.setBatchCode(oldCpn.getBatchCode());
+			cpn.setBoxNo(cpn.getBoxNum());
+			cp.setCpId(null);
+			cp.setArea(newCp.getArea());
+			cp.setPicCount(newCp.getPicCount());
+			int newCpId = cpService.save(cp);
+			cpn.setcPdctId(newCpId);
+			cpnService.save(cpn);
+			//成品总重量修改
+			Product p = new Product();
+			p.setUuid(cp.getProdId());
+			p = pService.selectOne(p);
+			p.setTotalWeight(p.getTotalWeight().add(cp.getWeight().multiply(new BigDecimal(newCp.getPicCount()))));
+			pService.update(p);
+			//成品出入记录
+			User u = (User) req.getSession().getAttribute("loggedUser");
+			pf.setOutPerson(u.getUserLoginId());
+			pf.setBatchCode(oldCpn.getBatchCode());
+			pf.setBoxNo(cpn.getBoxNo());
+			//新入库 boxNum 与boxNo 相同
+			pf.setBoxNum(cpn.getBoxNo());
+			pf.setInOrOut("2");
+			pf.setCount(newCp.getPicCount());
+			pdctService.save(pf);
+		}
+		return showHome();
+	}
+	
+	public String outWh(){
+		//修改客户产品库存片数
+		String boxNum = req.getParameter("boxNum");
+		if(boxNum != null && !"".equals(boxNum)){
+			CustPdct temp = cp;
+			cp = cpService.selectOne(cp);
+			cp.setPicCount(cp.getPicCount() - pf.getCount());
+			cpService.update(cp);
+			//添加出库记录
+			User u = (User) req.getSession().getAttribute("loggedUser");
+			pf.setOutPerson(u.getUserLoginId());
+			pf.setInOrOut("1");
+			pf.setCustPdctId(cp.getCpId());
+			//根据客户批号表查boxNo boxNum 更新批号
+			CustPno cpn = new CustPno();
+			cpn.setcPdctId(cp.getCpId());
+			if(cpnService.selectList(cpn).size() != 0){
+				cpn = cpnService.selectList(cpn).get(0);
+				cpn.setBoxNo(cpn.getBoxNo() - Integer.valueOf(boxNum));
+				cpnService.update(cpn);
+				pf.setBatchCode(cpn.getBatchCode());
+				if(cpn.getBoxNo() >= Integer.valueOf(boxNum)){
+					pf.setBoxNo(cpn.getBoxNo() - Integer.valueOf(boxNum));
+					pf.setBoxNum(cpn.getBoxNum());
+					pdctService.save(pf);
+					//修改成品总重量
+					Product p = new Product();
+					p.setUuid(cp.getProdId());
+					p = pService.selectOne(p);
+					BigDecimal tempCount = cp.getWeight().multiply(new BigDecimal(pf.getCount()));
+					if(p.getTotalWeight().compareTo(tempCount) == 1){
+						p.setTotalWeight(p.getTotalWeight().subtract(tempCount));
+						pService.update(p);
+					}
+				}
+			}
+		}		
+		return showHome();
+	}
+	
+	public String inExist(){
+		String flag = req.getParameter("flag");
+		String boxNum = req.getParameter("boxNum");
+		String area = req.getParameter("whId");
+		CustPno tempCpn = null;
+		if(flag != null){
+			if("1".equals(flag)){
+				//已有入库
+				if(boxNum != null && !"".equals(boxNum)){
+					//修改客户产品库存片数
+					Integer num = Integer.valueOf(boxNum);
+					CustPdct temp = cp;
+					cp = cpService.selectOne(cp);
+					cp.setPicCount(cp.getPicCount() + pf.getCount());
+					cpService.update(cp);
+					//修改批号表
+					CustPno oldCpn = new CustPno();
+					oldCpn.setcPdctId(cp.getCpId());
+					if(cpnService.selectList(oldCpn).size() != 0){
+						oldCpn = cpnService.selectList(oldCpn).get(0);
+						tempCpn = oldCpn;
+						oldCpn.setBoxNo(oldCpn.getBoxNo() + num);
+						oldCpn.setBoxNum(oldCpn.getBoxNum() + num);
+						cpnService.update(oldCpn);
+					}
+				}
+			}else if("2".equals(flag)){
+				//从未入库
+				if(boxNum != null && !"".equals(boxNum)){
+					//修改客户产品库存片数
+					Integer num = Integer.valueOf(boxNum);
+					CustPdct temp = cp;
+					cp = cpService.selectOne(cp);
+					cp.setPicCount(cp.getPicCount() + pf.getCount());
+					cp.setArea(Integer.valueOf(area));
+					cpService.update(cp);
+					//修改批号
+					CustPno newCpn = cpn;
+					CustPno oldCpn = new CustPno();
+					oldCpn.setcPdctId(cp.getCpId());
+					if(cpnService.selectList(oldCpn).size() != 0){
+						oldCpn = cpnService.selectList(oldCpn).get(0);
+						tempCpn = oldCpn;
+						oldCpn.setBoxNo(oldCpn.getBoxNo() + num);
+						oldCpn.setBoxNum(oldCpn.getBoxNum() + num);
+						oldCpn.setBatchCode(newCpn.getBatchCode());
+						cpnService.update(oldCpn);
+					}
+				}
+			}
+			//成品总重量修改
+			Product p = new Product();
+			p.setUuid(cp.getProdId());
+			p = pService.selectOne(p);
+			p.setTotalWeight(p.getTotalWeight().add(cp.getWeight().multiply(new BigDecimal(pf.getCount()))));
+			//添加出库记录
+			User u = (User) req.getSession().getAttribute("loggedUser");
+			pf.setOutPerson(u.getUserLoginId());
+			pf.setInOrOut("2");
+			pf.setCustPdctId(cp.getCpId());
+			pf.setBoxNo(tempCpn.getBoxNo() + Integer.valueOf(boxNum));
+			pf.setBoxNum(tempCpn.getBoxNum() + Integer.valueOf(boxNum));
+			pdctService.save(pf);
+		}
+		return showHome();
+	}
+	
 	public Product getProduct() {
 		return product;
 	}
@@ -384,6 +591,14 @@ public class PdctFlowAction extends BaseAction {
 
 	public void setCpn(CustPno cpn) {
 		this.cpn = cpn;
+	}
+
+	public PdctFlow getPf() {
+		return pf;
+	}
+
+	public void setPf(PdctFlow pf) {
+		this.pf = pf;
 	}
 	
 }

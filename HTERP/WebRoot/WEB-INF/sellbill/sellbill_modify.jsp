@@ -47,9 +47,13 @@
 			str +=	"maxlength='60' style='width:110px;' value='"+ data[i].remark +"'></td>";		
 			str +=	"<input type='hidden' value='" + data[i].sellDetailId + "' name='sdId'/>";		
 			str +=	"</tr>";
-			total = data[i].orderCount;
+			total += data[i].orderCount;
+			//document.getElementById("add").innerHTML=str;
+			var tr = document.createElement("tr");
+			tr.innerHTML=str;
+			document.getElementById("selltable").appendChild(tr);
 		}
-		document.getElementById("add").innerHTML=str;
+	
 		
 		document.getElementById("sdNum").value=no;
 		

@@ -9,9 +9,11 @@ import java.util.Map;
 import net.sf.json.JSONObject;
 import cn.joymates.erp.action.BaseAction;
 import cn.joymates.erp.domain.CustPdct;
+import cn.joymates.erp.domain.CustPno;
 import cn.joymates.erp.domain.Customer;
 import cn.joymates.erp.domain.Product;
 import cn.joymates.erp.service.CustPdctService;
+import cn.joymates.erp.service.CustPnoService;
 import cn.joymates.erp.service.CustomerService;
 import cn.joymates.erp.service.ProductService;
 import cn.joymates.erp.utils.JxlUtil;
@@ -78,7 +80,10 @@ public class ProductAction extends BaseAction {
 		try {
 			int prodId = service.save(product);
 			cp.setProdId(prodId);
-			cpService.save(cp);
+			int cpId = cpService.save(cp);
+			CustPno cpNo = new CustPno();
+			cpNo.setcPdctId(cpId);
+			cpnService.save(cpNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -168,6 +173,7 @@ public class ProductAction extends BaseAction {
 	private ProductService service = ServiceProxyFactory.getInstanceNoMybatis(new ProductService());
 	private CustomerService customerService = ServiceProxyFactory.getInstanceNoMybatis(new CustomerService());
 	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
+	private CustPnoService cpnService = ServiceProxyFactory.getInstanceNoMybatis(new CustPnoService());
 	private CustPdct cp;
 	private Product product;
 	private String product_key;

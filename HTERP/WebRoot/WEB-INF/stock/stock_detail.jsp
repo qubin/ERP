@@ -37,7 +37,7 @@
 					</tr>
 					<tr>
 						<th class="tr">描述：</th>
-						<td><label for="">${m.desc}</label></td>
+						<td><label for="">${m.remark}</label></td>
 						<th class="tr">总重量:</th>
 						<td><label for="">${m.weight}</label></td>
 					</tr>

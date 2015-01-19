@@ -38,7 +38,7 @@ public class SessionTimeOutFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest)arg0;
 		HttpSession sess = req.getSession();
 		HttpServletResponse resp = (HttpServletResponse)arg1;
-		
+		resp.setCharacterEncoding("UTF-8");
 		User user = (User)sess.getAttribute("loggedUser");
 		if (user == null || user.getUserId() == null) {
 			logger.info("session过期，请重新登录！");

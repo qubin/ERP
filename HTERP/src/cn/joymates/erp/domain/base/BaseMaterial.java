@@ -24,6 +24,7 @@ public class BaseMaterial extends BaseVO {
 		fieldMap.put("remark1", "remark1");
 		fieldMap.put("scrollId", "scroll_id");
 		fieldMap.put("materialModel", "material_model");
+		fieldMap.put("desc1", "desc1");
 		this.id = "id";
 	}
 
@@ -44,7 +45,15 @@ public class BaseMaterial extends BaseVO {
 	private String remark1;
 	private String scrollId;
 	private String materialModel;
+	private String desc1;
 	
+	
+	public String getDesc1() {
+		return desc1;
+	}
+	public void setDesc1(String desc1) {
+		this.desc1 = desc1;
+	}
 	public Integer getUuid() {
 		return uuid;
 	}

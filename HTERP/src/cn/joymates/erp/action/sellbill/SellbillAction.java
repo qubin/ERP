@@ -31,26 +31,26 @@ public class SellbillAction extends BaseAction {
 	private CustPdctService cpService = ServiceProxyFactory.getInstanceNoMybatis(new CustPdctService());
 	private Customer cust;
 	private SellBill sb;
-	
+	//结单
 	public String finish(){
 		List<Map<String, Object>> l = sService.findFinish(ec_rd, null, null, req);
 		req.setAttribute("fList", l);
 		req.setAttribute("STATUS", SellBill.STATUS);
 		return "finish";
 	}
-
+	//修改订单
 	public String showHome(){
 		req.setAttribute("list", sService.findAll(ec_rd, req,"showHome"));
 		req.setAttribute("STATUS", SellBill.STATUS);
 		return "home";
 	}
-	
+	//审核
 	public String examine(){
 		req.setAttribute("STATUS", SellBill.STATUS);
-		req.setAttribute("list", sService.findAll(ec_rd, req,"examine"));
+		req.setAttribute("list", sService.findAll(ec_rd, req,"showHome"));
 		return "examine";
 	}
-	
+	//查询
 	public String queryhome(){
 		req.setAttribute("list", sService.findAll(ec_rd, req,"foo"));
 		req.getSession().setAttribute("printAll", sService.findAll(ec_rd, req,"foo"));
@@ -139,7 +139,8 @@ public class SellbillAction extends BaseAction {
 		c.setCustId(sb.getCustId());
 		req.setAttribute("cList", cService.selectList(new Customer()));
 		req.setAttribute("sb", sb);
-		JSONArray list = JSONArray.fromObject(sdService.selectList(sd));
+		List templ = sdService.selectList(sd);
+		JSONArray list = JSONArray.fromObject(templ);
 		req.setAttribute("sdList", list.toString());
 		req.setAttribute("cust", cService.selectOne(c));
 		CustPdct cp = new CustPdct();

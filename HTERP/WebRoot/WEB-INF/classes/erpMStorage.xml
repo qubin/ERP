@@ -7,8 +7,8 @@
 
 	<package name="mStorageManager" extends="struts-default" namespace="/admin/mStorage" >
 		<action name="mStorage_*" class="cn.joymates.erp.action.stock.MStorageAction" method="{1}">
-            <result name="home">/WEB-INF/mStorage/mStorage_add.jsp</result>
-            <result name="addUI">/WEB-INF/mStorage/mStorage_add.jsp</result>
+            <result name="home">/WEB-INF/mStorage/mStorage_add2.jsp</result>
+            <result name="addUI">/WEB-INF/mStorage/mStorage_add2.jsp</result>
             <result name="modifyUI">/WEB-INF/mStorage/mStorage_modify.jsp</result>
         </action>
 	</package>

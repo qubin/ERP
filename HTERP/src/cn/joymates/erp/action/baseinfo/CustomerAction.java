@@ -101,18 +101,6 @@ public class CustomerAction extends BaseAction{
 			u.setCreatePerson(createPerson.getUserLoginId());
 			u.setCustId(custId);
 			userService.save(u);
-			String[] cusPn = req.getParameterValues("cusPn");
-			String[] prodId = req.getParameterValues("prodId");
-			if((cusPn != null && !"null".equals(cusPn)) && (prodId != null && !"null".equals(prodId))){
-				for(int i = 0; i < cusPn.length; i ++){
-					CustPdct cp = new CustPdct();
-					cp.setCustId(custId);
-					cp.setProdId(Integer.valueOf(prodId[i]));
-					cp.setCus_pn(cusPn[i]);
-					cpservice.save(cp);
-				}
-				return showHome();
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
