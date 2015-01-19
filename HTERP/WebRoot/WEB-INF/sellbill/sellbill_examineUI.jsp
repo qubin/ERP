@@ -177,7 +177,7 @@
 		<div class="hr10"></div>
 		<h2>修改订单</h2>
 		<form id="form1"
-			action="${pageContext.request.contextPath}/admin/sellbill/sellbill_modify.html"
+			action="${pageContext.request.contextPath}/admin/sellbill/sellbill_pass.html"
 			method="post">
 			<input type="hidden" id="sbId" name="sb.sbId" value="${sb.sbId}"/>
 		<input type="hidden" name="sdNum" value="" id="sdNum"/>

@@ -57,7 +57,7 @@ public class SellbillAction extends BaseAction {
 		req.setAttribute("STATUS", SellBill.STATUS);
 		return "queryhome";
 	}
-	
+	//审核不通过
 	public String refuse(){
 		sb = sService.selectOne(sb);
 		String verifyRemark = req.getParameter("reason");
@@ -68,18 +68,18 @@ public class SellbillAction extends BaseAction {
 		}
 		return examine();
 	}
-	
+	//审核通过
 	public String pass(){
 		sb = sService.selectOne(sb);
 		if(sb.getSbId() != null){
-			sb.setIsOrderOver("1");
+			sb.setVerifyStatus("1");
 			User u = (User) req.getSession().getAttribute("loggedUser");
 			sb.setVerifyPerson(u.getUserLoginId());
 			sService.update(sb);
 		}
 		return examine();
 	}
-	
+	//查询
 	public String queryfind(){
 		String queryStr = req.getParameter("queryStr");
 		String serachType = req.getParameter("serachType");
@@ -275,7 +275,7 @@ public class SellbillAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
-	
+	//结单操作
 	public String finishSellBill(){
 		sb = sService.selectOne(sb);
 		if(sb.getSbId() != null){

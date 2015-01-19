@@ -460,7 +460,7 @@ ul {
 						<th class="tr">操作时间：</th>
 						<td>
 							<input type="text" class="u-ipt "
-							name="pf.outTime" maxlength="13" id="nowTime" style="width:160px;"/>
+							name="pf.outTime" maxlength="13" id="nowTime" style="width:160px;" readonly="readonly"/>
 							<img onclick="WdatePicker({el:'nowTime'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
 						</td>
 					</tr>		
@@ -624,7 +624,7 @@ ul {
 						<th class="tr">操作时间：</th>
 						<td>
 							<input type="text" class="u-ipt "
-							name="pf.outTime" maxlength="13" id="nowTime2" style="width:160px;"/>
+							name="pf.outTime" maxlength="13" id="nowTime2" style="width:160px;" readonly="readonly"/>
 							<img onclick="WdatePicker({el:'nowTime2'})" src="${pageContext.request.contextPath}/assets/js/My97DatePicker/skin/datePicker.gif" width="16" height="22" align="absmiddle">
 						</td>
 					</tr>		
